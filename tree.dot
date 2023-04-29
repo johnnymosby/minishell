@@ -1,0 +1,1095 @@
+digraph cflow {
+    node [shape="box"]
+    main [label="int main (int argc, char **argv, char **env)
+utils.c:18"]
+    main -> how_to_use
+    main -> init_shell
+    main -> shell_loop
+    main -> free_at_exit
+    main -> exit
+    main -> ft_strncmp
+    main -> minishell
+    how_to_use [label="void how_to_use (int argc)
+error.c:15"]
+    how_to_use -> printf
+    how_to_use -> print_in
+    how_to_use -> print_shell
+    how_to_use -> exit
+    printf [label="printf()"]
+    print_in [label="void print_in (void)
+error.c:43"]
+    print_in -> printf
+    print_shell [label="void print_shell (void)
+error.c:58"]
+    print_shell -> printf
+    exit [label="exit()"]
+    init_shell [label="void init_shell (t_shell *shell, char **env)
+init.c:15"]
+    init_shell -> getenv
+    init_shell -> init_missing_environment
+    init_shell -> init_env
+    init_shell -> ft_split
+    init_shell -> get_path
+    init_shell -> dup
+    getenv [label="getenv()"]
+    init_missing_environment [label="void init_missing_environment (t_shell *shell, char **env)
+init.c:42"]
+    init_missing_environment -> getcwd
+    init_missing_environment -> extract_user
+    init_missing_environment -> ft_nm_strjoin
+    init_missing_environment -> ft_strdup
+    init_missing_environment -> free
+    init_missing_environment -> init_env
+    getcwd [label="getcwd()"]
+    extract_user [label="char *extract_user (t_shell *shell)
+init.c:62"]
+    extract_user -> open
+    extract_user -> p_err
+    extract_user -> ft_strdup
+    extract_user -> get_next_line
+    extract_user -> close
+    extract_user -> ft_strlen
+    extract_user -> ft_strtrim
+    extract_user -> free
+    open [label="open()"]
+    p_err [label="int p_err (const char *format, ...)
+fprintf.c:23"]
+    p_err -> va_start
+    p_err -> fpf_strchr
+    p_err -> fpf_check_format
+    p_err -> write
+    p_err -> va_end
+    va_start [label="va_start()"]
+    fpf_strchr [label="char *fpf_strchr (const char *s, int c)
+fpf_strchr.c:15"]
+    fpf_check_format [label="void fpf_check_format (va_list args, char conversion_type, int *input_len)
+fpf_check_format.c:31"]
+    fpf_check_format -> fpf_putchar
+    fpf_check_format -> va_arg
+    fpf_check_format -> fpf_putstr
+    fpf_check_format -> fprint_hex
+    fpf_check_format -> fpf_putnbr
+    fpf_putchar [label="void fpf_putchar (char c, int *input_len)
+fpf_putchar.c:18"]
+    fpf_putchar -> write
+    write [label="write()"]
+    va_arg [label="va_arg()"]
+    fpf_putstr [label="void fpf_putstr (char *str, int *input_len)
+fpf_putstr.c:20"]
+    fpf_putstr -> fpf_putstr
+    fpf_putstr -> fpf_putchar
+    fprint_hex [label="void fprint_hex (unsigned long number, char *hex_format, int *input_len)
+fprint_hex.c:32"]
+    fprint_hex -> fprint_hex
+    fprint_hex -> fpf_putchar
+    fpf_putnbr [label="void fpf_putnbr (long int number, int *input_len)
+fpf_putnbr.c:21"]
+    fpf_putnbr -> fpf_putchar
+    fpf_putnbr -> fpf_putnbr
+    va_end [label="va_end()"]
+    ft_strdup [label="char *ft_strdup (const char *s1)
+ft_strdup.c:17"]
+    ft_strdup -> ft_strlen
+    ft_strdup -> malloc
+    ft_strlen [label="size_t ft_strlen (const char *s)
+ft_strlen.c:15"]
+    malloc [label="malloc()"]
+    get_next_line [label="char *get_next_line (int fd)
+get_next_line.c:119"]
+    get_next_line -> read
+    get_next_line -> free
+    get_next_line -> ft_read_file
+    get_next_line -> ft_return_line
+    get_next_line -> ft_remove_line
+    read [label="read()"]
+    free [label="free()"]
+    ft_read_file [label="char *ft_read_file (int fd, char *resource)
+get_next_line.c:23"]
+    ft_read_file -> malloc
+    ft_read_file -> gnl_strchr
+    ft_read_file -> read
+    ft_read_file -> ft_gnl_strjoin
+    ft_read_file -> free
+    gnl_strchr [label="char *gnl_strchr (char *string, int lookfor)
+get_next_line_utils.c:30"]
+    ft_gnl_strjoin [label="char *ft_gnl_strjoin (char *resource, char *buffer)
+get_next_line_utils.c:53"]
+    ft_gnl_strjoin -> malloc
+    ft_gnl_strjoin -> ft_strlen
+    ft_gnl_strjoin -> free
+    ft_return_line [label="char *ft_return_line (char *buffer)
+get_next_line.c:80"]
+    ft_return_line -> malloc
+    ft_remove_line [label="char *ft_remove_line (char *buffer)
+get_next_line.c:49"]
+    ft_remove_line -> free
+    ft_remove_line -> malloc
+    ft_remove_line -> ft_strlen
+    close [label="close()"]
+    ft_strtrim [label="char *ft_strtrim (char const *s1, char const *set)
+ft_strtrim.c:40"]
+    ft_strtrim -> ft_char_in_set
+    ft_strtrim -> ft_strlen
+    ft_strtrim -> malloc
+    ft_char_in_set [label="int ft_char_in_set (char c, char const *set)
+ft_strtrim.c:19"]
+    ft_nm_strjoin [label="char *ft_nm_strjoin (char const *s1, char const *s2)
+ft_nm_strjoin.c:19"]
+    ft_nm_strjoin -> malloc
+    ft_nm_strjoin -> ft_strlen
+    init_env [label="t_env *init_env (char **env)
+env_utils.c:43"]
+    init_env -> init_env_node
+    init_env -> add_back_env_node
+    init_env_node [label="t_env *init_env_node (char *str)
+env_utils.c:16"]
+    init_env_node -> malloc
+    init_env_node -> p_err
+    init_env_node -> ft_split
+    init_env_node -> ft_strdup
+    init_env_node -> get_env_content
+    init_env_node -> free_char_array
+    ft_split [label="char **ft_split (char const *s, char c)
+ft_split.c:105"]
+    ft_split -> malloc
+    ft_split -> ft_word_count
+    ft_split -> ft_string_split
+    ft_word_count [label="int ft_word_count (const char *str, char c)
+ft_split.c:24"]
+    ft_string_split [label="void ft_string_split (char **split, const char *s, char c)
+ft_split.c:79"]
+    ft_string_split -> ft_strlen
+    ft_string_split -> ft_word_copy
+    ft_word_copy [label="char *ft_word_copy (const char *str, int start, int end)
+ft_split.c:52"]
+    ft_word_copy -> malloc
+    get_env_content [label="char *get_env_content (char *full, char *var_name)
+export_utils.c:47"]
+    get_env_content -> ft_strlen
+    get_env_content -> empty_content_allocate
+    get_env_content -> malloc
+    get_env_content -> p_err
+    empty_content_allocate [label="char *empty_content_allocate (char *content)
+empty_cont.c:15"]
+    empty_content_allocate -> malloc
+    free_char_array [label="void free_char_array (char **array)
+free.c:15"]
+    free_char_array -> free
+    add_back_env_node [label="void add_back_env_node (t_env *head, t_env *new)
+env_utils.c:32"]
+    get_path [label="char *get_path (char **env)
+env_utils.c:67"]
+    get_path -> ft_strncmp
+    ft_strncmp [label="int ft_strncmp (const char *s1, const char *s2, size_t n)
+ft_strncmp.c:19"]
+    dup [label="dup()"]
+    shell_loop [label="shell_loop()"]
+    free_at_exit [label="void free_at_exit (t_shell *shell)
+free.c:64"]
+    free_at_exit -> free_cmd_tbls
+    free_at_exit -> free_char_array
+    free_at_exit -> free
+    free_at_exit -> free_env
+    free_at_exit -> rl_clear_history
+    free_cmd_tbls [label="void free_cmd_tbls (t_cmd_tbl *cmd_tbls)
+free.c:44"]
+    free_cmd_tbls -> free_tokens
+    free_cmd_tbls -> free_char_array
+    free_cmd_tbls -> free
+    free_tokens [label="void free_tokens (t_token *token)
+token_utils.c:44"]
+    free_tokens -> free
+    free_env [label="void free_env (t_env *head)
+free.c:30"]
+    free_env -> free
+    rl_clear_history [label="rl_clear_history()"]
+    minishell [label="int minishell (int argc, char *argv, char **env)
+utils.c:29"]
+    minishell -> init_shell
+    minishell -> ft_strdup
+    minishell -> ft_strtrim
+    minishell -> lexer
+    minishell -> parser
+    minishell -> execute
+    minishell -> free_at_exit2
+    lexer [label="int lexer (t_shell *shell)
+lexer.c:15"]
+    lexer -> ft_strlen
+    lexer -> is_empty_line_passed
+    lexer -> bad_pipe
+    lexer -> unclosed_quotes
+    lexer -> wrong_operator_check
+    is_empty_line_passed [label="bool is_empty_line_passed (t_shell *s)
+lexer.c:36"]
+    is_empty_line_passed -> ft_strlen
+    is_empty_line_passed -> p_err
+    is_empty_line_passed -> syntax_error
+    syntax_error [label="bool syntax_error (char c)
+syntax_utils.c:35"]
+    syntax_error -> p_err
+    bad_pipe [label="bool bad_pipe (t_shell *shell)
+lexer.c:91"]
+    bad_pipe -> ft_strlen
+    bad_pipe -> syntax_error
+    bad_pipe -> syntax_error_newline
+    syntax_error_newline [label="bool syntax_error_newline (void)
+syntax_utils.c:40"]
+    syntax_error_newline -> p_err
+    unclosed_quotes [label="bool unclosed_quotes (char *str)
+lexer_utils.c:90"]
+    unclosed_quotes -> count_quotes
+    count_quotes [label="char count_quotes (char *s, int sq, int dq)
+lexer_utils.c:30"]
+    count_quotes -> nb_esc_chars
+    count_quotes -> is_in_dq
+    count_quotes -> syntax_error
+    nb_esc_chars [label="int nb_esc_chars (char *str, int last_ind)
+syntax_utils.c:15"]
+    is_in_dq [label="bool is_in_dq (char *s, int i)
+lexer_utils.c:58"]
+    wrong_operator_check [label="bool wrong_operator_check (char *str)
+lexer.c:65"]
+    wrong_operator_check -> has_wrong_pipe
+    wrong_operator_check -> is_operator
+    wrong_operator_check -> is_space
+    wrong_operator_check -> skip_spaces
+    wrong_operator_check -> syntax_error
+    wrong_operator_check -> ft_strlen
+    wrong_operator_check -> syntax_error_newline
+    has_wrong_pipe [label="bool has_wrong_pipe (char *str)
+syntax_check.c:36"]
+    has_wrong_pipe -> redir_before
+    has_wrong_pipe -> syntax_error
+    redir_before [label="bool redir_before (char *str, int i)
+syntax_check.c:52"]
+    redir_before -> ft_pf_strchr
+    redir_before -> nb_esc_chars
+    ft_pf_strchr [label="char *ft_pf_strchr (const char *s, int c)
+ft_strchr.c:19"]
+    is_operator [label="bool is_operator (char c)
+syntax_utils.c:45"]
+    is_operator -> ft_pf_strchr
+    is_space [label="bool is_space (char c)
+general_utils.c:41"]
+    is_space -> ft_pf_strchr
+    skip_spaces [label="int skip_spaces (char *str, int index)
+general_utils.c:28"]
+    skip_spaces -> is_space
+    parser [label="bool parser (t_shell *shell)
+parser.c:20"]
+    parser -> split_with_pipes
+    parser -> create_cmd_table
+    parser -> free_char_array
+    parser -> table_check
+    split_with_pipes [label="char **split_with_pipes (char *str, int start, int end, int index)
+parser.c:72"]
+    split_with_pipes -> malloc
+    split_with_pipes -> count_pipes
+    split_with_pipes -> p_err
+    split_with_pipes -> skip_quotes
+    split_with_pipes -> ft_strlen
+    split_with_pipes -> nb_esc_chars
+    split_with_pipes -> ft_strdup2
+    split_with_pipes -> ft_strtrim
+    split_with_pipes -> free
+    count_pipes [label="int count_pipes (char *str)
+parser.c:128"]
+    count_pipes -> skip_quotes
+    count_pipes -> ft_strlen
+    count_pipes -> nb_esc_chars
+    skip_quotes [label="int skip_quotes (char *str, int index)
+parser.c:106"]
+    skip_quotes -> nb_esc_chars
+    ft_strdup2 [label="char *ft_strdup2 (char *str, int start, int end)
+lexer_utils.c:15"]
+    ft_strdup2 -> malloc
+    ft_strdup2 -> p_err
+    create_cmd_table [label="t_cmd_tbl *create_cmd_table (char **str_arr, t_shell *shell)
+create_cmd_table.c:15"]
+    create_cmd_table -> split_elements_to_tokens
+    create_cmd_table -> init_cmd_table
+    create_cmd_table -> free_tokens
+    create_cmd_table -> expand_tables
+    create_cmd_table -> rm_quotes_tables
+    create_cmd_table -> init_cmd_args
+    split_elements_to_tokens [label="t_token *split_elements_to_tokens (char *str, t_token *token)
+create_tokens.c:21"]
+    split_elements_to_tokens -> add_quote_token
+    split_elements_to_tokens -> add_word_token
+    split_elements_to_tokens -> add_redirection_token
+    split_elements_to_tokens -> add_flag_token
+    split_elements_to_tokens -> skip_spaces
+    add_quote_token [label="t_token *add_quote_token (char *str, int *i, int *old_i, t_token *token)
+create_tokens.c:39"]
+    add_quote_token -> nb_esc_chars
+    add_quote_token -> add_new_token
+    add_quote_token -> ft_strdup2
+    add_new_token [label="t_token *add_new_token (t_token *token, char *str, t_type type)
+add_token_utils.c:32"]
+    add_new_token -> get_new_token
+    get_new_token [label="t_token *get_new_token (char *str, t_type type)
+add_token_utils.c:18"]
+    get_new_token -> malloc
+    get_new_token -> p_err
+    add_word_token [label="t_token *add_word_token (char *str, int *i, int *old_i, t_token *token)
+create_tokens.c:62"]
+    add_word_token -> ft_isalpha
+    add_word_token -> ft_isalnum
+    add_word_token -> is_printable
+    add_word_token -> add_new_token
+    add_word_token -> ft_strdup2
+    ft_isalpha [label="int ft_isalpha (int c)
+ft_isalpha.c:16"]
+    ft_isalnum [label="int ft_isalnum (int c)
+ft_isalnum.c:16"]
+    ft_isalnum -> ft_isdigit
+    ft_isalnum -> ft_isalpha
+    ft_isdigit [label="int ft_isdigit (int c)
+ft_isdigit.c:16"]
+    is_printable [label="bool is_printable (char c)
+cmd_table_utils.c:66"]
+    add_redirection_token [label="t_token *add_redirection_token (char *str, int *i, int *old_i, t_token *tk)
+create_tokens.c:76"]
+    add_redirection_token -> ft_pf_strchr
+    add_redirection_token -> get_redirection_type
+    add_redirection_token -> add_new_token
+    add_redirection_token -> ft_strdup2
+    get_redirection_type [label="t_type get_redirection_type (char *str, int start, int end)
+token_utils.c:15"]
+    add_flag_token [label="t_token *add_flag_token (char *str, int *i, int *old_i, t_token *token)
+create_tokens.c:94"]
+    add_flag_token -> ft_isalpha
+    add_flag_token -> ft_isalnum
+    add_flag_token -> add_new_token
+    add_flag_token -> ft_strdup2
+    init_cmd_table [label="t_cmd_tbl *init_cmd_table (t_cmd_tbl *cmd_tbls, t_token *tokens)
+init_cmd_table.c:15"]
+    init_cmd_table -> get_empty_cmd_table
+    init_cmd_table -> assign_cmd
+    init_cmd_table -> assign_args
+    init_cmd_table -> assign_redirs
+    init_cmd_table -> add_new_cmd_tbl
+    get_empty_cmd_table [label="t_cmd_tbl *get_empty_cmd_table (void)
+cmd_table_utils.c:32"]
+    get_empty_cmd_table -> malloc
+    get_empty_cmd_table -> p_err
+    assign_cmd [label="t_token *assign_cmd (t_cmd_tbl *cmd_tbl, t_token *token)
+init_cmd_table.c:34"]
+    assign_cmd -> is_redirection
+    assign_cmd -> ft_strdup
+    is_redirection [label="bool is_redirection (t_token *token)
+token_utils.c:32"]
+    assign_args [label="t_token *assign_args (t_cmd_tbl *cmd_tbl, t_token *token)
+init_cmd_table.c:46"]
+    assign_args -> is_redirection
+    assign_args -> copy_token
+    assign_args -> add_new_token2
+    copy_token [label="t_token *copy_token (t_token *token)
+add_token_utils.c:62"]
+    copy_token -> malloc
+    copy_token -> p_err
+    copy_token -> ft_strdup
+    add_new_token2 [label="t_token *add_new_token2 (t_token *tokens, t_token *new)
+add_token_utils.c:48"]
+    assign_redirs [label="t_token *assign_redirs (t_cmd_tbl *cmd_tbl, t_token *token)
+init_cmd_table.c:63"]
+    assign_redirs -> is_redirection
+    assign_redirs -> copy_token
+    assign_redirs -> add_new_token2
+    add_new_cmd_tbl [label="t_cmd_tbl *add_new_cmd_tbl (t_cmd_tbl *cmd_tbl, t_cmd_tbl *new)
+cmd_table_utils.c:15"]
+    expand_tables [label="void expand_tables (t_cmd_tbl *tables, t_shell *shell)
+expand_tokens.c:15"]
+    expand_tables -> expand_cmd
+    expand_tables -> strcmp_2
+    expand_tables -> expand_table
+    expand_tables -> free
+    expand_cmd [label="char *expand_cmd (t_cmd_tbl *table, t_shell *shell)
+expand_tokens.c:30"]
+    expand_cmd -> expander
+    expand_cmd -> ft_strdup
+    expand_cmd -> ft_tolower
+    expander [label="bool expander (char **str, t_shell *shell)
+expander_utils.c:99"]
+    expander -> has_dollar
+    expander -> malloc
+    expander -> extract_dollar
+    expander -> free
+    has_dollar [label="bool has_dollar (char *str, t_shell *shell)
+expander_utils.c:15"]
+    has_dollar -> nb_esc_chars
+    has_dollar -> dont_expand
+    has_dollar -> ft_pf_strchr
+    dont_expand [label="bool dont_expand (char *str, int i)
+extra_utils.c:15"]
+    dont_expand -> dont_expand_result
+    dont_expand_result [label="bool dont_expand_result (char *str, int i, int dq, int sq)
+extra_utils.c:42"]
+    dont_expand_result -> nb_esc_chars
+    extract_dollar [label="void extract_dollar (char **s, t_shell *sh, char **bef_doll, char **rest)
+expander_utils.c:70"]
+    extract_dollar -> malloc
+    extract_dollar -> nb_esc_chars
+    extract_dollar -> dont_expand
+    extract_dollar -> ft_strdup2
+    extract_dollar -> copy_dollar_from_string
+    extract_dollar -> expand_dollars
+    extract_dollar -> ft_strlen
+    extract_dollar -> free
+    extract_dollar -> ft_strjoin
+    extract_dollar -> ft_nm_strjoin
+    copy_dollar_from_string [label="void copy_dollar_from_string (char **dst, char **s, int index)
+expander_utils.c:41"]
+    copy_dollar_from_string -> ft_strdup2
+    expand_dollars [label="char *expand_dollars (char *doll_to_exp, t_shell *shell)
+expander.c:15"]
+    expand_dollars -> return_exit_status
+    expand_dollars -> type_to_expand
+    expand_dollars -> copy_variable
+    expand_dollars -> free
+    expand_dollars -> variable_doesnt_exist
+    return_exit_status [label="char *return_exit_status (t_shell *shell)
+expander.c:37"]
+    return_exit_status -> ft_itoa
+    ft_itoa [label="char *ft_itoa (int n)
+ft_itoa.c:39"]
+    ft_itoa -> ft_size_count
+    ft_itoa -> malloc
+    ft_size_count [label="size_t ft_size_count (int n)
+ft_itoa.c:16"]
+    type_to_expand [label="char *type_to_expand (char *dollar_to_expand, t_shell *shell)
+expander.c:45"]
+    type_to_expand -> ft_strtrim
+    type_to_expand -> replace_variable
+    type_to_expand -> variable_doesnt_exist
+    type_to_expand -> free
+    replace_variable [label="char *replace_variable (char *variable, t_shell *shell)
+expander.c:68"]
+    replace_variable -> ft_strtrim
+    replace_variable -> find_env_var
+    replace_variable -> free
+    replace_variable -> variable_doesnt_exist
+    find_env_var [label="t_env *find_env_var (t_env *head, char *var_name)
+unset.c:53"]
+    find_env_var -> ft_strncmp
+    find_env_var -> ft_strlen
+    variable_doesnt_exist [label="char *variable_doesnt_exist (void)
+expander.c:95"]
+    variable_doesnt_exist -> malloc
+    copy_variable [label="char *copy_variable (char *content)
+expander_utils.c:116"]
+    copy_variable -> ft_strlen
+    copy_variable -> malloc
+    ft_strjoin [label="char *ft_strjoin (char *s1, char *s2)
+ft_strjoin.c:15"]
+    ft_strjoin -> ft_strlen
+    ft_strjoin -> malloc
+    ft_strjoin -> free
+    ft_tolower [label="int ft_tolower (int c)
+ft_tolower.c:15"]
+    strcmp_2 [label="bool strcmp_2 (char *str1, char *str2)
+cd_utils.c:38"]
+    strcmp_2 -> ft_strlen
+    expand_table [label="void expand_table (t_cmd_tbl *table, t_shell *shell)
+expand_tokens.c:49"]
+    expand_table -> expand_tokens
+    expand_tokens [label="void expand_tokens (t_token *tokens, t_shell *shell)
+expand_tokens.c:55"]
+    expand_tokens -> expander
+    rm_quotes_tables [label="void rm_quotes_tables (t_cmd_tbl *tables, t_shell *shell)
+remove_quotes.c:15"]
+    rm_quotes_tables -> rm_quotes
+    rm_quotes_tables -> free
+    rm_quotes_tables -> cmd_to_lover_case
+    rm_quotes_tables -> strcmp_2
+    rm_quotes_tables -> rm_quotes_table
+    rm_quotes [label="char *rm_quotes (char *str)
+remove_quotes.c:35"]
+    rm_quotes -> ft_strdup2
+    rm_quotes -> ft_strlen
+    rm_quotes -> ft_strdup
+    cmd_to_lover_case [label="void cmd_to_lover_case (t_cmd_tbl *table)
+general_utils.c:15"]
+    cmd_to_lover_case -> ft_strdup
+    cmd_to_lover_case -> convert_to_lower
+    cmd_to_lover_case -> ft_strlen
+    cmd_to_lover_case -> strcmp_2
+    cmd_to_lover_case -> free
+    convert_to_lower [label="bool convert_to_lower (char *str, int until)
+general_utils.c:46"]
+    convert_to_lower -> strlen
+    convert_to_lower -> isupper
+    convert_to_lower -> tolower
+    strlen [label="strlen()"]
+    isupper [label="isupper()"]
+    tolower [label="tolower()"]
+    rm_quotes_table [label="void rm_quotes_table (t_cmd_tbl *table, t_shell *shell)
+remove_quotes.c:69"]
+    rm_quotes_table -> rm_quotes_tokens
+    rm_quotes_table -> rm_quotes_tokenss
+    rm_quotes_tokens [label="void rm_quotes_tokens (t_token *tokens, t_shell *shell)
+remove_quotes.c:75"]
+    rm_quotes_tokens -> rm_quotes
+    rm_quotes_tokens -> free
+    rm_quotes_tokenss [label="void rm_quotes_tokenss (t_token *tokens, t_shell *shell, t_token *args)
+remove_quotes.c:48"]
+    rm_quotes_tokenss -> rm_quotes
+    rm_quotes_tokenss -> free
+    init_cmd_args [label="void init_cmd_args (t_cmd_tbl *tables)
+create_cmd_table.c:36"]
+    init_cmd_args -> get_cmd_args_from_token
+    get_cmd_args_from_token [label="char **get_cmd_args_from_token (char *cmd, t_token *token)
+init_cmd_table.c:81"]
+    get_cmd_args_from_token -> token_list_size
+    get_cmd_args_from_token -> malloc
+    get_cmd_args_from_token -> p_err
+    get_cmd_args_from_token -> ft_strdup
+    token_list_size [label="int token_list_size (t_token *token)
+cmd_table_utils.c:49"]
+    table_check [label="bool table_check (t_cmd_tbl *tables)
+parser.c:43"]
+    execute [label="void execute (t_shell *shell, t_cmd_tbl *table)
+execute.c:26"]
+    execute -> tables_have_wrong_redir
+    execute -> redir_check
+    execute -> free_cmd_tbls
+    execute -> handle_heredocs
+    execute -> table_size
+    execute -> exec_without_pipes
+    execute -> exec_pipes
+    tables_have_wrong_redir [label="bool tables_have_wrong_redir (t_cmd_tbl *table, t_shell *shell)
+exec_only_heredoc.c:15"]
+    tables_have_wrong_redir -> has_heredoc_and_wrong_redir
+    tables_have_wrong_redir -> run_only_heredocs
+    has_heredoc_and_wrong_redir [label="bool has_heredoc_and_wrong_redir (t_token *token)
+exec_only_heredoc.c:37"]
+    has_heredoc_and_wrong_redir -> is_good_redirection
+    is_good_redirection [label="bool is_good_redirection (t_token *token)
+handle_redirs.c:42"]
+    is_good_redirection -> is_redirection
+    run_only_heredocs [label="void run_only_heredocs (t_cmd_tbl *start, t_cmd_tbl *last, t_shell *sh)
+exec_only_heredoc.c:48"]
+    run_only_heredocs -> is_redirection
+    run_only_heredocs -> stop_word
+    run_only_heredocs -> free
+    run_only_heredocs -> heredoc
+    stop_word [label="char *stop_word (char *str, t_shell *shell)
+here_doc_utils.c:15"]
+    stop_word -> malloc
+    stop_word -> ft_strtrim
+    stop_word -> free
+    heredoc [label="char *heredoc (t_cmd_tbl *cmd_tbl, char *s_w, t_shell *shell)
+here_doc.c:60"]
+    heredoc -> filename
+    heredoc -> open
+    heredoc -> p_err
+    heredoc -> strerror
+    heredoc -> write
+    heredoc -> get_next_line
+    heredoc -> ft_strncmp
+    heredoc -> ft_strlen
+    heredoc -> free
+    heredoc -> expander
+    heredoc -> close
+    filename [label="char *filename (t_cmd_tbl *table)
+here_doc.c:89"]
+    filename -> unlink
+    filename -> ft_itoa
+    filename -> ft_nm_strjoin
+    filename -> free
+    unlink [label="unlink()"]
+    strerror [label="strerror()"]
+    redir_check [label="bool redir_check (char *str)
+syntax_check.c:15"]
+    redir_check -> ft_strlen
+    redir_check -> syntax_error
+    handle_heredocs [label="void handle_heredocs (t_cmd_tbl *cmd_tbl, t_shell *shell)
+here_doc.c:15"]
+    handle_heredocs -> cmd_tbl_has_heredoc
+    handle_heredocs -> execute_heredocs
+    cmd_tbl_has_heredoc [label="bool cmd_tbl_has_heredoc (t_cmd_tbl *cmd_tbl)
+here_doc.c:25"]
+    execute_heredocs [label="void execute_heredocs (t_cmd_tbl *cmd_tbl, t_shell *shell)
+here_doc.c:41"]
+    execute_heredocs -> stop_word
+    execute_heredocs -> free
+    execute_heredocs -> heredoc
+    table_size [label="int table_size (t_cmd_tbl *table)
+execute.c:50"]
+    exec_without_pipes [label="void exec_without_pipes (t_cmd_tbl *table, t_shell *shell)
+execute_without_pipes.c:15"]
+    exec_without_pipes -> fork
+    exec_without_pipes -> p_err
+    exec_without_pipes -> simple_exec_in_child
+    exec_without_pipes -> waitpid_to_get_exit_status
+    exec_without_pipes -> builtins
+    exec_without_pipes -> has_wrong_redir
+    exec_without_pipes -> close_and_dup
+    fork [label="fork()"]
+    simple_exec_in_child [label="void simple_exec_in_child (t_shell *shell, t_cmd_tbl *table)
+execute_without_pipes.c:39"]
+    simple_exec_in_child -> signals_child
+    simple_exec_in_child -> has_wrong_redir
+    simple_exec_in_child -> handle_redirections
+    simple_exec_in_child -> execute_command
+    simple_exec_in_child -> child_exit
+    signals_child [label="void signals_child (struct termios *mirror_termios)
+signals_child.c:15"]
+    signals_child -> tcsetattr
+    signals_child -> signal_ctrl_backslash
+    signals_child -> signal_ctrl_c_child
+    tcsetattr [label="tcsetattr()"]
+    signal_ctrl_backslash [label="void signal_ctrl_backslash (void)
+signals.c:43"]
+    signal_ctrl_backslash -> sigemptyset
+    signal_ctrl_backslash -> sigaction
+    sigemptyset [label="sigemptyset()"]
+    sigaction [label="sigaction()"]
+    signal_ctrl_c_child [label="void signal_ctrl_c_child (void)
+signals_child.c:22"]
+    signal_ctrl_c_child -> sigemptyset
+    signal_ctrl_c_child -> sigaction
+    has_wrong_redir [label="bool has_wrong_redir (t_shell *shell, t_token *token, t_cmd_tbl *table)
+wrong_redirs.c:15"]
+    has_wrong_redir -> is_redirection
+    has_wrong_redir -> is_good_redirection
+    has_wrong_redir -> execute_only_heredocs
+    execute_only_heredocs [label="void execute_only_heredocs (t_shell *shll, t_cmd_tbl *tabl, t_token *end)
+wrong_redirs.c:38"]
+    execute_only_heredocs -> stop_word
+    execute_only_heredocs -> free
+    execute_only_heredocs -> heredoc
+    handle_redirections [label="void handle_redirections (t_shell *shell, t_cmd_tbl *table)
+handle_redirs.c:15"]
+    handle_redirections -> is_good_redirection
+    handle_redirections -> open_heredoc
+    handle_redirections -> open_file
+    handle_redirections -> change_stdin_out
+    handle_redirections -> exit
+    handle_redirections -> set_curr
+    open_heredoc [label="int open_heredoc (t_cmd_tbl *table, t_shell *shell, t_token *token)
+open_heredoc.c:15"]
+    open_heredoc -> is_last_heredoc
+    open_heredoc -> dup2
+    open_heredoc -> open
+    is_last_heredoc [label="bool is_last_heredoc (t_token *token, t_token *redirs)
+open_heredoc.c:26"]
+    is_last_heredoc -> heredoc
+    dup2 [label="dup2()"]
+    open_file [label="int open_file (t_type type, char *file_name, t_shell *shell)
+open.c:15"]
+    open_file -> open
+    open_file -> p_err
+    open_file -> strerror
+    change_stdin_out [label="bool change_stdin_out (t_type type, int fd, t_shell *shell, int ret_val)
+handle_redirs.c:51"]
+    change_stdin_out -> dup2
+    change_stdin_out -> close
+    change_stdin_out -> unlink
+    change_stdin_out -> std_out_error
+    change_stdin_out -> free_at_child
+    std_out_error [label="bool std_out_error (t_shell *shell)
+handle_redirs.c:77"]
+    std_out_error -> p_err
+    std_out_error -> strerror
+    free_at_child [label="void free_at_child (t_shell *shell)
+free.c:83"]
+    free_at_child -> free_cmd_tbls
+    free_at_child -> free_char_array
+    free_at_child -> free
+    free_at_child -> free_env
+    free_at_child -> rl_clear_history
+    set_curr [label="t_token *set_curr (t_token *curr)
+handle_redirs.c:85"]
+    execute_command [label="void execute_command (t_cmd_tbl *table, t_shell *shell)
+execute_cmd.c:15"]
+    execute_command -> child_exit
+    execute_command -> builtins
+    execute_command -> exit_after_builtin
+    execute_command -> path_check
+    execute_command -> final_exec
+    execute_command -> extract_path
+    execute_command -> clear_and_exit
+    execute_command -> access
+    child_exit [label="void child_exit (t_shell *shell)
+execute_cmd.c:85"]
+    child_exit -> free_at_child
+    child_exit -> exit
+    builtins [label="bool builtins (t_shell *shell, char *cmd, char **args)
+run_builtins.c:15"]
+    builtins -> ft_strcmp
+    builtins -> cd
+    builtins -> export
+    builtins -> pwd
+    builtins -> env
+    builtins -> exit_shell
+    builtins -> unset
+    builtins -> call_echo
+    ft_strcmp [label="int ft_strcmp (char *s1, char *s2)
+ft_strcmp.c:15"]
+    cd [label="void cd (t_shell *shell, char *cmd, char **args)
+cd.c:15"]
+    cd -> find_env_var
+    cd -> cd_home
+    cd -> cd_tilde
+    cd -> strcmp_2
+    cd -> cd_oldpwd
+    cd -> ft_strcmp
+    cd -> cd_forward
+    cd -> ft_strncmp
+    cd -> cd_back
+    cd -> update_pwd_and_oldpwd
+    cd_home [label="void cd_home (t_shell *shell)
+cd_options.c:44"]
+    cd_home -> find_env_var
+    cd_home -> p_err
+    cd_home -> ft_strlen
+    cd_home -> printf
+    cd_home -> chdir
+    cd_home -> strerror
+    chdir [label="chdir()"]
+    cd_tilde [label="void cd_tilde (t_shell *shell, char *folder_path)
+cd_options.c:15"]
+    cd_tilde -> find_env_var
+    cd_tilde -> ft_strtrim
+    cd_tilde -> ft_nm_strjoin
+    cd_tilde -> chdir
+    cd_tilde -> p_err
+    cd_tilde -> strerror
+    cd_tilde -> free
+    cd_oldpwd [label="void cd_oldpwd (t_shell *shell)
+cd_options.c:62"]
+    cd_oldpwd -> cd_slash_is_first_cmd
+    cd_oldpwd -> find_env_var
+    cd_oldpwd -> p_err
+    cd_oldpwd -> strerror
+    cd_oldpwd -> printf
+    cd_oldpwd -> chdir
+    cd_slash_is_first_cmd [label="void cd_slash_is_first_cmd (t_shell *shell)
+cd_utils.c:83"]
+    cd_slash_is_first_cmd -> p_err
+    cd_forward [label="void cd_forward (t_shell *shell, char *folder_path)
+cd_options.c:89"]
+    cd_forward -> chdir
+    cd_forward -> p_err
+    cd_forward -> strerror
+    cd_back [label="void cd_back (t_shell *shell, char *dotdot, char *folder_path)
+cd_options.c:99"]
+    cd_back -> ft_strcmp
+    cd_back -> chdir
+    cd_back -> p_err
+    cd_back -> strerror
+    update_pwd_and_oldpwd [label="void update_pwd_and_oldpwd (t_shell *shell, char *old_pwd)
+cd_utils.c:56"]
+    update_pwd_and_oldpwd -> add_oldpwd_to_env
+    update_pwd_and_oldpwd -> getcwd
+    update_pwd_and_oldpwd -> ft_nm_strjoin
+    update_pwd_and_oldpwd -> replace_var_content
+    update_pwd_and_oldpwd -> free
+    add_oldpwd_to_env [label="void add_oldpwd_to_env (t_shell *shell)
+cd_utils.c:77"]
+    add_oldpwd_to_env -> find_env_var
+    add_oldpwd_to_env -> add_new_variable
+    add_new_variable [label="void add_new_variable (t_shell *shell, char *str)
+export.c:89"]
+    add_new_variable -> init_env_node
+    add_new_variable -> add_back_env_node
+    replace_var_content [label="void replace_var_content (t_shell *shell, char *str, char *var)
+export.c:69"]
+    replace_var_content -> ft_strcmp
+    replace_var_content -> free
+    replace_var_content -> get_env_content
+    export [label="void export (t_shell *shell, char *cmd, char **args)
+export.c:20"]
+    export -> print_export
+    export -> is_valid_export
+    export -> do_not_export
+    export -> ft_isdigit
+    export -> ft_pf_strchr
+    export -> has_invalid_chars
+    export -> has_plus
+    export -> p_err
+    export -> export_new_variables
+    print_export [label="void print_export (t_shell *shell)
+export.c:97"]
+    print_export -> ft_strcmp
+    print_export -> printf
+    print_export -> ft_strlen
+    is_valid_export [label="bool is_valid_export (t_shell *shell, char *args, int i)
+export_utils.c:75"]
+    is_valid_export -> ft_strlen
+    do_not_export [label="void do_not_export (t_shell *shell, char **args, int i)
+export_utils.c:82"]
+    do_not_export -> p_err
+    has_invalid_chars [label="bool has_invalid_chars (char *str)
+unset_utils.c:15"]
+    has_plus [label="bool has_plus (char *str)
+unset_utils.c:62"]
+    export_new_variables [label="void export_new_variables (t_shell *shell, char **args)
+export.c:50"]
+    export_new_variables -> ft_split
+    export_new_variables -> find_env_var
+    export_new_variables -> add_new_variable
+    export_new_variables -> replace_var_content
+    export_new_variables -> free_char_array
+    pwd [label="void pwd (t_shell *shell, char **args)
+pwd.c:15"]
+    pwd -> find_env_var
+    pwd -> p_err
+    pwd -> ft_strncmp
+    pwd -> printf
+    env [label="void env (t_shell *shell, char **args)
+env.c:20"]
+    env -> p_err
+    env -> ft_strlen
+    env -> printf
+    env -> strcmp_2
+    exit_shell [label="void exit_shell (t_shell *shell, char *cmd, char **args)
+exit.c:15"]
+    exit_shell -> ft_strcmp
+    exit_shell -> simple_exit
+    exit_shell -> ft_strlen
+    exit_shell -> exit_tma
+    exit_shell -> exit_code
+    exit_shell -> ft_isalpha
+    exit_shell -> exit_error_msg
+    exit_shell -> exit_code_on_pipe
+    simple_exit [label="void simple_exit (t_shell *shell)
+exit.c:39"]
+    simple_exit -> free_at_exit
+    simple_exit -> exit
+    exit_tma [label="void exit_tma (t_shell *shell, char *cmd)
+exit.c:45"]
+    exit_tma -> p_err
+    exit_tma -> free_at_exit
+    exit_tma -> exit
+    exit_code [label="void exit_code (t_shell *shell, char **args)
+exit.c:53"]
+    exit_code -> ft_strlen
+    exit_code -> is_exit_code_correct
+    exit_code -> p_err
+    exit_code -> free_at_exit
+    exit_code -> exit
+    is_exit_code_correct [label="bool is_exit_code_correct (t_shell *shell, char *args, int i)
+exit_utils.c:20"]
+    exit_error_msg [label="void exit_error_msg (t_shell *shell, char *cmd, char *arg, int option)
+exit_utils.c:49"]
+    exit_error_msg -> p_err
+    exit_code_on_pipe [label="void exit_code_on_pipe (t_shell *shell, char **args)
+exit.c:76"]
+    exit_code_on_pipe -> ft_strlen
+    exit_code_on_pipe -> malloc
+    exit_code_on_pipe -> p_err
+    exit_code_on_pipe -> free_at_exit
+    exit_code_on_pipe -> exit
+    exit_code_on_pipe -> strcpy
+    exit_code_on_pipe -> ft_atoi
+    exit_code_on_pipe -> free
+    strcpy [label="strcpy()"]
+    ft_atoi [label="int ft_atoi (const char *str)
+ft_atoi.c:25"]
+    unset [label="void unset (t_shell *shell, char *cmd, char **args)
+unset.c:15"]
+    unset -> unset_special
+    unset -> unset_all_vars
+    unset_special [label="bool unset_special (t_shell *shell, char **args)
+unset_utils.c:43"]
+    unset_special -> ft_strlen
+    unset_special -> p_err
+    unset_all_vars [label="void unset_all_vars (t_shell *shell, char **args)
+unset.c:25"]
+    unset_all_vars -> env
+    unset_all_vars -> find_env_var
+    unset_all_vars -> delete_env_var
+    unset_all_vars -> ft_pf_strchr
+    unset_all_vars -> has_invalid_chars
+    unset_all_vars -> p_err
+    delete_env_var [label="void delete_env_var (t_env *head, t_env *del)
+unset.c:68"]
+    delete_env_var -> free_env_var
+    free_env_var [label="void free_env_var (t_env *env)
+unset.c:87"]
+    free_env_var -> free
+    call_echo [label="void call_echo (t_shell *shell, char *cmd, char **args)
+run_builtins.c:39"]
+    call_echo -> echo
+    echo [label="void echo (t_shell *shell, char *cmd, char **args)
+echo.c:15"]
+    echo -> ft_strcmp
+    echo -> write
+    echo -> is_flag_valid
+    echo -> handle_n_flag
+    echo -> simple_echo
+    is_flag_valid [label="bool is_flag_valid (char *arg)
+echo.c:70"]
+    is_flag_valid -> ft_strcmp
+    is_flag_valid -> ft_strncmp
+    handle_n_flag [label="void handle_n_flag (char **args)
+echo.c:29"]
+    handle_n_flag -> echo_n_flag_validator
+    handle_n_flag -> write
+    handle_n_flag -> print_without_quotes
+    echo_n_flag_validator [label="int echo_n_flag_validator (char **args)
+echo.c:48"]
+    echo_n_flag_validator -> is_flag_valid
+    echo_n_flag_validator -> ft_strncmp
+    print_without_quotes [label="void print_without_quotes (char *str, int i, int k, int dq)
+echo_utils.c:31"]
+    print_without_quotes -> has_quote_in_string
+    print_without_quotes -> write_escapes
+    print_without_quotes -> write
+    has_quote_in_string [label="bool has_quote_in_string (char *str)
+lexer_utils.c:76"]
+    write_escapes [label="int write_escapes (char *str, int escp_nb, int i)
+echo_utils.c:59"]
+    write_escapes -> write
+    simple_echo [label="void simple_echo (t_shell *shell, char **args)
+echo.c:95"]
+    simple_echo -> print_without_quotes
+    simple_echo -> space_filled_token
+    simple_echo -> write
+    space_filled_token [label="bool space_filled_token (char *str)
+echo_utils.c:15"]
+    exit_after_builtin [label="void exit_after_builtin (t_shell *shell)
+execute_cmd.c:35"]
+    exit_after_builtin -> free_at_child
+    exit_after_builtin -> exit
+    path_check [label="int path_check (char *path, t_shell *shell)
+path_check.c:25"]
+    path_check -> dot_dot_slash_at_path_start
+    path_check -> ft_strlen
+    path_check -> no_such_file_or_folder
+    path_check -> invalid_command
+    path_check -> dot_at_path_start
+    path_check -> slash_at_path_start
+    path_check -> access
+    dot_dot_slash_at_path_start [label="int dot_dot_slash_at_path_start (t_shell *shell, char *path)
+path_check.c:56"]
+    dot_dot_slash_at_path_start -> access
+    dot_dot_slash_at_path_start -> no_such_file_or_folder
+    access [label="access()"]
+    no_such_file_or_folder [label="int no_such_file_or_folder (char *command, t_shell *shell)
+path_check.c:48"]
+    no_such_file_or_folder -> p_err
+    no_such_file_or_folder -> strerror
+    invalid_command [label="void invalid_command (t_shell *shell, char *command)
+extract_path.c:44"]
+    invalid_command -> p_err
+    dot_at_path_start [label="int dot_at_path_start (t_shell *shell, char *path)
+path_check.c:64"]
+    dot_at_path_start -> access
+    dot_at_path_start -> no_such_file_or_folder
+    slash_at_path_start [label="int slash_at_path_start (t_shell *shell, char *path)
+path_check.c:71"]
+    slash_at_path_start -> access
+    slash_at_path_start -> no_such_file_or_folder
+    final_exec [label="void final_exec (char *cmd_path, t_cmd_tbl *table, t_shell *shell)
+execute_cmd.c:44"]
+    final_exec -> is_a_directory
+    final_exec -> child_exit
+    final_exec -> copy_2d_char_array
+    final_exec -> execve
+    final_exec -> p_err
+    final_exec -> strerror
+    final_exec -> free
+    final_exec -> free_char_array
+    final_exec -> exit
+    is_a_directory [label="bool is_a_directory (t_shell *shell, char *cmd)
+execute_cmd.c:68"]
+    is_a_directory -> ft_strlen
+    is_a_directory -> p_err
+    copy_2d_char_array [label="char **copy_2d_char_array (char **array)
+execute_utils.c:15"]
+    copy_2d_char_array -> malloc
+    copy_2d_char_array -> p_err
+    copy_2d_char_array -> ft_strdup
+    execve [label="execve()"]
+    extract_path [label="char *extract_path (t_shell *shell, char *command)
+extract_path.c:15"]
+    extract_path -> ft_strlen
+    extract_path -> child_exit
+    extract_path -> ft_nm_strjoin
+    extract_path -> free
+    extract_path -> invalid_command
+    extract_path -> access
+    clear_and_exit [label="void clear_and_exit (t_shell *shell, char *cmd_path, t_cmd_tbl *table)
+execute_utils.c:36"]
+    clear_and_exit -> strcmp_2
+    clear_and_exit -> free
+    clear_and_exit -> free_at_child
+    clear_and_exit -> exit
+    clear_and_exit -> ft_strlen
+    clear_and_exit -> p_err
+    waitpid_to_get_exit_status [label="void waitpid_to_get_exit_status (pid_t pid, t_shell *shell, int *status)
+execute_utils.c:62"]
+    waitpid_to_get_exit_status -> signals_parent
+    waitpid_to_get_exit_status -> waitpid
+    waitpid_to_get_exit_status -> WEXITSTATUS
+    signals_parent [label="void signals_parent (void)
+signals_parent.c:15"]
+    signals_parent -> signal_ctrl_c_parent
+    signals_parent -> signal_ctrl_backslash
+    signal_ctrl_c_parent [label="void signal_ctrl_c_parent (void)
+signals_parent.c:31"]
+    signal_ctrl_c_parent -> handle_sigint_parent
+    signal_ctrl_c_parent -> sigemptyset
+    signal_ctrl_c_parent -> sigaction
+    handle_sigint_parent [label="void handle_sigint_parent (int sig_num)
+signals_parent.c:21"]
+    handle_sigint_parent -> write
+    handle_sigint_parent -> rl_on_new_line
+    handle_sigint_parent -> rl_replace_line
+    rl_on_new_line [label="rl_on_new_line()"]
+    rl_replace_line [label="rl_replace_line()"]
+    waitpid [label="waitpid()"]
+    WEXITSTATUS [label="WEXITSTATUS()"]
+    close_and_dup [label="void close_and_dup (t_shell *shell)
+execute_utils.c:70"]
+    close_and_dup -> close
+    close_and_dup -> dup2
+    exec_pipes [label="void exec_pipes (t_cmd_tbl *table, t_shell *shell)
+pipe.c:15"]
+    exec_pipes -> pipe_child_process
+    exec_pipes -> exec_last_pipe
+    exec_pipes -> waitpid
+    pipe_child_process [label="void pipe_child_process (t_cmd_tbl *table, t_shell *shell)
+pipe.c:31"]
+    pipe_child_process -> pipe
+    pipe_child_process -> p_err
+    pipe_child_process -> fork
+    pipe_child_process -> pipe_exec_in_child
+    pipe_child_process -> builtins
+    pipe_child_process -> close
+    pipe_child_process -> dup2
+    pipe [label="pipe()"]
+    pipe_exec_in_child [label="void pipe_exec_in_child (t_cmd_tbl *t, t_shell *s, int fd_in, int fd_out)
+pipe.c:59"]
+    pipe_exec_in_child -> signals_child
+    pipe_exec_in_child -> close
+    pipe_exec_in_child -> dup2
+    pipe_exec_in_child -> handle_redirections
+    pipe_exec_in_child -> execute_command
+    exec_last_pipe [label="void exec_last_pipe (t_cmd_tbl *table, t_shell *shell)
+pipe.c:70"]
+    exec_last_pipe -> fork
+    exec_last_pipe -> p_err
+    exec_last_pipe -> signals_child
+    exec_last_pipe -> pipe_has_redirs
+    exec_last_pipe -> dup2
+    exec_last_pipe -> handle_redirections
+    exec_last_pipe -> execute_command
+    exec_last_pipe -> waitpid_to_get_exit_status
+    exec_last_pipe -> builtins
+    exec_last_pipe -> has_wrong_redir
+    exec_last_pipe -> close_and_dup
+    pipe_has_redirs [label="bool pipe_has_redirs (t_token *token)
+pipe.c:99"]
+    free_at_exit2 [label="void free_at_exit2 (t_shell *shell)
+utils.c:42"]
+    free_at_exit2 -> free_cmd_tbls
+    free_at_exit2 -> free_char_array
+    free_at_exit2 -> free
+    free_at_exit2 -> free_env
+    free_at_exit2 -> rl_clear_history
+}
+
