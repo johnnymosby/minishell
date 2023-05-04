@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_argc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/28 10:16:01 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/03 12:07:18 by rbasyrov         ###   ########.fr       */
+/*   Created: 2023/05/01 13:55:22 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/05/03 11:27:52 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	main(int argc, char **argv)
+void	check_argc(int argc)
 {
-	t_shell	shell;
-
-	check_argc(argc);
-	return (EXIT_SUCCESS);
+	if (argc != 1)
+	{
+		printf("Minishell does not accept any arguments\n");
+		exit(EXIT_FAILURE);
+	}
 }

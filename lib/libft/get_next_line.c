@@ -6,11 +6,11 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 16:43:03 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/04/27 17:10:19 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:37:24 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 static char	*read_until_nl_or_o(int fd, char *save)
 {

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:47:49 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/04/27 17:11:58 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:40:23 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define LIBFT_H
 # include "stdlib.h"
 # include "unistd.h"
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 typedef struct s_list
 {
@@ -66,10 +70,6 @@ t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE = 42
-# endif
 
 char	*get_next_line(int fd);
 

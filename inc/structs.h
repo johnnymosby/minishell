@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/28 10:16:01 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/03 12:07:18 by rbasyrov         ###   ########.fr       */
+/*   Created: 2023/05/03 12:13:32 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/05/04 14:51:45 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-int	main(int argc, char **argv)
+typedef struct s_shell
 {
-	t_shell	shell;
+	char	**envs;
+}	t_shell;
 
-	check_argc(argc);
-	return (EXIT_SUCCESS);
-}
+#endif

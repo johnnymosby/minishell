@@ -2,14 +2,18 @@ NAME	=	minishell
 
 LIBFT	=	./lib/libft/libft.a
 
-SRC_DIR	=	./src/
+SRC_DIR	=	src/
+OBJ_DIR	=	obj/
 
-INC		=	./inc
+MAIN	=	main
+MAIN	:=	$(addprefix main/, $(MAIN))
 
-SRC		=	main.c
-SRC		:=	$(addprefix $(SRC_DIR)/,$(SRC))
+UTILS	=	check_argc
+UTILS	:=	$(addprefix utils/, $(UTILS))
 
-OBJ		=	$(SRC:.c=.o)
+SOURCE	=	$(MAIN) $(UTILS)
+SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SOURCE)))
+OBJ		=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SOURCE)))
 
 CC		=	cc
 
@@ -17,18 +21,20 @@ CFLAGS	=	-Wall -Wextra -Werror
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ) $(OMAIN) $(LIBFT)
-			$(CC) $(OBJ) $(OMAIN) $(CFLAGS) $(LIBFT) -o $(NAME)
+$(NAME):	$(OBJ) $(LIBFT)
+			$(CC) $(OBJ) $(CFLAGS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
 			make -C ./lib/libft/
 
-.c.o:
-			cc $(CFLAGS) -c $< -o $(<:.c=.o) -I ./inc
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c
+			@mkdir -p $(@D)
+			$(CC) -c $< -o $@
 
 clean:
 			rm -f $(OBJ)
 			make clean -C ./lib/libft/
+			rm -rf $(OBJ_DIR)
 
 fclean:		clean
 			rm -f $(NAME)
