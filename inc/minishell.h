@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/03 12:16:54 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:20:37 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,31 @@
 
 // functions:	printf
 # include <stdio.h>
+# include <unistd.h>
+
+// functions:	readline
+# include <readline/readline.h>
+
+// macros:		SIGINT, SIGQUIT, SIG_IGN
+// functions:	signal
+# include <signal.h>
+
+// main/...
+//	 .../main.c
 
 // utils/...
 //	 .../check_argc.c
 void	check_argc(int argc);
+
+// signals/...
+//	 .../check_signals.c
+void	check_signals(t_shell *shell);
+// loop/...
+//	 .../minishell_loop.c
+void	minishell_loop(t_shell *shell);
+
+// init/...
+//	 .../init.c
+void	init_minishell(t_shell *shell, int argc, char **argv, char **envs);
 
 #endif

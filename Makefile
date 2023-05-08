@@ -11,7 +11,16 @@ MAIN	:=	$(addprefix main/, $(MAIN))
 UTILS	=	check_argc
 UTILS	:=	$(addprefix utils/, $(UTILS))
 
-SOURCE	=	$(MAIN) $(UTILS)
+SIG		=	check_signals
+SIG		:=	$(addprefix signals/, $(SIG))
+
+LOOP	=	minishell_loop
+LOOP	:=	$(addprefix loop/, $(LOOP))
+
+INIT	=	init
+INIT	:=	$(addprefix init/, $(INIT))
+
+SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG)
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SOURCE)))
 OBJ		=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SOURCE)))
 
@@ -22,7 +31,7 @@ CFLAGS	=	-Wall -Wextra -Werror
 all:		$(NAME)
 
 $(NAME):	$(OBJ) $(LIBFT)
-			$(CC) $(OBJ) $(CFLAGS) $(LIBFT) -o $(NAME)
+			$(CC) $(OBJ) $(CFLAGS) $(LIBFT) -lreadline -o $(NAME)
 
 $(LIBFT):
 			make -C ./lib/libft/
