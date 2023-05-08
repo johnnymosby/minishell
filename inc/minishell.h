@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/08 17:20:37 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:39:53 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 // functions:	signal
 # include <signal.h>
 
+# include <sys/ioctl.h>
+# include <termios.h>
 // main/...
 //	 .../main.c
 

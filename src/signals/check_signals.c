@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 16:17:40 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/08 17:18:01 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:52:54 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ static void	handle_sigint(int sig)
 	if (sig == SIGINT)
 	{
 		g_status = 130;
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
 	}
 }
 
