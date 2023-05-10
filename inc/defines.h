@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_argc.c                                       :+:      :+:    :+:   */
+/*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/01 13:55:22 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/03 11:27:52 by rbasyrov         ###   ########.fr       */
+/*   Created: 2023/05/09 17:30:44 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/05/09 19:04:46 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#ifndef DEFINES_H
+# define DEFINES_H
 
-void	check_argc(int argc)
-{
-	if (argc != 1)
-	{
-		printf("Minishell does not accept any arguments\n");
-		exit(EXIT_FAILURE);
-	}
-}
+# ifndef TRUE
+#  define TRUE 1
+# endif
+# ifndef FALSE
+#  define FALSE (!TRUE)
+# endif
+
+# define SPACES "\t\n\v\f\r "
+
+#endif

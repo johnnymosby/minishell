@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 10:16:01 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/08 15:19:49 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:58:25 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int	main(int argc, char **argv, char **envs)
 {
 	t_shell	shell;
 
-	check_argc(argc);
-	init_minishell(&shell, argc, argv, envs);
+	(void)argc;
+	(void)argv;
+	init_minishell(&shell, envs);
 	minishell_loop(&shell);
 	return (EXIT_SUCCESS);
 }

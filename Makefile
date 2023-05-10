@@ -8,7 +8,7 @@ OBJ_DIR	=	obj/
 MAIN	=	main
 MAIN	:=	$(addprefix main/, $(MAIN))
 
-UTILS	=	check_argc
+UTILS	=	
 UTILS	:=	$(addprefix utils/, $(UTILS))
 
 SIG		=	check_signals
@@ -20,7 +20,10 @@ LOOP	:=	$(addprefix loop/, $(LOOP))
 INIT	=	init
 INIT	:=	$(addprefix init/, $(INIT))
 
-SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG)
+LEXER	=	lexer
+LEXER	:=	$(addprefix lexer/, $(LEXER))
+
+SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG) $(LEXER)
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SOURCE)))
 OBJ		=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SOURCE)))
 
