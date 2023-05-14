@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/09 19:01:01 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/11 18:19:26 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 
 // functions:	printf
 # include <stdio.h>
+
+// macros:		STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO
+// functions:	exit
 # include <unistd.h>
 
 // functions:	readline
