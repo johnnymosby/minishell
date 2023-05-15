@@ -1,0 +1,5 @@
+.vscode
+tests/google_test/
+obj/
+plots/
+minishell
