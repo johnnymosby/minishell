@@ -16,7 +16,7 @@ OBJ_DIR	=	obj/
 MAIN	=	main
 MAIN	:=	$(addprefix main/, $(MAIN))
 
-UTILS	=	
+UTILS	=	history
 UTILS	:=	$(addprefix utils/, $(UTILS))
 
 SIG		=	check_signals

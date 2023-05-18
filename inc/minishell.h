@@ -6,7 +6,7 @@
 /*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/18 12:50:12 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/18 16:05:55 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,23 @@
 // functions:	signal
 # include <signal.h>
 
+// functions:	rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay,
+				//add_history
+# include <readline/history.h>
+
 # include <sys/ioctl.h>
 # include <termios.h>
 // main/...
 //	 .../main.c
 
 // utils/...
-//		.../
+//		.../history.c
+void	history(t_shell *shell);
 
 // signals/...
 //	 .../check_signals.c
 void	check_signals(t_shell *shell);
+
 // loop/...
 //	 .../minishell_loop.c
 void	minishell_loop(t_shell *shell);

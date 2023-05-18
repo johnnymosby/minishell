@@ -6,7 +6,7 @@
 /*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/16 13:19:23 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/18 15:34:36 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void	minishell_loop(t_shell *shell)
 		if (lexer(shell) == TRUE && parser(shell) == TRUE)
 			execute(shell);
 		printf("%s\n", shell->input);
+		history(shell);
 	}
 }
