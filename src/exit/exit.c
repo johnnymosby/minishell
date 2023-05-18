@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/03 12:13:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/16 14:28:38 by rbasyrov         ###   ########.fr       */
+/*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/05/18 12:50:05 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#include "../../inc/minishell.h"
 
-typedef struct s_cmd_table
+static void	free_if_not_null(void *data)
 {
-	char	*cmd;
-	char	**args;
-}	t_cmd_table;
+	if (data != NULL)
+		free(data);
+}
 
-typedef struct s_shell
+void	clean_exit(t_shell *shell)
 {
-	int		argc;
-	char	**argv;
-	char	**envs;
-	char	*prompt;
-	char	*input;
-	char	*trimmed_input;
-}	t_shell;
+	free_if_not_null(shell->prompt);
+}
 
-#endif
+void	exit_if_true(t_shell *shell, int if_true)
+{
+	if (if_true == TRUE)
+		clean_exit(shell);
+}

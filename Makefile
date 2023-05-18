@@ -31,7 +31,16 @@ INIT	:=	$(addprefix init/, $(INIT))
 LEXER	=	lexer
 LEXER	:=	$(addprefix lexer/, $(LEXER))
 
-SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG) $(LEXER)
+PARSER	=	parser
+PARSER	:=	$(addprefix parser/, $(PARSER))
+
+EXEC	=	execute
+EXEC	:=	$(addprefix execute/, $(EXEC))
+
+EXIT	=	exit
+EXIT	:=	$(addprefix exit/, $(EXIT))
+
+SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG) $(LEXER) $(PARSER) $(EXEC) $(EXIT)
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SOURCE)))
 OBJ		=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SOURCE)))
 

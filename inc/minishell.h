@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/11 18:19:26 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/18 12:50:12 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 # include "structs.h"
 # include "defines.h"
 // macros:		EXIT_SUCCESS, EXIT_FAILURE
-// functions:	exit
+// functions:	exit, getenv
 # include <stdlib.h>
 
-// functions:	printf
+// functions:	printf, perror
 # include <stdio.h>
 
 // macros:		STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO
-// functions:	exit
+// functions:	execve
 # include <unistd.h>
 
 // functions:	readline
@@ -56,4 +56,19 @@ void	init_minishell(t_shell *shell, char **envs);
 // lexer/...
 //	 .../lexer.c
 int		lexer(t_shell *shell);
+
+// parser/...
+//	 .../parser.c
+int		parser(t_shell *shell);
+
+// execute/...
+//	 .../execute.c
+int		execute(t_shell *shell);
+int		execute_cmd(t_shell *shell, t_cmd_table *cmd_tb);
+
+// 	exit/...
+//	 .../exit.c
+void	clean_exit(t_shell *shell);
+void	exit_if_true(t_shell *shell, int if_true);
+
 #endif

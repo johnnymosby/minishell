@@ -1,10 +1,9 @@
 #include <gtest/gtest.h>
 
-// Sample test case
-TEST(MyTestSuite, MyTestCase) {
-	// Test assertions
-	ASSERT_EQ(2 + 2, 4);
+TEST(ShellTest, CommandExecution) {
+	EXPECT_EQ(1, 1);
 }
+
 
 int main(int argc, char** argv) {
 	testing::InitGoogleTest(&argc, argv);

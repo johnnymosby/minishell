@@ -1,5 +1,6 @@
 .vscode
-tests/google_test/
 obj/
 plots/
+tests/obj/
 minishell
+test

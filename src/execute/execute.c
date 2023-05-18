@@ -1,39 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_loop.c                                   :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/16 13:19:23 by rbasyrov         ###   ########.fr       */
+/*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/05/16 14:34:48 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//check signals
-//read line
-
-static int	get_input(t_shell *shell)
+int	execute(t_shell *shell)
 {
-	shell->input = readline(shell->prompt);
-	if (shell->input == NULL)
-		return (FALSE);
-	shell->trimmed_input = ft_strtrim(shell->input, SPACES);
 	return (TRUE);
 }
 
-void	minishell_loop(t_shell *shell)
+int	execute_cmd(t_shell *shell, t_cmd_table *cmd_tb)
 {
-	while (1)
-	{
-		check_signals(shell);
-		if (get_input(shell) == FALSE)
-			break ;
-		// update environment
-		if (lexer(shell) == TRUE && parser(shell) == TRUE)
-			execute(shell);
-		printf("%s\n", shell->input);
-	}
+	return (TRUE);
 }
