@@ -6,7 +6,7 @@
 /*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:40:35 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/18 13:01:45 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/18 16:29:26 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*construct_prompt(t_shell *shell, char *username)
 	char	*prompt_tail;
 	int		prompt_length;
 
-	prompt_tail = "@minishell %";
+	prompt_tail = "@minishell % ";
 	prompt_length = ft_strlen(username) + ft_strlen(prompt_tail) + 1;
 	prompt = malloc(sizeof(char) * prompt_length);
 	exit_if_true(shell, prompt == NULL);

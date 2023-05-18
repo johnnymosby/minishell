@@ -6,7 +6,7 @@
 /*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:13:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/16 14:28:38 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/18 16:13:34 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_shell
 	char	*prompt;
 	char	*input;
 	char	*trimmed_input;
+	int		exit_code;
 }	t_shell;
 
 #endif
