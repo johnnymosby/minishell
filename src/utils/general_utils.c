@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   general_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/28 10:16:01 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/18 16:38:58 by rbasyrov         ###   ########.fr       */
+/*   Created: 2023/05/18 16:46:50 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/05/18 16:52:25 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	main(int argc, char **argv, char **envs)
+void	free_if_not_null(void *data)
 {
-	t_shell	*shell;
-
-	(void)argc;
-	(void)argv;
-	shell = ft_calloc(1, sizeof(t_shell));
-	if (shell == NULL)
-		return (EXIT_FAILURE);
-	init_minishell(shell, envs);
-	minishell_loop(shell);
-	return (EXIT_SUCCESS);
+	if (data != NULL)
+		free(data);
+	data = NULL;
 }

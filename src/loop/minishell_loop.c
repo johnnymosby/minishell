@@ -3,20 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/18 16:28:40 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/18 16:52:40 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//check signals
-//read line
+static void	free_input(t_shell *shell)
+{
+	free_if_not_null(shell->input);
+	free_if_not_null(shell->trimmed_input);
+}
 
 static int	get_input(t_shell *shell)
 {
+	free_input(shell);
 	shell->input = readline(shell->prompt);
 	if (shell->input == NULL)
 		return (FALSE);
@@ -24,6 +28,8 @@ static int	get_input(t_shell *shell)
 	return (TRUE);
 }
 
+//check signals
+//read line
 void	minishell_loop(t_shell *shell)
 {
 	while (1)

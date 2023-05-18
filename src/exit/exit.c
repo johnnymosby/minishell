@@ -3,26 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/18 16:16:01 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/18 16:46:40 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	free_if_not_null(void *data)
-{
-	if (data != NULL)
-		free(data);
-}
-
 void	clean_exit(t_shell *shell)
 {
+	int	exit_code;
+
+	exit_code = shell->exit_code;
 	free_if_not_null(shell->prompt);
+	free_if_not_null(shell->trimmed_input);
 	rl_clear_history();
-	exit (shell->exit_code);
+	free(shell);
+	exit (exit_code);
 }
 
 void	exit_if_true(t_shell *shell, int if_true)
