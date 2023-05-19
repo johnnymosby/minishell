@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:20:53 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/09 18:13:03 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/18 17:29:47 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 int	lexer(t_shell *shell)
 {
-	return (1);
+	if (shell->trimmed_input[0] == '\0')
+		return (FALSE);
+	return (TRUE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:34:41 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/18 16:04:09 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/19 14:22:05 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,8 @@
 void	history(t_shell *shell)
 {
 	if (shell->trimmed_input[0] != '\0')
+	{
 		add_history(shell->input);
+		shell->if_history_exists = TRUE;
+	}
 }

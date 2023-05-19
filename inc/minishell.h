@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/18 16:47:47 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/19 15:32:55 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 
 // utils/...
 //		.../general_utils.c
-void	free_if_not_null(void *data);
+void	free_if_not_null(void **data);
 //		.../history.c
 void	history(t_shell *shell);
 
