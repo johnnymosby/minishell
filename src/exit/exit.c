@@ -6,13 +6,13 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/22 15:42:31 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:59:08 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	free_tkn_tbl(t_tkn_tbl **tkn_tbl)
+void	free_tkn_tbl(t_tkn_tbl **tkn_tbl)
 {
 	int		i;
 	t_tkn	**tkns;
