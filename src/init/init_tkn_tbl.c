@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   init_tkn_tbl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 17:20:53 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/22 15:23:25 by rbasyrov         ###   ########.fr       */
+/*   Created: 2023/05/22 15:15:29 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/05/22 15:42:12 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// static void	lexer_loop(t_shell *shell)
-// {
-// 	while ()
-// 	{
-		
-// 	}
-// }
-
-int	lexer(t_shell *shell)
+void	init_tkn_tbl(t_shell *shell)
 {
-	if (shell->trimmed_input[0] == '\0')
-		return (FALSE);
-	init_tkn_tbl(shell);
-	//lexer_loop(shell);
-	return (TRUE);
+	shell->tkn_tbl = ft_calloc(1, sizeof(t_tkn_tbl));
+	if (shell->tkn_tbl == NULL)
+		clean_exit(shell);
+	shell->tkn_tbl->max_n_tkns = 16;
+	shell->tkn_tbl->tkns = ft_calloc(shell->tkn_tbl->n_tkns, sizeof(t_tkn));
+	if (shell->tkn_tbl->tkns == NULL)
+		clean_exit(shell);
 }

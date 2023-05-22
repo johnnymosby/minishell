@@ -6,29 +6,56 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:13:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/19 14:25:42 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:37:19 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_cmd_table
+typedef enum e_type
+{
+	FT_QUOTE,
+	FT_DQUOTE,
+	FT_GREAT,
+	FT_DGREAT,
+	FT_LESS,
+	FT_DLESS,
+	FT_SPACE,
+	FT_PIPE,
+	FT_WORD
+}	t_type;
+
+typedef struct s_tkn
+{
+	t_type	type;
+	char	*cntnt;
+}	t_tkn;
+
+typedef struct s_tkn_tbl
+{
+	t_tkn	*tkns;
+	int		max_n_tkns;
+	int		n_tkns;
+}	t_tkn_tbl;
+
+typedef struct s_cmd_tbl
 {
 	char	*cmd;
 	char	**args;
-}	t_cmd_table;
+}	t_cmd_tbl;
 
 typedef struct s_shell
 {
-	int		argc;
-	char	**argv;
-	char	**envs;
-	char	*prompt;
-	char	*input;
-	char	*trimmed_input;
-	int		exit_code;
-	int		if_history_exists;
+	int			argc;
+	char		**argv;
+	char		**envs;
+	char		*prompt;
+	char		*input;
+	char		*trimmed_input;
+	int			exit_code;
+	int			if_history_exists;
+	t_tkn_tbl	*tkn_tbl;
 }	t_shell;
 
 #endif
