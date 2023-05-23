@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:15:29 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/22 16:15:10 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:11:03 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,27 @@ void	increase_tkn_tbl(t_shell *shell)
 {
 	int			old_max;
 	int			new_max;
-	t_tkn_tbl	*new_t_tkn;
+	t_tkn_tbl	*new_tkn_tbl;
 	int			i;
 
 	old_max = shell->tkn_tbl->max_n_tkns;
 	new_max = (int)(1.5 * old_max);
-	new_t_tkn = ft_calloc(1, new_max);
-	if (new_t_tkn == NULL)
+	new_tkn_tbl = ft_calloc(1, sizeof(t_tkn_tbl));
+	if (new_tkn_tbl == NULL)
 		clean_exit(shell);
-	i = 0;
-	new_t_tkn->max_n_tkns = new_max;
-	new_t_tkn->n_tkns = old_max;
-	while (i != old_max)
+	new_tkn_tbl->tkns = ft_calloc(new_max, sizeof(t_tkn));
+	if (new_tkn_tbl->tkns == NULL)
 	{
-		new_t_tkn->tkns[i] = shell->tkn_tbl->tkns[i];
-		i++;
+		free(new_tkn_tbl);
+		clean_exit(shell);
 	}
+	i = -1;
+	while (++i != old_max)
+		new_tkn_tbl->tkns[i] = shell->tkn_tbl->tkns[i];
+	new_tkn_tbl->max_n_tkns = new_max;
+	new_tkn_tbl->n_tkns = old_max;
+	free_tkn_tbl(&shell->tkn_tbl);
+	shell->tkn_tbl = new_tkn_tbl;
 }
 
 void	init_tkn_tbl(t_shell *shell)
@@ -39,8 +44,8 @@ void	init_tkn_tbl(t_shell *shell)
 	shell->tkn_tbl = ft_calloc(1, sizeof(t_tkn_tbl));
 	if (shell->tkn_tbl == NULL)
 		clean_exit(shell);
-	shell->tkn_tbl->max_n_tkns = 16;
-	shell->tkn_tbl->tkns = ft_calloc(shell->tkn_tbl->n_tkns, sizeof(t_tkn));
+	shell->tkn_tbl->max_n_tkns = 4;
+	shell->tkn_tbl->tkns = ft_calloc(shell->tkn_tbl->max_n_tkns, sizeof(t_tkn));
 	if (shell->tkn_tbl->tkns == NULL)
 		clean_exit(shell);
 }
