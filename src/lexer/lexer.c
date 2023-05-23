@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:20:53 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/23 16:21:35 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:09:47 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,18 @@ int	add_token(t_shell *shell, int i)
 	return (0);
 }
 
+int	skip_spaces(t_shell *shell, int i)
+{
+	int		ret;
+	char	*inp;
+
+	ret = 0;
+	inp = shell->trimmed_input;
+	while (ft_strchr(SPACES, inp[i + ret + 1]) != NULL)
+		ret++;
+	return (ret);
+}
+
 static void	lexer_loop(t_shell *shell)
 {
 	int	i;
@@ -150,6 +162,7 @@ static void	lexer_loop(t_shell *shell)
 		if (shell->tkn_tbl->max_n_tkns == shell->tkn_tbl->n_tkns)
 			increase_tkn_tbl(shell);
 		i += add_token(shell, i);
+		//i += skip_spaces(shell, i);
 	}
 }
 
