@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/23 16:22:06 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:24:33 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static char	*translate_enum(int n)
 		return ("FT_QUOTE");
 	else if (n == FT_DQUOTE)
 		return ("FT_DQUOTE");
+	else if (n == FT_SPACE)
+		return ("FT_SPACE");
 	else if (n == FT_WORD)
 		return ("FT_WORD");
 	else

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:13:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/23 13:53:18 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:18:15 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef enum e_type
 	FT_LESS,
 	FT_DLESS,
 	FT_PIPE,
+	FT_SPACE,
 	FT_WORD
 }	t_type;
 

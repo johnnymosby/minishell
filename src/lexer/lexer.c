@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:20:53 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/23 17:09:47 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:26:19 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,19 @@ int	add_less(t_tkn_tbl *tkn_tbl, const char *inp, int i)
 	}
 }
 
+int	add_space(t_tkn_tbl *tkn_tbl, const char *inp, int i)
+{
+	int		ret;
+
+	ret = 0;
+	while (inp[i + ret] != '\0'
+		&& ft_strchr(SPACES, inp[i + ret]) != NULL)
+		ret++;
+	tkn_tbl->tkns[tkn_tbl->n_tkns].type = FT_SPACE;
+	tkn_tbl->n_tkns += 1;
+	return (ret);
+}
+
 int	add_token(t_shell *shell, int i)
 {
 	if (shell->trimmed_input[i] == '|')
@@ -135,21 +148,11 @@ int	add_token(t_shell *shell, int i)
 		return (add_quote(shell->tkn_tbl, shell->trimmed_input, i, shell));
 	else if (shell->trimmed_input[i] == '"')
 		return (add_dquote(shell->tkn_tbl, shell->trimmed_input, i, shell));
+	else if (ft_strchr(SPACES, shell->trimmed_input[i]) != NULL)
+		return (add_space(shell->tkn_tbl, shell->trimmed_input, i));
 	else
 		return (add_word(shell->tkn_tbl, shell->trimmed_input, i, shell));
 	return (0);
-}
-
-int	skip_spaces(t_shell *shell, int i)
-{
-	int		ret;
-	char	*inp;
-
-	ret = 0;
-	inp = shell->trimmed_input;
-	while (ft_strchr(SPACES, inp[i + ret + 1]) != NULL)
-		ret++;
-	return (ret);
 }
 
 static void	lexer_loop(t_shell *shell)
@@ -162,7 +165,6 @@ static void	lexer_loop(t_shell *shell)
 		if (shell->tkn_tbl->max_n_tkns == shell->tkn_tbl->n_tkns)
 			increase_tkn_tbl(shell);
 		i += add_token(shell, i);
-		//i += skip_spaces(shell, i);
 	}
 }
 
