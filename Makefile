@@ -28,7 +28,7 @@ LOOP	:=	$(addprefix loop/, $(LOOP))
 INIT	=	init init_tkn_tbl
 INIT	:=	$(addprefix init/, $(INIT))
 
-LEXER	=	lexer
+LEXER	=	lexer add_token
 LEXER	:=	$(addprefix lexer/, $(LEXER))
 
 PARSER	=	parser
