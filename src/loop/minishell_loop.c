@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/23 17:12:46 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/25 20:46:23 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ void	minishell_loop(t_shell *shell)
 	{
 		check_signals(shell);
 		exit_if_true(shell, get_input(shell) == FALSE);
+		printf("after readline\n");
 		// update environment
-		if (lexer(shell) == TRUE && parser(shell) == TRUE)
+		if (lexer(shell) == TRUE && expander(shell) == TRUE
+			&& parser(shell) == TRUE)
 			execute(shell);
 		printf("%s\n", shell->input);
 		history(shell);

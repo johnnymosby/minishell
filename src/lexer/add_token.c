@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 10:33:57 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/24 10:36:18 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/25 20:21:20 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ int	add_word(t_tkn_tbl *tkn_tbl, const char *inp, int i, t_shell *shell)
 	int	ret;
 
 	len = 0;
-	while (inp[i + len + 1] != '\0'
-		&& ft_strchr(SPACES, inp[i + len + 1]) == NULL
-		&& ft_strchr("|><\"'", inp[i + len + 1]) == NULL)
+	while (inp[i + len] != '\0'
+		&& ft_strchr(SPACES, inp[i + len]) == NULL
+		&& ft_strchr("|><\"'", inp[i + len]) == NULL)
 		len++;
 	ret = len;
 	tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt = ft_calloc(len + 1, sizeof(char));
@@ -83,5 +83,5 @@ int	add_word(t_tkn_tbl *tkn_tbl, const char *inp, int i, t_shell *shell)
 		tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt[len] = inp[i + len];
 	tkn_tbl->tkns[tkn_tbl->n_tkns].type = FT_WORD;
 	tkn_tbl->n_tkns += 1;
-	return (ret + 1);
+	return (ret);
 }

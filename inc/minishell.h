@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/24 10:38:54 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:20:18 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ int		add_space(t_tkn_tbl *tkn_tbl, const char *inp, int i);
 int		add_less(t_tkn_tbl *tkn_tbl, const char *inp, int i);
 int		add_great(t_tkn_tbl *tkn_tbl, const char *inp, int i);
 int		add_pipe(t_tkn_tbl *tkn_tbl);
+
+// expander/...
+//	 .../expander.c
+int		expander(t_shell *shell);
 
 // parser/...
 //	 .../parser.c

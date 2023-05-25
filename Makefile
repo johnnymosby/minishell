@@ -31,6 +31,9 @@ INIT	:=	$(addprefix init/, $(INIT))
 LEXER	=	lexer add_token
 LEXER	:=	$(addprefix lexer/, $(LEXER))
 
+EXPAND	=	expander
+EXPAND	:=	$(addprefix expander/, $(EXPAND))
+
 PARSER	=	parser
 PARSER	:=	$(addprefix parser/, $(PARSER))
 
@@ -40,7 +43,7 @@ EXEC	:=	$(addprefix execute/, $(EXEC))
 EXIT	=	exit
 EXIT	:=	$(addprefix exit/, $(EXIT))
 
-SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG) $(LEXER) $(PARSER) $(EXEC) $(EXIT)
+SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG) $(LEXER) $(EXPAND) $(PARSER) $(EXEC) $(EXIT)
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SOURCE)))
 OBJ		=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SOURCE)))
 
