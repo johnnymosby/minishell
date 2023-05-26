@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 10:33:57 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/25 20:21:20 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 14:31:43 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,6 @@ int	add_less(t_tkn_tbl *tkn_tbl, const char *inp, int i)
 		tkn_tbl->n_tkns += 1;
 		return (2);
 	}
-}
-
-int	add_space(t_tkn_tbl *tkn_tbl, const char *inp, int i)
-{
-	int		ret;
-
-	ret = 0;
-	while (inp[i + ret] != '\0'
-		&& ft_strchr(SPACES, inp[i + ret]) != NULL)
-		ret++;
-	tkn_tbl->tkns[tkn_tbl->n_tkns].type = FT_SPACE;
-	tkn_tbl->n_tkns += 1;
-	return (ret);
 }
 
 int	add_word(t_tkn_tbl *tkn_tbl, const char *inp, int i, t_shell *shell)
