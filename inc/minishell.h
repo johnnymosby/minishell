@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/25 18:20:18 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:51:45 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,13 @@ int		add_pipe(t_tkn_tbl *tkn_tbl);
 // expander/...
 //	 .../expander.c
 int		expander(t_shell *shell);
+//	 .../expander_utils.c
+void	remove_repeating_dollars(char *s);
+void	remove_trailing_dollar(char *s);
+int		find_len_var(char *s);
+void	cut_out_variable(char *s, int ind);
+//	 .../put_value.c
+void	put_value(char *value, int ind, t_tkn *tkn, t_shell *shell);
 
 // parser/...
 //	 .../parser.c

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 15:15:29 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/23 17:15:42 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:46:59 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	increase_tkn_tbl(t_shell *shell)
 	new_tkn_tbl->n_tkns = old_max;
 	free(shell->tkn_tbl->tkns);
 	free(shell->tkn_tbl);
-	//free_tkn_tbl(&shell->tkn_tbl);
 	shell->tkn_tbl = new_tkn_tbl;
 }
 

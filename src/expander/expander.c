@@ -6,45 +6,13 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:19:31 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/26 13:02:31 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:52:10 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	cut_out_variable(char *s, int ind)
-{
-	int	j;
-
-	j = 0;
-	while (s[j] != '\0')
-		j++;
-	if (j <= ind || s[ind] != '$')
-		return ;
-	j = ind;
-	ind++;
-	while (s[ind] != '\0' && s[ind] != '$')
-		ind++;
-	while (s[ind] != '\0')
-	{
-		s[j] = s[ind];
-		ind++;
-		j++;
-	}
-	s[j] = '\0';
-}
-
-int	find_len_var(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0' && s[i] != '$')
-		i++;
-	return (i);
-}
-
-char	*find_env_value(char **envs, char *var, int len, t_shell *shell)
+static char	*find_env_value(char **envs, char *var, int len, t_shell *shell)
 {
 	int		i;
 	char	*value;
@@ -67,40 +35,7 @@ char	*find_env_value(char **envs, char *var, int len, t_shell *shell)
 	return (NULL);
 }
 
-void	put_value(char *value, int ind, t_tkn *tkn, t_shell *shell)
-{
-	char	*left;
-	char	*right;
-	char	*left_and_value;
-	char	*full;
-
-	left = ft_substr(tkn->cntnt, 0, ind);
-	if (left == NULL)
-	{
-		free(value);
-		clean_exit(shell);
-	}
-	left_and_value = ft_strjoin(left, value);
-	free(left);
-	free(value);
-	if (left_and_value == NULL)
-		clean_exit(shell);
-	right = ft_substr(tkn->cntnt, ind + find_len_var(tkn->cntnt + ind + 1) + 1, ft_strlen(tkn->cntnt));
-	if (right == NULL)
-	{
-		free(left_and_value);
-		clean_exit(shell);
-	}
-	full = ft_strjoin(left_and_value, right);
-	free(left_and_value);
-	free(right);
-	if (full == NULL)
-		clean_exit(shell);
-	free(tkn->cntnt);
-	tkn->cntnt = full;
-}
-
-void	expand_variable(int ind, t_tkn *tkn, t_shell *shell)
+static void	expand_variable(int ind, t_tkn *tkn, t_shell *shell)
 {
 	char	*var;
 	int		len_var;
@@ -118,37 +53,7 @@ void	expand_variable(int ind, t_tkn *tkn, t_shell *shell)
 		put_value(value, ind, tkn, shell);
 }
 
-void	remove_repeating_dollars(char *s)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (s[i] != '\0')
-	{
-		if (!(s[i] == '$' && s[i + 1] == '$'))
-		{
-			s[j] = s[i];
-			j++;
-		}
-		i++;
-	}
-	s[j] = '\0';
-}
-
-void	remove_trailing_dollar(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	if (i > 0 && s[i - 1] == '$')
-		s[i - 1] = '\0';
-}
-
-void	expand_tkn(t_tkn *tkn, t_shell *shell)
+static void	expand_tkn(t_tkn *tkn, t_shell *shell)
 {
 	int	i;
 
@@ -166,7 +71,7 @@ void	expand_tkn(t_tkn *tkn, t_shell *shell)
 	}
 }
 
-void	expand_tkn_tbl(t_shell *shell, t_tkn_tbl *tkn_tbl)
+static void	expand_tkn_tbl(t_shell *shell, t_tkn_tbl *tkn_tbl)
 {
 	int		i;
 	t_tkn	*tkn;
