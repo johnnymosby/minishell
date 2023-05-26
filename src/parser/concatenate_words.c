@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   concatenate_words.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/16 13:29:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/26 14:51:28 by rbasyrov         ###   ########.fr       */
+/*   Created: 2023/05/26 14:49:00 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/05/26 14:55:37 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	parser(t_shell *shell)
+void	concatenate_words(t_shell *shell)
 {
-	concatenate_words(shell);
-	return (TRUE);
+	
 }

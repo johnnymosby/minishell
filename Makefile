@@ -34,7 +34,7 @@ LEXER	:=	$(addprefix lexer/, $(LEXER))
 EXPAND	=	expander expander_utils put_value
 EXPAND	:=	$(addprefix expander/, $(EXPAND))
 
-PARSER	=	parser
+PARSER	=	parser concatenate_words
 PARSER	:=	$(addprefix parser/, $(PARSER))
 
 EXEC	=	execute
