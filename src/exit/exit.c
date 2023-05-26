@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/25 20:45:14 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 12:53:59 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	clean_exit(t_shell *shell)
 {
 	int	exit_code;
 
-	printf("AAAAAA\n");
 	exit_code = shell->exit_code;
 	free_tkn_tbl(&shell->tkn_tbl);
 	free_if_not_null((void **)&shell->trimmed_input);
@@ -45,7 +44,6 @@ void	clean_exit(t_shell *shell)
 	if (shell->if_history_exists == TRUE)
 		rl_clear_history();
 	free(shell);
-	printf("before exit\n");
 	exit (exit_code);
 }
 

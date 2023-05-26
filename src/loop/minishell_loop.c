@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/25 20:46:23 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 12:53:50 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int	get_input(t_shell *shell)
 	if (shell->input == NULL)
 		return (FALSE);
 	shell->trimmed_input = ft_strtrim(shell->input, SPACES);
+	if (shell->trimmed_input == NULL)
+		return (FALSE);
 	return (TRUE);
 }
 
@@ -36,7 +38,6 @@ void	minishell_loop(t_shell *shell)
 	{
 		check_signals(shell);
 		exit_if_true(shell, get_input(shell) == FALSE);
-		printf("after readline\n");
 		// update environment
 		if (lexer(shell) == TRUE && expander(shell) == TRUE
 			&& parser(shell) == TRUE)
