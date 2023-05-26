@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:19:31 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/26 15:16:38 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:33:31 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	expand_tkn_tbl(t_shell *shell, t_tkn_tbl *tkn_tbl)
 		if ((tkn->type == FT_DQUOTE || tkn->type == FT_WORD)
 			&& ft_strchr(tkn->cntnt, '$') != NULL)
 			expand_tkn(tkn, shell);
-		else if (tkn->type == FT_QUOTE)
+		else if (tkn->type == FT_QUOTE || tkn->type == FT_DQUOTE)
 			tkn->type = FT_WORD;
 		i++;
 	}

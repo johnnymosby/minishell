@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/26 15:15:06 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:43:18 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void	put_value(char *value, int ind, t_tkn *tkn, t_shell *shell);
 //	 .../parser.c
 int		parser(t_shell *shell);
 //	 .../concatenate_words.c
-void	concatenate_words(t_shell *shell);
+void	shift_array_by_one_to_left(t_tkn_tbl *tkn_tbl, int i);
+void	concatenate_words(t_tkn_tbl *tkn_tbl, t_shell *shell);
 
 // execute/...
 //	 .../execute.c
