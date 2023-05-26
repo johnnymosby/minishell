@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/26 12:53:50 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:16:12 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	minishell_loop(t_shell *shell)
 	while (1)
 	{
 		check_signals(shell);
-		exit_if_true(shell, get_input(shell) == FALSE);
+		exit_if_true(shell, get_input(shell) == FALSE, FT_NOT_ERROR);
 		// update environment
 		if (lexer(shell) == TRUE && expander(shell) == TRUE
 			&& parser(shell) == TRUE)

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:30:44 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/09 19:04:46 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:13:43 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@
 # endif
 
 # define SPACES "\t\n\v\f\r "
+# define FT_ERROR 1
+# define FT_NOT_ERROR 0
 
 #endif

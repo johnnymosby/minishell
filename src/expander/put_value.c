@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:34:38 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/26 13:44:43 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:17:08 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	free_str_and_exit(char *to_free, t_shell *shell)
 {
 	free(to_free);
-	clean_exit(shell);
+	clean_exit(shell, FT_ERROR);
 }
 
 void	put_value(char *value, int ind, t_tkn *tkn, t_shell *shell)
@@ -32,7 +32,7 @@ void	put_value(char *value, int ind, t_tkn *tkn, t_shell *shell)
 	free(left);
 	free(value);
 	if (left_and_value == NULL)
-		clean_exit(shell);
+		clean_exit(shell, FT_ERROR);
 	right = ft_substr(tkn->cntnt, ind + find_len_var(tkn->cntnt + ind + 1) + 1,
 			ft_strlen(tkn->cntnt));
 	if (right == NULL)
@@ -41,7 +41,7 @@ void	put_value(char *value, int ind, t_tkn *tkn, t_shell *shell)
 	free(left_and_value);
 	free(right);
 	if (full == NULL)
-		clean_exit(shell);
+		clean_exit(shell, FT_ERROR);
 	free(tkn->cntnt);
 	tkn->cntnt = full;
 }

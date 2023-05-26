@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/26 12:53:59 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:14:50 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,15 @@ void	free_tkn_tbl(t_tkn_tbl **tkn_tbl)
 	free_if_not_null((void **)tkn_tbl);
 }
 
-void	clean_exit(t_shell *shell)
+void	clean_exit(t_shell *shell, int if_error)
 {
-	int	exit_code;
-
-	exit_code = shell->exit_code;
 	free_tkn_tbl(&shell->tkn_tbl);
 	free_if_not_null((void **)&shell->trimmed_input);
 	free_if_not_null((void **)&shell->prompt);
 	if (shell->if_history_exists == TRUE)
 		rl_clear_history();
 	free(shell);
-	exit (exit_code);
+	exit (if_error);
 }
 
 static char	*translate_enum(int n)
@@ -96,12 +93,12 @@ static void	print_contents(t_shell *shell)
 	}
 }
 
-void	exit_if_true(t_shell *shell, int if_true)
+void	exit_if_true(t_shell *shell, int if_true, int if_error)
 {
 	if (if_true == TRUE && shell != NULL && shell->tkn_tbl != NULL)
 		print_tokens(shell);
 	if (if_true == TRUE && shell != NULL && shell->tkn_tbl != NULL && shell->tkn_tbl->tkns != NULL)
 		print_contents(shell);
 	if (if_true == TRUE)
-		clean_exit(shell);
+		clean_exit(shell, if_error);
 }

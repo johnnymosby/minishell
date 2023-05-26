@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:40:35 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/18 16:29:26 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:15:35 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*construct_prompt(t_shell *shell, char *username)
 	prompt_tail = "@minishell % ";
 	prompt_length = ft_strlen(username) + ft_strlen(prompt_tail) + 1;
 	prompt = malloc(sizeof(char) * prompt_length);
-	exit_if_true(shell, prompt == NULL);
+	exit_if_true(shell, prompt == NULL, FT_ERROR);
 	prompt[0] = '\0';
 	ft_strlcat(prompt, username, prompt_length);
 	ft_strlcat(prompt, prompt_tail, prompt_length);
