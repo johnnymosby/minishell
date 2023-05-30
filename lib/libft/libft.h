@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:47:49 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/03 11:40:23 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:14:46 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t size);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *string, int c);
 char	*ft_strrchr(const char *string, int c);
-char	*ft_strtrim(char const *s1, char const *set);
+char	*	ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
