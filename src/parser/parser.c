@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:29:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/30 18:31:53 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/01 20:40:12 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	parser(t_shell *shell)
 {
 	concatenate_words(shell->tkn_tbl, shell);
 	remove_all_spaces(shell->tkn_tbl, shell);
-	if (check_syntax(shell->tkn_tbl, shell) == FALSE)
+	if (check_syntax(shell->tkn_tbl, shell) == FALSE
+		|| check_access(shell->tkn_tbl, shell) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }

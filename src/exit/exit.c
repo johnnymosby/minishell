@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/01 18:21:16 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/01 19:42:55 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,13 @@ void	print_tokens(t_shell *shell)
 	int	i;
 
 	i = 0;
-	while (i != shell->tkn_tbl->n_tkns)
+	if (shell != NULL && shell->tkn_tbl != NULL)
 	{
-		printf("%s\n", translate_enum(shell->tkn_tbl->tkns[i].type));
-		i++;
+		while (i != shell->tkn_tbl->n_tkns)
+		{
+			printf("%s\n", translate_enum(shell->tkn_tbl->tkns[i].type));
+			i++;
+		}
 	}
 }
 
@@ -85,21 +88,22 @@ void	print_contents(t_shell *shell)
 	int	i;
 
 	i = 0;
-	while (i != shell->tkn_tbl->n_tkns)
+	if (shell != NULL && shell->tkn_tbl != NULL
+		&& shell->tkn_tbl->tkns != NULL)
 	{
-		if (shell->tkn_tbl->tkns[i].cntnt != NULL)
-			printf("%s\n", shell->tkn_tbl->tkns[i].cntnt);
-		i++;
+		while (i != shell->tkn_tbl->n_tkns)
+		{
+			if (shell->tkn_tbl->tkns[i].cntnt != NULL)
+				printf("%s\n", shell->tkn_tbl->tkns[i].cntnt);
+			i++;
+		}
 	}
 }
 
 void	exit_if_true(t_shell *shell, int if_true, int if_error)
 {
-	if (if_true == TRUE && shell != NULL && shell->tkn_tbl != NULL)
-		print_tokens(shell);
-	if (if_true == TRUE && shell != NULL && shell->tkn_tbl != NULL
-		&& shell->tkn_tbl->tkns != NULL)
-		print_contents(shell);
+	print_tokens(shell);
+	print_contents(shell);
 	if (if_true == TRUE)
 		clean_exit(shell, if_error);
 }
