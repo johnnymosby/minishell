@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/01 19:42:55 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:04:21 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,58 @@ void	free_tkn_tbl(t_tkn_tbl **tkn_tbl)
 	free_if_not_null((void **)tkn_tbl);
 }
 
+void	free_str_array(char ***args, int n_args)
+{
+	char	**arr;
+	int		i;
+
+	arr = *args;
+	i = 0;
+	while (i != n_args)
+	{
+		free_if_not_null((void **)&arr[i]);
+		i++;
+	}
+	free_if_not_null((void **)args);
+}
+
+void	free_redirs(t_redir *redirs)
+{
+	while (redirs != NULL)
+	{
+		free_if_not_null((void **)redirs->file);
+		redirs == redirs->next;
+	}
+}
+
+void	free_cmd_tbl(t_cmd_tbl *cmd_tbl)
+{
+	int		i;
+
+	i = 0;
+	free_if_not_null((void **)&cmd_tbl->cmd);
+	free_str_array(&cmd_tbl->args, cmd_tbl->n_args);
+	free_redirs(cmd_tbl->redirs);
+}
+
+void	free_cmd_tbls(t_cmd_tbl **cmd_tbls)
+{
+	int		i;
+
+	if (cmd_tbls != NULL && *cmd_tbls != NULL)
+	{
+		i = 0;
+		while (i != (*cmd_tbls)->n_args)
+		{
+			free_cmd_tbl(cmd_tbls[i]);
+			i++;
+		}
+	}
+}
+
 void	clean_exit(t_shell *shell, int if_error)
 {
+	free_cmd_tbls(&shell->cmd_tbls);
 	free_tkn_tbl(&shell->tkn_tbl);
 	free_if_not_null((void **)&shell->prompt);
 	free_input(shell);

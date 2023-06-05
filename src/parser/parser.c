@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:29:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/01 20:40:12 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/05 13:05:57 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ int	parser(t_shell *shell)
 	if (check_syntax(shell->tkn_tbl, shell) == FALSE
 		|| check_access(shell->tkn_tbl, shell) == FALSE)
 		return (FALSE);
+	construct_cmd_tables(shell->tkn_tbl, shell);
 	return (TRUE);
 }

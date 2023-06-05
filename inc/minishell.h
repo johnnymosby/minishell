@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/01 20:40:45 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/05 14:56:55 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ char	*tkn_type_to_str(t_type tkn_type);
 int		if_redirection(t_type tkn_type);
 //	 .../check_access.c
 int		check_access(t_tkn_tbl *tkn_tbl, t_shell *shell);
+//	 .../construct_cmd_tables.c
+void	construct_cmd_tables(t_tkn_tbl *tkn_tbl, t_shell *shell);
 
 // execute/...
 //	 .../execute.c
@@ -124,6 +126,7 @@ int		execute_cmd(t_shell *shell, t_cmd_tbl *cmd_tb);
 void	free_tkn_tbl(t_tkn_tbl **tkn_tbl);
 void	clean_exit(t_shell *shell, int if_error);
 void	exit_if_true(t_shell *shell, int if_true, int if_error);
+void	free_cmd_tbls(t_cmd_tbl **cmd_tbls);
 //	 .../clean_shell.c
 void	free_input(t_shell *shell);
 void	clean_shell(t_shell *shell);
