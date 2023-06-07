@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_shell.c                                      :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 17:57:51 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/07 14:40:30 by rbasyrov         ###   ########.fr       */
+/*   Created: 2022/10/04 13:41:10 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/03/27 16:37:23 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "libft.h"
 
-void	free_input(t_shell *shell)
+void	*ft_calloc(size_t count, size_t size)
 {
-	free_if_not_null((void **)&shell->input);
-	free_if_not_null((void **)&shell->trimmed_input);
-}
+	void	*t;
+	size_t	z;
 
-void	clean_shell(t_shell *shell)
-{
-	if (shell != NULL)
-	{
-		free_cmd_tbls(&shell->cmd_tbls, shell->n_cmd_tbls);
-		free_tkn_tbl(&shell->tkn_tbl);
-		free_input(shell);
-	}
+	z = count * size;
+	if (count != 0 && z / count != size)
+		return (NULL);
+	t = malloc(count * size);
+	if (!t)
+		return (NULL);
+	ft_bzero(t, count * size);
+	return (t);
 }

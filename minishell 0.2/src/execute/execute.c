@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_shell.c                                      :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 17:57:51 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/07 14:40:30 by rbasyrov         ###   ########.fr       */
+/*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/05/22 15:23:46 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	free_input(t_shell *shell)
+int	execute(t_shell *shell)
 {
-	free_if_not_null((void **)&shell->input);
-	free_if_not_null((void **)&shell->trimmed_input);
+	return (TRUE);
 }
 
-void	clean_shell(t_shell *shell)
+int	execute_cmd(t_shell *shell, t_cmd_tbl *cmd_tb)
 {
-	if (shell != NULL)
-	{
-		free_cmd_tbls(&shell->cmd_tbls, shell->n_cmd_tbls);
-		free_tkn_tbl(&shell->tkn_tbl);
-		free_input(shell);
-	}
+	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/07 14:40:58 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/07 12:44:12 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,21 @@ void	free_cmd_tbl(t_cmd_tbl *cmd_tbl)
 	int		i;
 
 	i = 0;
-	if (cmd_tbl->cmd != NULL)
-		free(cmd_tbl->cmd);
+	free_if_not_null((void **)&cmd_tbl->cmd);
 	free_str_array(&cmd_tbl->args, cmd_tbl->n_args);
 	free_redirs(cmd_tbl->redirs);
 }
 
-void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n)
+void	free_cmd_tbls(t_cmd_tbl **cmd_tbls)
 {
-	int			i;
-	t_cmd_tbl	*cmd_tbl;
+	int		i;
 
-	cmd_tbl = *cmd_tbls;
-	if (cmd_tbl != NULL)
+	if (cmd_tbls != NULL && *cmd_tbls != NULL)
 	{
 		i = 0;
-		while (i != n)
+		while (i != (*cmd_tbls)->n_args)
 		{
-			free_cmd_tbl(&cmd_tbl[i]);
+			free_cmd_tbl(cmd_tbls[i]);
 			i++;
 		}
 	}
@@ -89,7 +86,7 @@ void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n)
 
 void	clean_exit(t_shell *shell, int if_error)
 {
-	free_cmd_tbls(&shell->cmd_tbls, shell->n_cmd_tbls);
+	free_cmd_tbls(&shell->cmd_tbls);
 	free_tkn_tbl(&shell->tkn_tbl);
 	free_if_not_null((void **)&shell->prompt);
 	free_input(shell);
@@ -99,7 +96,7 @@ void	clean_exit(t_shell *shell, int if_error)
 	exit (if_error);
 }
 
-char	*translate_enum(int n)
+static char	*translate_enum(int n)
 {
 	if (n == FT_PIPE)
 		return ("FT_PIPE");

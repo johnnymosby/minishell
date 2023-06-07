@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_shell.c                                      :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 17:57:51 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/07 14:40:30 by rbasyrov         ###   ########.fr       */
+/*   Created: 2022/10/04 13:41:48 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/03/24 20:11:31 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "libft.h"
 
-void	free_input(t_shell *shell)
+void	*ft_memmove(void *to, const void *from, size_t size)
 {
-	free_if_not_null((void **)&shell->input);
-	free_if_not_null((void **)&shell->trimmed_input);
-}
+	size_t		i;
+	char		*t;
+	char		*f;
 
-void	clean_shell(t_shell *shell)
-{
-	if (shell != NULL)
+	if (!to || !from)
+		return (0);
+	t = (char *)to;
+	f = (char *)from;
+	i = 0;
+	if (to < from)
 	{
-		free_cmd_tbls(&shell->cmd_tbls, shell->n_cmd_tbls);
-		free_tkn_tbl(&shell->tkn_tbl);
-		free_input(shell);
+		while (i < size)
+		{
+			t[i] = f[i];
+			i++;
+		}
 	}
+	else
+	{
+		while (size-- > 0)
+			t[size] = f[size];
+	}
+	return (to);
 }

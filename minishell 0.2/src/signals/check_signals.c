@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_shell.c                                      :+:      :+:    :+:   */
+/*   check_signals.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 17:57:51 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/07 14:40:30 by rbasyrov         ###   ########.fr       */
+/*   Created: 2023/05/08 16:17:40 by rbasyrov          #+#    #+#             */
+/*   Updated: 2023/05/08 17:52:54 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	free_input(t_shell *shell)
+int	g_status;
+
+static void	handle_sigint(int sig)
 {
-	free_if_not_null((void **)&shell->input);
-	free_if_not_null((void **)&shell->trimmed_input);
+	if (sig == SIGINT)
+	{
+		g_status = 130;
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+	}
 }
 
-void	clean_shell(t_shell *shell)
+void	check_signals(t_shell *shell)
 {
-	if (shell != NULL)
-	{
-		free_cmd_tbls(&shell->cmd_tbls, shell->n_cmd_tbls);
-		free_tkn_tbl(&shell->tkn_tbl);
-		free_input(shell);
-	}
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }

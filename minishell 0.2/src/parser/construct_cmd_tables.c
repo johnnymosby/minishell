@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:06:15 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/07 14:41:39 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:00:50 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ void	increase_args_array(char ***args, t_cmd_tbl *cmd_tbl, t_shell *shell)
 
 void	add_arg(char *arg, t_cmd_tbl *cmd_tbl, t_shell *shell)
 {
+	int	i;
+
+	i = 0;
 	if (cmd_tbl->args == NULL)
 	{
 		cmd_tbl->args = ft_calloc(cmd_tbl->max_n_args + 1, sizeof (char *));
@@ -65,8 +68,9 @@ void	add_arg(char *arg, t_cmd_tbl *cmd_tbl, t_shell *shell)
 	printf("after increment\n");
 	cmd_tbl->args[cmd_tbl->n_args] = ft_strdup(arg);
 	printf("after strdup\n");
-	if (cmd_tbl->args[cmd_tbl->n_args] == NULL)
+	if (cmd_tbl->args[i] == NULL)
 		clean_exit(shell, FT_ERROR);
+	cmd_tbl->args[cmd_tbl->n_args + 1] = NULL;
 	cmd_tbl->n_args += 1;
 }
 
@@ -78,17 +82,21 @@ int	init_cmd_and_args(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbl,
 		if (tkn_tbl->tkns[i].type == FT_PIPE)
 		{
 			i++;
-			return (i);
+			break ;
 		}
-		if (tkn_tbl->tkns[i].type == FT_WORD && cmd_tbl->cmd == NULL)
+		if (tkn_tbl->tkns[i].type == FT_WORD && shell->cmd_tbls[i].cmd == NULL)
 		{
-			cmd_tbl->cmd = ft_strdup(tkn_tbl->tkns[i].cntnt);
-			if (cmd_tbl->cmd == NULL)
+			printf("checked if command is null\n");
+			shell->cmd_tbls[i].cmd = ft_strdup(tkn_tbl->tkns[i].cntnt);
+			printf("after adding command\n");
+			if (tkn_tbl->tkns[i].cntnt == NULL)
 				clean_exit(shell, FT_ERROR);
 		}
 		else if (tkn_tbl->tkns[i].type == FT_WORD)
 		{
+			printf("before adding argument\n");
 			add_arg(tkn_tbl->tkns[i].cntnt, cmd_tbl, shell);
+			printf("after adding argument\n");
 		}
 		i++;
 	}
@@ -117,6 +125,7 @@ void	construct_cmd_tables(t_tkn_tbl *tkn_tbl, t_shell *shell)
 	while (i != tkn_tbl->n_tkns)
 	{
 		i = construct_cmd_table(tkn_tbl, &(shell->cmd_tbls[j]), shell, i);
+		shell->cmd_tbls->n_args += 1;
 		j++;
 	}
 }
