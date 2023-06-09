@@ -6,11 +6,13 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/09 15:55:53 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:50:53 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+extern int	g_status;
 
 int	find_last_heredoc_in_cmd(t_tkn_tbl *tkn_tbl, int i)
 {
@@ -41,11 +43,19 @@ void	imitate_heredoc(char *s, t_shell *shell)
 {
 	char	*input;
 
+	g_status = 1;
 	while (TRUE)
 	{
 		input = readline("> ");
-		if (input == NULL)
+		if (g_status == 130)
+		{
+			g_status = 1;
 			return ;
+		}
+		if (input == NULL)
+		{
+			return ;
+		}
 		else if (ft_strcmp(input, s) == 0)
 		{
 			free(input);

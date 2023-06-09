@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/09 16:04:40 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:43:03 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,8 @@ void	print_contents(t_shell *shell)
 
 void	exit_if_true(t_shell *shell, int if_true, int if_error)
 {
-	print_tokens(shell);
-	print_contents(shell);
+	// print_tokens(shell);
+	// print_contents(shell);
 	if (if_true == TRUE)
 		clean_exit(shell, if_error);
 }
