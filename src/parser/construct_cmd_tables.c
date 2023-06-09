@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:06:15 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/09 15:31:46 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:06:44 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	init_cmd_and_args(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbl,
 		{
 			add_arg(tkn_tbl->tkns[i].cntnt, cmd_tbl, shell);
 		}
+		else
+			i++;
 		i++;
 	}
 	return (i);

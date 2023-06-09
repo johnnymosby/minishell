@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/09 15:23:14 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:04:40 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	free_cmd_tbl(t_cmd_tbl *cmd_tbl)
 	i = 0;
 	if (cmd_tbl->cmd != NULL)
 		free(cmd_tbl->cmd);
-	free_str_array(&cmd_tbl->args, cmd_tbl->n_args);
+	if (cmd_tbl->args != NULL)
+		free_str_array(&cmd_tbl->args, cmd_tbl->n_args);
 	//free_redirs(cmd_tbl->redirs);
 }
 
