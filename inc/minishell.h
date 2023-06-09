@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/07 14:06:58 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:21:02 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ int		if_redirection(t_type tkn_type);
 int		check_access(t_tkn_tbl *tkn_tbl, t_shell *shell);
 //	 .../construct_cmd_tables.c
 void	construct_cmd_tables(t_tkn_tbl *tkn_tbl, t_shell *shell);
+//	 .../handle_heredocs.c
+void	handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, t_shell *shell);
 
 // execute/...
 //	 .../execute.c

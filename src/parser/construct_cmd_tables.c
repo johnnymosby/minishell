@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   construct_cmd_tables.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:06:15 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/07 14:41:39 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:31:46 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,12 @@ void	add_arg(char *arg, t_cmd_tbl *cmd_tbl, t_shell *shell)
 	if (cmd_tbl->args == NULL)
 	{
 		cmd_tbl->args = ft_calloc(cmd_tbl->max_n_args + 1, sizeof (char *));
-		printf("after calloc\n");
 		if (cmd_tbl->args == NULL)
 			clean_exit(shell, FT_ERROR);
 	}
 	if (cmd_tbl->n_args == cmd_tbl->max_n_args)
 		increase_args_array(&(cmd_tbl->args), cmd_tbl, shell);
-	printf("after increment\n");
 	cmd_tbl->args[cmd_tbl->n_args] = ft_strdup(arg);
-	printf("after strdup\n");
 	if (cmd_tbl->args[cmd_tbl->n_args] == NULL)
 		clean_exit(shell, FT_ERROR);
 	cmd_tbl->n_args += 1;

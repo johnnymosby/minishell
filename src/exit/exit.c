@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/07 14:40:58 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:23:14 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ void	free_str_array(char ***args, int n_args)
 	free_if_not_null((void **)args);
 }
 
-void	free_redirs(t_redir *redirs)
-{
-	while (redirs != NULL)
-	{
-		free_if_not_null((void **)redirs->file);
-		redirs == redirs->next;
-	}
-}
+// void	free_redirs(t_redir *redirs)
+// {
+// 	while (redirs != NULL)
+// 	{
+// 		free_if_not_null((void **)redirs->file);
+// 		redirs == redirs->next;
+// 	}
+// }
 
 void	free_cmd_tbl(t_cmd_tbl *cmd_tbl)
 {
@@ -66,7 +66,7 @@ void	free_cmd_tbl(t_cmd_tbl *cmd_tbl)
 	if (cmd_tbl->cmd != NULL)
 		free(cmd_tbl->cmd);
 	free_str_array(&cmd_tbl->args, cmd_tbl->n_args);
-	free_redirs(cmd_tbl->redirs);
+	//free_redirs(cmd_tbl->redirs);
 }
 
 void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n)

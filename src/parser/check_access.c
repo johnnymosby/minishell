@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 20:39:57 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/01 20:41:10 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:21:30 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,5 @@ int	check_access(t_tkn_tbl *tkn_tbl, t_shell *shell)
 				i += 2;
 		}
 	}
+	return (TRUE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/01 19:17:21 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:19:42 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	minishell_loop(t_shell *shell)
 		check_signals(shell);
 		exit_if_true(shell, get_input(shell) == FALSE, FT_NOT_ERROR);
 		// update environment
+		history(shell);
 		if (lexer(shell) == TRUE && expander(shell) == TRUE
 			&& parser(shell) == TRUE)
 			execute(shell);
-		history(shell);
 		print_tokens(shell);
 		print_contents(shell);
 	}
