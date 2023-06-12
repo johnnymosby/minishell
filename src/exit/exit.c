@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/12 11:39:42 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/12 13:28:54 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	free_cmd_tbl(t_cmd_tbl *cmd_tbl)
 	if (cmd_tbl->cmd != NULL)
 		free(cmd_tbl->cmd);
 	if (cmd_tbl->args != NULL)
-		free_str_array(&cmd_tbl->args, cmd_tbl->n_args);
+		free_if_not_null((void **)&cmd_tbl->args);
 	if (cmd_tbl->in >= 0)
 	{
 		close(cmd_tbl->in);
