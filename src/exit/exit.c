@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/12 15:02:51 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:55:06 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	delete_heredocs(void)
 		if (ft_strncmp(entry->d_name, "tmp_heredoc_", 11) == 0)
 		{
 			pathname = ft_strjoin("/tmp/", entry->d_name);
-			unlink(entry->d_name);
+			unlink(pathname);
 			free(pathname);
 		}
 		entry = readdir(dir);

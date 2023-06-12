@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/12 15:04:52 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:56:08 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,14 @@ int	fill_heredoc(char *stopword, int fd, t_shell *shell)
 			close(fd);
 			return (TRUE);
 		}
-		else if (ft_strcmp(input, stopword) == 0)
+		if (ft_strcmp(input, stopword) == 0)
 		{
 			free(input);
 			close(fd);
 			return (TRUE);
 		}
 		write(fd, input, ft_strlen(input));
+		write(fd, "\n", 1);
 		free(input);
 	}
 	close(fd);
@@ -140,7 +141,7 @@ int	add_heredoc(char *stopword, t_cmd_tbl *cmd_tbl, int j, t_shell *shell)
 	free(file_id);
 	if (pathname == NULL)
 		clean_exit(shell, TRUE);
-	fd = open(pathname, O_RDWR | O_CREAT | O_TRUNC);
+	fd = open(pathname, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (fd < 0)
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
@@ -179,7 +180,9 @@ int	handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, t_shell *shell)
 		}
 		else if (last_heredoc_ind != -1 && i == last_heredoc_ind)
 		{
-			if (add_heredoc(tkn_tbl->tkns[last_heredoc_ind].cntnt, &cmd_tbls[j],
+			printf("%s\n", tkn_tbl->tkns[last_heredoc_ind + 1].cntnt);
+			printf("%s\n", translate_enum(tkn_tbl->tkns[last_heredoc_ind].type));
+			if (add_heredoc(tkn_tbl->tkns[last_heredoc_ind + 1].cntnt, &cmd_tbls[j],
 					j, shell) == FALSE)
 				return (FALSE);
 		}
