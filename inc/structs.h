@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:13:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/07 13:20:10 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/10 23:37:10 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,12 @@ typedef struct s_tkn_tbl
 	int		n_tkns;
 }	t_tkn_tbl;
 
-typedef struct s_redir
-{
-	t_type			type;
-	char			*file;
-	struct s_redir	*next;
-	int				if_last;
-}	t_redir;
-
 typedef struct s_cmd_tbl
 {
 	char	*cmd;
 	char	**args;
-	t_redir	*redirs;
+	int		in;
+	int		out;
 	int		n_args;
 	int		max_n_args;
 }	t_cmd_tbl;

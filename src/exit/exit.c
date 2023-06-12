@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/09 16:43:03 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/12 11:39:42 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,16 @@ void	free_cmd_tbl(t_cmd_tbl *cmd_tbl)
 		free(cmd_tbl->cmd);
 	if (cmd_tbl->args != NULL)
 		free_str_array(&cmd_tbl->args, cmd_tbl->n_args);
-	//free_redirs(cmd_tbl->redirs);
+	if (cmd_tbl->in >= 0)
+	{
+		close(cmd_tbl->in);
+		cmd_tbl->in = -1;
+	}
+	if (cmd_tbl->out >= 0)
+	{
+		close(cmd_tbl->out);
+		cmd_tbl->out = -1;
+	}
 }
 
 void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n)
@@ -88,9 +97,32 @@ void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n)
 	free_if_not_null((void **)cmd_tbls);
 }
 
+void	delete_heredocs(void)
+{
+	DIR				*dir;
+	struct dirent	*entry;
+	char			*pathname;
+
+	if (access(".", W_OK | X_OK) == -1)
+		return ;
+	dir = opendir(".");
+	if (dir == NULL)
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+	entry = readdir(dir);
+	while (entry != NULL)
+	{
+		if (ft_strncmp(entry->d_name, "tmp_heredoc", 11) == 0)
+			unlink(entry->d_name);
+		entry = readdir(dir);
+	}
+	closedir(dir);
+}
+
 void	clean_exit(t_shell *shell, int if_error)
 {
+	//close_files(&shell->cmd_tbls, shell->n_cmd_tbls);
 	free_cmd_tbls(&shell->cmd_tbls, shell->n_cmd_tbls);
+	delete_heredocs();
 	free_tkn_tbl(&shell->tkn_tbl);
 	free_if_not_null((void **)&shell->prompt);
 	free_input(shell);

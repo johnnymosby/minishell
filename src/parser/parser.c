@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:29:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/09 15:26:58 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/12 11:15:07 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	parser(t_shell *shell)
 		|| check_access(shell->tkn_tbl, shell) == FALSE)
 		return (FALSE);
 	construct_cmd_tables(shell->tkn_tbl, shell);
-	handle_heredocs(shell->tkn_tbl, shell->cmd_tbls, shell);
+	if (handle_heredocs(shell->tkn_tbl, shell->cmd_tbls, shell) == FALSE)
+		return (FALSE);
 	return (TRUE);
 }

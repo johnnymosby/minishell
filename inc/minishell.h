@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/09 15:21:02 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/12 11:32:52 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdio.h>
 
 // macros:		STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO
-// functions:	execve
+// functions:	execve, unlink, access
 # include <unistd.h>
 
 // functions:	readline
@@ -46,6 +46,16 @@
 
 # include <sys/ioctl.h>
 # include <termios.h>
+
+// macros:		S_IRWXU (user read, write, and execute permissions)
+# include <sys/stat.h>
+
+// functions:	open
+# include <fcntl.h>
+
+// functions:	opendir, readdir, closedir
+# include <dirent.h>
+
 // main/...
 //	 .../main.c
 
@@ -116,7 +126,7 @@ int		check_access(t_tkn_tbl *tkn_tbl, t_shell *shell);
 //	 .../construct_cmd_tables.c
 void	construct_cmd_tables(t_tkn_tbl *tkn_tbl, t_shell *shell);
 //	 .../handle_heredocs.c
-void	handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, t_shell *shell);
+int		handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, t_shell *shell);
 
 // execute/...
 //	 .../execute.c
@@ -133,7 +143,6 @@ char	*translate_enum(int n);
 //	 .../clean_shell.c
 void	free_input(t_shell *shell);
 void	clean_shell(t_shell *shell);
-
 
 //TO DELETE
 void	print_tokens(t_shell *shell);

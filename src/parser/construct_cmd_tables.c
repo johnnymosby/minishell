@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:06:15 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/09 16:06:44 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/10 23:37:19 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ int	init_cmd_and_args(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbl,
 int	construct_cmd_table(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbl,
 	t_shell *shell, int i)
 {
+	cmd_tbl->max_n_args = 4;
+	cmd_tbl->in = -1;
+	cmd_tbl->out = -1;
 	i = init_cmd_and_args(tkn_tbl, cmd_tbl, shell, i);
 	return (i);
 }
@@ -108,7 +111,6 @@ void	construct_cmd_tables(t_tkn_tbl *tkn_tbl, t_shell *shell)
 
 	shell->n_cmd_tbls = count_pipes(tkn_tbl) + 1;
 	shell->cmd_tbls = ft_calloc(shell->n_cmd_tbls, sizeof(t_cmd_tbl));
-	shell->cmd_tbls->max_n_args = 4;
 	if (shell->cmd_tbls == NULL)
 		clean_exit(shell, FT_ERROR);
 	i = 0;
