@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/12 13:37:12 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:02:51 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,20 @@ void	delete_heredocs(void)
 	struct dirent	*entry;
 	char			*pathname;
 
-	if (access(".", W_OK | X_OK) == -1)
+	if (access("/tmp/", W_OK | X_OK) == -1)
 		return ;
-	dir = opendir(".");
+	dir = opendir("/tmp/");
 	if (dir == NULL)
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
-		if (ft_strncmp(entry->d_name, "tmp_heredoc", 11) == 0)
+		if (ft_strncmp(entry->d_name, "tmp_heredoc_", 11) == 0)
+		{
+			pathname = ft_strjoin("/tmp/", entry->d_name);
 			unlink(entry->d_name);
+			free(pathname);
+		}
 		entry = readdir(dir);
 	}
 	closedir(dir);
