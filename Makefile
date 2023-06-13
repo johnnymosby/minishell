@@ -41,7 +41,7 @@ PARSER	:=	$(addprefix parser/, $(PARSER))
 EXEC	=	execute
 EXEC	:=	$(addprefix execute/, $(EXEC))
 
-EXIT	=	exit clean_shell
+EXIT	=	exit clean_shell error
 EXIT	:=	$(addprefix exit/, $(EXIT))
 
 SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG) $(LEXER) $(EXPAND) $(PARSER) $(EXEC) $(EXIT)

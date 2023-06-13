@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/12 11:32:52 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:21:41 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@
 
 // functions:	opendir, readdir, closedir
 # include <dirent.h>
+
+// functions:	wait, waitpid
+# include <sys/wait.h>
 
 // main/...
 //	 .../main.c
@@ -126,11 +129,12 @@ int		check_access(t_tkn_tbl *tkn_tbl, t_shell *shell);
 //	 .../construct_cmd_tables.c
 void	construct_cmd_tables(t_tkn_tbl *tkn_tbl, t_shell *shell);
 //	 .../handle_heredocs.c
-int		handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, t_shell *shell);
+int		handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls,
+			t_shell *shell);
 
 // execute/...
 //	 .../execute.c
-int		execute(t_shell *shell);
+void	execute(t_shell *shell);
 int		execute_cmd(t_shell *shell, t_cmd_tbl *cmd_tb);
 
 // 	exit/...
@@ -140,9 +144,12 @@ void	clean_exit(t_shell *shell, int if_error);
 void	exit_if_true(t_shell *shell, int if_true, int if_error);
 void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n);
 char	*translate_enum(int n);
+void	free_str_array(char ***args, int n_args);
 //	 .../clean_shell.c
 void	free_input(t_shell *shell);
 void	clean_shell(t_shell *shell);
+//	 .../error.c
+void	write_file_error_message(const char *pathname);
 
 //TO DELETE
 void	print_tokens(t_shell *shell);

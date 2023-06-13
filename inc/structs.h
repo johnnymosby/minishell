@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:13:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/10 23:37:10 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/13 11:53:55 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_shell
 	char		*prompt;
 	char		*input;
 	char		*trimmed_input;
+	int			std_in_out[2];
 	int			exit_code;
 	int			if_history_exists;
 	t_tkn_tbl	*tkn_tbl;

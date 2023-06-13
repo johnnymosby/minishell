@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:29:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/12 11:15:07 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/13 11:06:19 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	parser(t_shell *shell)
 {
 	concatenate_words(shell->tkn_tbl, shell);
 	remove_all_spaces(shell->tkn_tbl, shell);
-	if (check_syntax(shell->tkn_tbl, shell) == FALSE
-		|| check_access(shell->tkn_tbl, shell) == FALSE)
+	if (check_syntax(shell->tkn_tbl, shell) == FALSE)
 		return (FALSE);
 	construct_cmd_tables(shell->tkn_tbl, shell);
 	if (handle_heredocs(shell->tkn_tbl, shell->cmd_tbls, shell) == FALSE)

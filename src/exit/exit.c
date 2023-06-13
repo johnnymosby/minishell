@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/12 15:55:06 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:06:49 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,10 @@ void	delete_heredocs(void)
 		return ;
 	dir = opendir("/tmp/");
 	if (dir == NULL)
+	{
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		ft_putchar_fd('\n', STDERR_FILENO);
+	}
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
@@ -134,6 +137,8 @@ void	clean_exit(t_shell *shell, int if_error)
 	free_input(shell);
 	if (shell->if_history_exists == TRUE)
 		rl_clear_history();
+	close(shell->std_in_out[0]);
+	close(shell->std_in_out[1]);
 	free(shell);
 	exit (if_error);
 }

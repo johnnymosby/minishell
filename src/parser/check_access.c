@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 20:39:57 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/09 15:21:30 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:07:55 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	print_file_error(char *pathname)
 	ft_putstr_fd(pathname, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd(strerror(errno), STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
 static int	check_file(char *pathname, t_type tkn_type)

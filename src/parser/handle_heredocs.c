@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredocs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/12 15:56:08 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:07:45 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	imitate_heredocs(t_tkn_tbl *tkn_tbl, int i, int last_heredoc_ind,
 	return (TRUE);
 }
 
-void	check_access_to_file(const char *pathname, t_shell *shell)
+int	check_access_to_file(const char *pathname, t_shell *shell)
 {
 	if (access(pathname, R_OK | W_OK | X_OK) != 0)
 	{
@@ -89,7 +89,8 @@ void	check_access_to_file(const char *pathname, t_shell *shell)
 		ft_putstr_fd((char *)pathname, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
-		clean_exit(shell, TRUE);
+		ft_putchar_fd('\n', STDERR_FILENO);
+		return (FALSE);
 	}
 }
 
@@ -133,7 +134,8 @@ int	add_heredoc(char *stopword, t_cmd_tbl *cmd_tbl, int j, t_shell *shell)
 	char	*pathname;
 	char	*file_id;
 
-	check_access_to_file("/tmp/", shell);
+	if (check_access_to_file("/tmp/", shell) == FALSE)
+		return (FALSE);
 	file_id = ft_itoa(j);
 	if (file_id == NULL)
 		clean_exit(shell, TRUE);
@@ -144,10 +146,7 @@ int	add_heredoc(char *stopword, t_cmd_tbl *cmd_tbl, int j, t_shell *shell)
 	fd = open(pathname, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (fd < 0)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd((char *)pathname, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		write_file_error_message(pathname);
 		free(pathname);
 		clean_exit(shell, TRUE);
 	}
