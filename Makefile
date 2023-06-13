@@ -48,13 +48,6 @@ SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG) $(LEXER) $(EXPAND) $(PARSER) $(
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SOURCE)))
 OBJ		=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SOURCE)))
 
-#tests:
-SRCTESTDIR	=	tests/src/
-OBJTESTDIR	=	tests/obj/
-SOURCETEST	=	test
-SRCTEST		=	$(addprefix $(SRCTESTDIR), $(addsuffix .cpp, $(SOURCETEST)))
-OBJTEST		=	$(addprefix $(OBJTESTDIR), $(addsuffix .o, $(SOURCETEST)))
-
 ifeq ($(OS), Darwin)
 RDL_HEAD	=	-I /Users/$(USER)/.brew/opt/readline/include
 RDL_LIB		=	-L /Users/$(USER)/.brew/opt/readline/lib
@@ -72,10 +65,6 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 			@mkdir -p $(@D)
 			$(CC) $(RDL_HEAD) -c $< -o $@
 
-$(OBJTESTDIR)%.o : $(SRCTESTDIR)%.cpp
-			@mkdir -p $(@D)
-			c++ -std=c++14 $(RDL_HEAD) -c $< -o $@
-
 clean:
 			make clean -C ./lib/libft/
 			rm -rf $(OBJ_DIR)
@@ -85,12 +74,6 @@ fclean:		clean
 			rm -f $(NAME)
 			rm -f test
 			make fclean -C ./lib/libft/
-
-ifeq ($(OS), Darwin)
-test:		$(OBJ) $(LIBFT) $(OBJTEST)
-			c++ -std=c++14 $(filter-out obj/main/main.o,$(OBJ)) $(OBJTEST) $(CFLAGS) $(RDL_LIB) $(LIBFT) \
-			-lreadline -lgtest -o test
-endif
 
 re:			fclean all
 
