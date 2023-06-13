@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/13 16:26:24 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:14:55 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,7 @@ int	open_file(const char *pathname, t_type type, int n_cmd_tbl, t_shell *shell)
 {
 	int	fd;
 
-	if ((type == FT_GREAT || type == FT_DGREAT) && access(pathname, W_OK) == -1)
-	{
-		write_file_error_message(pathname);
-		return (FALSE);
-	}
-	else if (type == FT_LESS && access(pathname, R_OK) == -1)
+	if (type == FT_LESS && access(pathname, R_OK) == -1)
 	{
 		write_file_error_message(pathname);
 		return (FALSE);
@@ -43,9 +38,9 @@ int	open_file(const char *pathname, t_type type, int n_cmd_tbl, t_shell *shell)
 	if (type == FT_LESS)
 		fd = open(pathname, O_RDONLY);
 	else if (type == FT_DGREAT)
-		fd = open(pathname, O_WRONLY | O_CREAT | O_APPEND);
+		fd = open(pathname, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (type == FT_GREAT)
-		fd = open(pathname, O_WRONLY | O_CREAT | O_TRUNC);
+		fd = open(pathname, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd <= -1)
 	{
 		write_file_error_message(pathname);
@@ -106,7 +101,7 @@ int	open_redirection(t_tkn_tbl *tkn_tbl, int n_cmd_tbl,
 	char	*pathname;
 
 	type = tkn_tbl->tkns[i].type;
-	pathname = tkn_tbl->tkns[i].cntnt;
+	pathname = tkn_tbl->tkns[i + 1].cntnt;
 	if (type == FT_LESS || type == FT_GREAT || type == FT_DGREAT)
 		if_no_error = open_file(pathname, type, n_cmd_tbl, shell);
 	else if (type == FT_DLESS)
@@ -128,7 +123,7 @@ int	handle_redirections(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, int n_cmd_tbl, 
 		if (type == FT_LESS || type == FT_DLESS
 			|| type == FT_GREAT || type == FT_DGREAT)
 		{
-			if (open_redirection(tkn_tbl, n_cmd_tbl, 0, shell) == FALSE)
+			if (open_redirection(tkn_tbl, n_cmd_tbl, i, shell) == FALSE)
 				return (FALSE);
 			i += 2;
 		}
@@ -315,6 +310,16 @@ void	execute_without_pipes(t_shell *shell)
 	}
 	else if (pid == 0)
 	{
+		if (shell->cmd_tbls[0].in != -1)
+		{
+			close(STDIN_FILENO);
+			dup(shell->cmd_tbls[0].in);
+		}
+		if (shell->cmd_tbls[0].out != -1)
+		{
+			close(STDOUT_FILENO);
+			dup(shell->cmd_tbls[0].out);
+		}
 		if (execve(pathname, shell->cmd_tbls->args, shell->envs) < 0)
 			exit (1);
 	}
