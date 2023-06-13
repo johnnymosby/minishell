@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/13 17:14:55 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:28:31 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	open_heredoc(t_cmd_tbl *cmd_tbls, int n_cmd_tbl, t_shell *shell)
 	if (cmd_tbls[n_cmd_tbl].in != -1)
 		close(cmd_tbls[n_cmd_tbl].in);
 	cmd_tbls[n_cmd_tbl].in = fd;
+	free(pathname);
 	return (TRUE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/13 16:07:45 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:24:58 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	check_access_to_file(const char *pathname, t_shell *shell)
 		ft_putchar_fd('\n', STDERR_FILENO);
 		return (FALSE);
 	}
+	return (TRUE);
 }
 
 int	fill_heredoc(char *stopword, int fd, t_shell *shell)
@@ -179,8 +180,6 @@ int	handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, t_shell *shell)
 		}
 		else if (last_heredoc_ind != -1 && i == last_heredoc_ind)
 		{
-			printf("%s\n", tkn_tbl->tkns[last_heredoc_ind + 1].cntnt);
-			printf("%s\n", translate_enum(tkn_tbl->tkns[last_heredoc_ind].type));
 			if (add_heredoc(tkn_tbl->tkns[last_heredoc_ind + 1].cntnt, &cmd_tbls[j],
 					j, shell) == FALSE)
 				return (FALSE);
