@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/14 14:42:07 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:12:57 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ int	open_file(const char *pathname, t_type type, int n_cmd_tbl, t_shell *shell)
 	int	fd;
 
 	if (type == FT_LESS && access(pathname, R_OK) == -1)
-	{
-		write_file_error_message(pathname);
-		return (FALSE);
-	}
+		return (write_file_error_message(pathname), FALSE);
 	if (type == FT_LESS)
 		fd = open(pathname, O_RDONLY);
 	else if (type == FT_DGREAT)
@@ -42,10 +39,7 @@ int	open_file(const char *pathname, t_type type, int n_cmd_tbl, t_shell *shell)
 	else if (type == FT_GREAT)
 		fd = open(pathname, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd <= -1)
-	{
-		write_file_error_message(pathname);
-		clean_exit(shell, TRUE);
-	}
+		return (write_file_error_message(pathname), clean_exit(shell, TRUE), 0);
 	if (type == FT_LESS)
 	{
 		if (shell->cmd_tbls[n_cmd_tbl].in != -1)
@@ -75,11 +69,7 @@ int	open_heredoc(t_cmd_tbl *cmd_tbls, int n_cmd_tbl, t_shell *shell)
 	if (pathname == NULL)
 		clean_exit(shell, TRUE);
 	if (access(pathname, R_OK) != 0)
-	{
-		write_file_error_message(pathname);
-		free(pathname);
-		return (FALSE);
-	}
+		return (write_file_error_message(pathname), free(pathname), FALSE);
 	fd = open(pathname, O_RDONLY);
 	if (fd <= -1)
 	{
@@ -137,134 +127,6 @@ int	handle_redirections_no_pipes(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, int n_
 	return (TRUE);
 }
 
-int	find_path_variable(char **envs)
-{
-	int	i;
-
-	i = 0;
-	while (envs[i] != NULL)
-	{
-		if (ft_strncmp(envs[i], "PATH=", 5) == 0)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-char	*extract_folder(const char *path, int n,  t_shell *shell)
-{
-	int		len;
-	char	*folder;
-	int		i;
-
-	len = 0;
-	while (path[n + len] != '\0' && path[n + len] != ':')
-		len++;
-	folder = malloc(sizeof(char) * (len + 2));
-	if (folder == NULL)
-	{
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
-		ft_putchar_fd('\n', STDERR_FILENO);
-		clean_exit(shell, TRUE);
-	}
-	i = 0;
-	while (i != len)
-	{
-		folder[i] = path[n + i];
-		i++;
-	}
-	folder[i] = '/';
-	folder[i + 1] = '\0';
-	return (folder);
-}
-
-char *get_next_folder_from_path(const char *path, int i, t_shell *shell)
-{
-	int		j;
-	int		n;
-
-	j = 0;
-	n = 0;
-	while (path[n] != '\0')
-	{
-		if (path[n] == '/')
-			break ;
-		n++;
-	}
-	while (j < i && path[n] != '\0')
-	{
-		if (path[n] == ':')
-			j++;
-		n++;
-	}
-	if (j != i)
-		return (NULL);
-	else
-		return (extract_folder(path, n, shell));
-}
-
-char	*find_folder_with_command(char *cmd, const char *path, t_shell *shell)
-{
-	DIR				*dir;
-	struct dirent	*entry;
-	char			*folder;
-	int				i;
-
-	i = 0;
-	folder = get_next_folder_from_path(path, i, shell);
-	while (folder != NULL)
-	{
-		if (access(folder, X_OK) != -1)
-		{
-			dir = opendir(folder);
-			if (dir == NULL)
-			{
-				write_file_error_message(folder);
-				free(folder);
-				clean_exit(shell, TRUE);
-			}
-			entry = readdir(dir);
-			while (entry != NULL)
-			{
-				if (ft_strcmp(entry->d_name, cmd) == 0)
-				{
-					closedir(dir);
-					return (folder);
-				}
-				entry = readdir(dir);
-			}
-			closedir(dir);
-		}
-		free(folder);
-		i++;
-		folder = get_next_folder_from_path(path, i, shell);
-	}
-	return (NULL);
-}
-
-char	*construct_pathname(char *cmd, t_shell *shell)
-{
-	char	*pathname;
-	char	*folder;
-	int		path_ind;
-
-	path_ind = find_path_variable(shell->envs);
-	if (path_ind < 0)
-		return (NULL);
-	folder = find_folder_with_command(cmd, shell->envs[path_ind], shell);
-	if (folder == NULL)
-		return (NULL);
-	pathname = ft_strjoin(folder, cmd);
-	free(folder);
-	if (pathname == NULL)
-	{
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
-		ft_putchar_fd('\n', STDERR_FILENO);
-		clean_exit(shell, TRUE);
-	}
-	return (pathname);
-}
-
 void	add_command_to_args(char *pathname, int i, t_shell *shell)
 {
 	char		**new_argv;
@@ -290,13 +152,22 @@ void	add_command_to_args(char *pathname, int i, t_shell *shell)
 	cmd_tbl->args = new_argv;
 }
 
+void	enable_redirections(t_cmd_tbl *cmd_tbl)
+{
+	if (cmd_tbl[0].in != -1)
+		dup2(cmd_tbl[0].in, STDIN_FILENO);
+	if (cmd_tbl[0].out != -1)
+		dup2(cmd_tbl[0].out, STDOUT_FILENO);
+}
+
 void	execute_without_pipes(t_shell *shell)
 {
 	pid_t	pid;
 	char	*pathname;
 	int		status;
 
-	if (handle_redirections_no_pipes(shell->tkn_tbl, shell->cmd_tbls, 0, shell) == FALSE)
+	if (handle_redirections_no_pipes(shell->tkn_tbl, shell->cmd_tbls, 0, shell)
+		== FALSE)
 		return ;
 	if (shell->cmd_tbls[0].cmd == NULL)
 		return ;
@@ -306,17 +177,10 @@ void	execute_without_pipes(t_shell *shell)
 	add_command_to_args(pathname, 0, shell);
 	pid = fork();
 	if (pid < 0)
-	{
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
-		ft_putchar_fd('\n', STDERR_FILENO);
-		clean_exit(shell, TRUE);
-	}
+		print_error_and_exit(shell);
 	else if (pid == 0)
 	{
-		if (shell->cmd_tbls[0].in != -1)
-			dup2(shell->cmd_tbls[0].in, STDIN_FILENO);
-		if (shell->cmd_tbls[0].out != -1)
-			dup2(shell->cmd_tbls[0].out, STDOUT_FILENO);
+		enable_redirections(&(shell->cmd_tbls[0]));
 		if (execve(pathname, shell->cmd_tbls->args, shell->envs) < 0)
 			exit (1);
 	}
@@ -327,12 +191,5 @@ void	execute_without_pipes(t_shell *shell)
 void	execute(t_shell *shell)
 {
 	if (shell->n_cmd_tbls <= 1)
-	{
 		execute_without_pipes(shell);
-	}
-}
-
-int	execute_cmd(t_shell *shell, t_cmd_tbl *cmd_tb)
-{
-	return (TRUE);
 }

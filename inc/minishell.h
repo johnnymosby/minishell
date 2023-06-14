@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/14 13:15:18 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:18:00 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,14 @@ int		find_last_heredoc_in_cmd(t_tkn_tbl *tkn_tbl, int i);
 // execute/...
 //	 .../execute.c
 void	execute(t_shell *shell);
-int		execute_cmd(t_shell *shell, t_cmd_tbl *cmd_tb);
+//	 .../original_builtins.c
+int		find_path_variable(char **envs);
+char	*extract_folder(const char *path, int n,  t_shell *shell);
+char	*get_next_folder_from_path(const char *path, int i, t_shell *shell);
+int		command_is_in_folder(DIR *dir, char *cmd);
+char	*find_folder_with_command(char *cmd, const char *path, t_shell *shell);
+char	*construct_pathname(char *cmd, t_shell *shell);
+
 
 // 	exit/...
 //	 .../exit.c
@@ -151,6 +158,7 @@ void	free_input(t_shell *shell);
 void	clean_shell(t_shell *shell);
 //	 .../error.c
 void	write_file_error_message(const char *pathname);
+void	print_error_and_exit(t_shell *shell);
 
 //TO DELETE
 void	print_tokens(t_shell *shell);

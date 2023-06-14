@@ -38,7 +38,7 @@ PARSER	=	parser concatenate_words check_syntax check_syntax_utils check_access c
 			handle_heredocs
 PARSER	:=	$(addprefix parser/, $(PARSER))
 
-EXEC	=	execute
+EXEC	=	execute original_builtins
 EXEC	:=	$(addprefix execute/, $(EXEC))
 
 EXIT	=	exit clean_shell error
