@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:43:57 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/12 16:39:02 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:14:12 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ typedef struct s_shell
 	char		*trimmed_input;
 	int			exit_code;
 	int			if_history_exists;
-	//t_tkn_tbl	*tkn_tbl;
+	t_tkn_tbl	*tkn_tbl;
 	int			n_cmd_tbls;
-	//t_cmd_tbl	*cmd_tbls;
+	t_cmd_tbl	*cmd_tbls;
 }	t_shell;
 
 //#include "../../inc/minishell.h"

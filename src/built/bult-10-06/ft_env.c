@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/11 13:15:08 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/11 18:18:20 by maruzibo         ###   ########.fr       */
+/*   Created: 2023/06/14 16:38:19 by maruzibo          #+#    #+#             */
+/*   Updated: 2023/06/14 16:38:27 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char *join_with_equal(char *s1, char *s2)
 }
 
 /*
-This function inserts a values of an environmental vairable to the existing list of variables
+This function inserts a value of an environmental vairable to the existing list of variables
 */
 char **ft_set_new_env(t_shell *cmd, char *var, char *value)
 {
