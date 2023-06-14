@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/13 17:24:58 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:27:01 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ int	handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, t_shell *shell)
 		if (tkn_tbl->tkns[i].type == FT_PIPE)
 		{
 			i++;
+			j++;
 			continue ;
 		}
 		last_heredoc_ind = find_last_heredoc_in_cmd(tkn_tbl, i);
@@ -177,15 +178,21 @@ int	handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, t_shell *shell)
 		{
 			if (imitate_heredocs(tkn_tbl, i, last_heredoc_ind, shell) == FALSE)
 				return (FALSE);
+			i = last_heredoc_ind;
 		}
 		else if (last_heredoc_ind != -1 && i == last_heredoc_ind)
 		{
 			if (add_heredoc(tkn_tbl->tkns[last_heredoc_ind + 1].cntnt, &cmd_tbls[j],
 					j, shell) == FALSE)
 				return (FALSE);
+			i = skip_cmd(tkn_tbl, i);
+			j++;
 		}
-		i = skip_cmd(tkn_tbl, i);
-		j++;
+		else
+		{
+			i = skip_cmd(tkn_tbl, i);
+			j++;
+		}
 	}
 	return (TRUE);
 }

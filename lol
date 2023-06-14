@@ -1,0 +1,10 @@
+inc
+lib
+lol
+Makefile
+minishell
+obj
+plots
+README.md
+src
+wow

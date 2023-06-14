@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/13 17:28:31 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:42:07 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,19 +100,22 @@ int	open_redirection(t_tkn_tbl *tkn_tbl, int n_cmd_tbl,
 	int		if_no_error;
 	t_type	type;
 	char	*pathname;
+	int		last_heredoc_id;
 
+	if_no_error = TRUE;
 	type = tkn_tbl->tkns[i].type;
 	pathname = tkn_tbl->tkns[i + 1].cntnt;
-	if (type == FT_LESS || type == FT_GREAT || type == FT_DGREAT)
+	last_heredoc_id = find_last_heredoc_in_cmd(tkn_tbl, i);
+	if ((type == FT_LESS || type == FT_GREAT || type == FT_DGREAT))
 		if_no_error = open_file(pathname, type, n_cmd_tbl, shell);
-	else if (type == FT_DLESS)
+	else if (type == FT_DLESS && i == last_heredoc_id)
 		if_no_error = open_heredoc(shell->cmd_tbls, n_cmd_tbl, shell);
 	if (if_no_error == FALSE)
-		return (FALSE);	
+		return (FALSE);
 	return (TRUE);
 }
 
-int	handle_redirections(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, int n_cmd_tbl, t_shell *shell)
+int	handle_redirections_no_pipes(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, int n_cmd_tbl, t_shell *shell)
 {
 	int		i;
 	t_type	type;
@@ -293,14 +296,13 @@ void	execute_without_pipes(t_shell *shell)
 	char	*pathname;
 	int		status;
 
-	if (handle_redirections(shell->tkn_tbl, shell->cmd_tbls, 0, shell) == FALSE)
+	if (handle_redirections_no_pipes(shell->tkn_tbl, shell->cmd_tbls, 0, shell) == FALSE)
+		return ;
+	if (shell->cmd_tbls[0].cmd == NULL)
 		return ;
 	pathname = construct_pathname(shell->cmd_tbls[0].cmd, shell);
 	if (pathname == NULL)
-	{
-		write_file_error_message(shell->cmd_tbls[0].cmd);
-		return ;
-	}
+		return (write_file_error_message(shell->cmd_tbls[0].cmd));
 	add_command_to_args(pathname, 0, shell);
 	pid = fork();
 	if (pid < 0)
@@ -312,15 +314,9 @@ void	execute_without_pipes(t_shell *shell)
 	else if (pid == 0)
 	{
 		if (shell->cmd_tbls[0].in != -1)
-		{
-			close(STDIN_FILENO);
-			dup(shell->cmd_tbls[0].in);
-		}
+			dup2(shell->cmd_tbls[0].in, STDIN_FILENO);
 		if (shell->cmd_tbls[0].out != -1)
-		{
-			close(STDOUT_FILENO);
-			dup(shell->cmd_tbls[0].out);
-		}
+			dup2(shell->cmd_tbls[0].out, STDOUT_FILENO);
 		if (execve(pathname, shell->cmd_tbls->args, shell->envs) < 0)
 			exit (1);
 	}
