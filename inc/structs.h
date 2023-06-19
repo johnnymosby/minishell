@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:13:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/13 11:53:55 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/19 13:21:53 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ typedef struct s_cmd_tbl
 	char	*cmd;
 	char	**args;
 	int		in;
+	char	*in_file;
 	int		out;
+	char	*out_file;
 	int		n_args;
 	int		max_n_args;
 }	t_cmd_tbl;

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/13 16:06:49 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:02:37 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,8 @@ void	free_str_array(char ***args, int n_args)
 // 	}
 // }
 
-void	free_cmd_tbl(t_cmd_tbl *cmd_tbl)
+void	close_files(t_cmd_tbl *cmd_tbl)
 {
-	int		i;
-
-	i = 0;
-	if (cmd_tbl->cmd != NULL)
-		free(cmd_tbl->cmd);
-	if (cmd_tbl->args != NULL)
-		free_str_array(&cmd_tbl->args, cmd_tbl->n_args);
 	if (cmd_tbl->in >= 0)
 	{
 		close(cmd_tbl->in);
@@ -79,6 +72,18 @@ void	free_cmd_tbl(t_cmd_tbl *cmd_tbl)
 		close(cmd_tbl->out);
 		cmd_tbl->out = -1;
 	}
+}
+
+void	free_cmd_tbl(t_cmd_tbl *cmd_tbl)
+{
+	int		i;
+
+	i = 0;
+	if (cmd_tbl->cmd != NULL)
+		free(cmd_tbl->cmd);
+	if (cmd_tbl->args != NULL)
+		free_str_array(&cmd_tbl->args, cmd_tbl->n_args);
+	close_files(cmd_tbl);
 }
 
 void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n)

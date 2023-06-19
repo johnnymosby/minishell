@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/14 15:12:57 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:31:36 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	handle_redirections_no_pipes(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, int n_
 void	add_command_to_args(char *pathname, int i, t_shell *shell)
 {
 	char		**new_argv;
-	t_cmd_tbl	*cmd_tbl; 
+	t_cmd_tbl	*cmd_tbl;
 	int			n;
 
 	cmd_tbl = &(shell->cmd_tbls[i]);
@@ -152,12 +152,12 @@ void	add_command_to_args(char *pathname, int i, t_shell *shell)
 	cmd_tbl->args = new_argv;
 }
 
-void	enable_redirections(t_cmd_tbl *cmd_tbl)
+void	enable_redirections(t_cmd_tbl *cmd_tbls, int i)
 {
-	if (cmd_tbl[0].in != -1)
-		dup2(cmd_tbl[0].in, STDIN_FILENO);
-	if (cmd_tbl[0].out != -1)
-		dup2(cmd_tbl[0].out, STDOUT_FILENO);
+	if (cmd_tbls[i].in != -1)
+		dup2(cmd_tbls[i].in, STDIN_FILENO);
+	if (cmd_tbls[i].out != -1)
+		dup2(cmd_tbls[i].out, STDOUT_FILENO);
 }
 
 void	execute_without_pipes(t_shell *shell)
@@ -180,7 +180,7 @@ void	execute_without_pipes(t_shell *shell)
 		print_error_and_exit(shell);
 	else if (pid == 0)
 	{
-		enable_redirections(&(shell->cmd_tbls[0]));
+		enable_redirections(shell->cmd_tbls, 0);
 		if (execve(pathname, shell->cmd_tbls->args, shell->envs) < 0)
 			exit (1);
 	}
@@ -192,4 +192,6 @@ void	execute(t_shell *shell)
 {
 	if (shell->n_cmd_tbls <= 1)
 		execute_without_pipes(shell);
+	else
+		execute_with_pipes(shell);
 }

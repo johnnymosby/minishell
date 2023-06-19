@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/14 15:18:00 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:02:56 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,12 @@ int		find_last_heredoc_in_cmd(t_tkn_tbl *tkn_tbl, int i);
 
 // execute/...
 //	 .../execute.c
+int		open_redirection(t_tkn_tbl *tkn_tbl, int n_cmd_tbl,
+			int i, t_shell *shell);
+void	add_command_to_args(char *pathname, int i, t_shell *shell);
+void	enable_redirections(t_cmd_tbl *cmd_tbls, int i);
 void	execute(t_shell *shell);
+
 //	 .../original_builtins.c
 int		find_path_variable(char **envs);
 char	*extract_folder(const char *path, int n,  t_shell *shell);
@@ -143,7 +148,8 @@ char	*get_next_folder_from_path(const char *path, int i, t_shell *shell);
 int		command_is_in_folder(DIR *dir, char *cmd);
 char	*find_folder_with_command(char *cmd, const char *path, t_shell *shell);
 char	*construct_pathname(char *cmd, t_shell *shell);
-
+//	.../execute_with_pipes.c
+void	execute_with_pipes(t_shell *shell);
 
 // 	exit/...
 //	 .../exit.c
@@ -153,6 +159,7 @@ void	exit_if_true(t_shell *shell, int if_true, int if_error);
 void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n);
 char	*translate_enum(int n);
 void	free_str_array(char ***args, int n_args);
+void	close_files(t_cmd_tbl *cmd_tbl);
 //	 .../clean_shell.c
 void	free_input(t_shell *shell);
 void	clean_shell(t_shell *shell);

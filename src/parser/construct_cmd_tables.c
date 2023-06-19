@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   construct_cmd_tables.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:06:15 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/10 23:37:19 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:48:46 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ void	add_arg(char *arg, t_cmd_tbl *cmd_tbl, t_shell *shell)
 	cmd_tbl->n_args += 1;
 }
 
-int	init_cmd_and_args(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbl,
-	t_shell *shell, int i)
+int	init_cmd_and_args(t_tkn_tbl *tkn_tbl, t_shell *shell, int i, int j)
 {
+	t_cmd_tbl	*cmd_tbl;
+
+	cmd_tbl = &(shell->cmd_tbls[j]);
 	while (i != tkn_tbl->n_tkns)
 	{
 		if (tkn_tbl->tkns[i].type == FT_PIPE)
@@ -94,13 +96,97 @@ int	init_cmd_and_args(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbl,
 	return (i);
 }
 
-int	construct_cmd_table(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbl,
-	t_shell *shell, int i)
+int	find_last_in_file_index(t_tkn_tbl *tkn_tbl, int i)
 {
+	int	ind;
+
+	ind = -1;
+	while (i != tkn_tbl->n_tkns)
+	{
+		if (tkn_tbl->tkns[i].type == FT_PIPE)
+			return (ind);
+		if (tkn_tbl->tkns[i].type == FT_LESS
+			|| tkn_tbl->tkns[i].type == FT_DLESS)
+			ind = i;
+		i++;
+	}
+	return (ind);
+}
+
+int	find_last_out_file_index(t_tkn_tbl *tkn_tbl, int i)
+{
+	int	ind;
+
+	ind = -1;
+	while (i != tkn_tbl->n_tkns)
+	{
+		if (tkn_tbl->tkns[i].type == FT_PIPE)
+			return (ind);
+		if (tkn_tbl->tkns[i].type == FT_GREAT
+			|| tkn_tbl->tkns[i].type == FT_DGREAT)
+			ind = i;
+		i++;
+	}
+	return (ind);
+}
+
+char	*make_tmp_heredoc_pathname(t_shell *shell, int j)
+{
+	char	*pathname;
+	char	*file_id;
+
+	file_id = ft_itoa(j);
+	if (file_id == NULL)
+		clean_exit(shell, TRUE);
+	pathname = ft_strjoin("/tmp/tmp_heredoc_", file_id);
+	free(file_id);
+	if (pathname == NULL)
+		clean_exit(shell, TRUE);
+	return (pathname);
+}
+
+char	*find_last_in_file(t_shell *shell, t_tkn_tbl *tkn_tbl, int i, int j)
+{
+	char	*file;
+	int		ind;
+
+	file = NULL;
+	ind = find_last_in_file_index(tkn_tbl, i);
+	if (ind < 0)
+		return (NULL);
+	if (tkn_tbl->tkns[ind].type == FT_LESS)
+		return (tkn_tbl->tkns[ind + 1].cntnt);
+	else if (tkn_tbl->tkns[ind].type == FT_DLESS)
+		return (make_tmp_heredoc_pathname(shell, j));
+	else
+		return (NULL);
+}
+
+char	*find_last_out_file(t_tkn_tbl *tkn_tbl, int i, int j)
+{
+	char	*file;
+	int		ind;
+
+	file = NULL;
+	ind = find_last_out_file_index(tkn_tbl, i);
+	if (ind < 0)
+		return (NULL);
+	else
+		return (tkn_tbl->tkns[ind + 1].cntnt);
+}
+
+int	construct_cmd_table(t_tkn_tbl *tkn_tbl, t_shell *shell, int i, int j)
+{
+	t_cmd_tbl *cmd_tbl;
+
+	(void) j;
+	cmd_tbl = &(shell->cmd_tbls[j]);
 	cmd_tbl->max_n_args = 4;
 	cmd_tbl->in = -1;
+	//cmd_tbl->in_file = find_last_in_file(shell, tkn_tbl, i, j);
 	cmd_tbl->out = -1;
-	i = init_cmd_and_args(tkn_tbl, cmd_tbl, shell, i);
+	//cmd_tbl->out_file = find_last_out_file(tkn_tbl, i, j);
+	i = init_cmd_and_args(tkn_tbl, shell, i, j);
 	return (i);
 }
 
@@ -117,7 +203,7 @@ void	construct_cmd_tables(t_tkn_tbl *tkn_tbl, t_shell *shell)
 	j = 0;
 	while (i != tkn_tbl->n_tkns)
 	{
-		i = construct_cmd_table(tkn_tbl, &(shell->cmd_tbls[j]), shell, i);
+		i = construct_cmd_table(tkn_tbl, shell, i, j);
 		j++;
 	}
 }
