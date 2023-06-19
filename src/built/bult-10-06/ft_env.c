@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:38:19 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/14 16:38:27 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:18:15 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
 This function tries to extract a environtment variable from **envs in *cmd
 */
-char	*ft_getenv(t_shell  *cmd, char *var)
+char	*ft_getenv(char **env, char *var)
 {
 	int	i;
 	int	j;
@@ -27,13 +27,13 @@ char	*ft_getenv(t_shell  *cmd, char *var)
 	j = ft_strlen(var);
 	if (j == 0)		// check??
 		return (NULL);
-	while (cmd->envs && cmd->envs[i])
+	while (env && env[i])
 	{
 		//j = ft_strlen(var);
 		//if (j < ft_strchr(cmd->envs[i], '='))
 		//	j = ft_strchr(cmd->envs[i], '=');
-		if (!ft_strncmp(cmd->envs[i], var, j))
-			return (ft_substr(cmd->envs[i], j + 1, ft_strlen(cmd->envs[i])));
+		if (!ft_strncmp(env[i], var, j))
+			return (ft_substr(env[i], j + 1, ft_strlen(env[i])));
 		i++;
 	}
 	return (NULL);
@@ -55,7 +55,7 @@ char *join_with_equal(char *s1, char *s2)
 /*
 This function inserts a value of an environmental vairable to the existing list of variables
 */
-char **ft_set_new_env(t_shell *cmd, char *var, char *value)
+char **ft_set_new_env(char **env, char *var, char *value)
 {
 	int i[2];
 	char *str;
@@ -65,23 +65,22 @@ char **ft_set_new_env(t_shell *cmd, char *var, char *value)
 		return (NULL);
 	str = join_with_equal(var, value);
 	i[0] = 0;
-	while(cmd->envs && cmd->envs[i[0]])
+	while(env && env[i[0]])
 	{
 		i[1] = ft_strlen(var);
-		//if (i[1] < ft_strchr(cmd->envs[i[0]], '='))
-		//	i[1] = ft_strchr(cmd->envs[i[0]], '=');
-		if (!ft_strncmp(cmd->envs[i[0]], var, i[1]))
+		if (!ft_strncmp(env[i[0]], var, i[1]) && 
+			env[i[0]][i[1]] == '=')
 		{
-			tmp = cmd->envs[i[0]];
-			cmd->envs[i[0]] = str;
+			tmp = env[i[0]];
+			env[i[0]] = str;
 			free(tmp);
-			return (cmd->envs[i[0]]);
+			return (env[i[0]]);
 		}
 		i[0]++;
 	}
-	cmd->envs = ft_add_line(cmd->envs, str); 
+	env = ft_add_line(env, str); 
 	free(str);
-	return (cmd->envs);
+	return (env);
 }
 
 /* 

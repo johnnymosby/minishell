@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 15:16:01 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/14 19:35:14 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:19:00 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,20 @@
 This function changes the address of the dicrectory: 
 old and current dicrectory addresses are updated
 */
-int change_address(t_shell *cmd, char *new)
+int change_address(char **env, char *new)
 {
     char    s[MAX_PATH];
     //char    s1[MAX_PATH];
 
     if (!getcwd(s, MAX_PATH))
         return(2);
-    if(!is_in_envs("PWD", cmd->env))  
-        ft_set_new_env(cmd, "PWD", s);
-    s = ft_getenv(cmd, "PWD");
-    ft_set_new_env(cmd, "PWD", new);
+    if(!is_in_envs("PWD", env))  
+        ft_set_new_env(env, "PWD", s);
+    s = ft_getenv(env, "PWD");
+    ft_set_new_env(env, "PWD", new);
     //if(!is_in_envs("OLDPWD", cmd->env))  
       //  ft_set_new_env(cmd, "OLDPWD", s);
-    //else 
-        ft_set_new_env(cmd, "OLDPWD", s);  
+    ft_set_new_env(env, "OLDPWD", s);  
     return(0);
 }
 int  go_to_old_dir(t_shell *cmd)
