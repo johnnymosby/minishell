@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_with_pipes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/19 17:40:51 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/19 23:47:56 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,30 +54,22 @@ int	handle_redirections_pipes(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, int n_cmd
 	return (TRUE);
 }
 
-int	execute_last_command(t_shell *shell, int i, int prevpipe)
+void	close_prevpipe(int *prevpipe)
 {
-	t_cmd_tbl	*cmd_tbl;
-	t_tkn_tbl	*tkn_tbl;
-	int			j;
-	char		*pathname;
-	pid_t		pid;
-	int			status;
+	if (*prevpipe >= 0)
+		close(*prevpipe);
+}
 
-	cmd_tbl = &(shell->cmd_tbls[i]);
-	tkn_tbl = shell->tkn_tbl;
-	j = skip_n_pipes(tkn_tbl, i);
-	if (handle_redirections_pipes(tkn_tbl, shell->cmd_tbls, j, shell) == FALSE)
-	{
-		if (prevpipe >= 0)
-			close(prevpipe);
-		return (FALSE);
-	}
-	if (cmd_tbl->cmd == NULL)
-	{
-		if (prevpipe >= 0)
-			close(prevpipe);
-		return (TRUE);
-	}
+void	wait_child_processes(void)
+{
+	int	status;
+
+	while (wait(&status) > 0)
+		;
+}
+
+int	populate_infile(t_cmd_tbl *cmd_tbl, int prevpipe)
+{
 	if (cmd_tbl->in < 0)
 	{
 		if (prevpipe >= 0)
@@ -91,10 +83,13 @@ int	execute_last_command(t_shell *shell, int i, int prevpipe)
 				return (write_file_error_message("/dev/null"), FALSE);
 		}
 	}
-	pathname = construct_pathname(cmd_tbl->cmd, shell);
-	if (pathname == NULL)
-		return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);
-	add_command_to_args(pathname, i, shell);
+	return (TRUE);
+}
+
+void	execute_in_child(t_shell *shell, char *pathname, t_cmd_tbl *cmd_tbl, int i)
+{
+	pid_t		pid;
+
 	pid = fork();
 	if (pid < 0)
 		print_error_and_exit(shell);
@@ -104,16 +99,39 @@ int	execute_last_command(t_shell *shell, int i, int prevpipe)
 		if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
 			exit (1);
 	}
-	else
-	{
-		while (wait(&status) > 0)
-			;
-		//waitpid(pid, &status, 0);
-		if (cmd_tbl->in >= 0 && prevpipe >= 0)
-			close(prevpipe);
-		close_files(cmd_tbl);
-	}
+}
+
+int	execute_last_command(t_shell *shell, int i, int prevpipe)
+{
+	t_cmd_tbl	*cmd_tbl;
+	t_tkn_tbl	*tkn_tbl;
+	int			j;
+	char		*pathname;
+
+	cmd_tbl = &(shell->cmd_tbls[i]);
+	tkn_tbl = shell->tkn_tbl;
+	j = skip_n_pipes(tkn_tbl, i);
+	if (handle_redirections_pipes(tkn_tbl, shell->cmd_tbls, j, shell) == FALSE)
+		return (close_prevpipe(&prevpipe), FALSE);
+	if (cmd_tbl->cmd == NULL)
+		return (close_prevpipe(&prevpipe), TRUE);
+	if (populate_infile(cmd_tbl, prevpipe) == FALSE)
+		return (FALSE);
+	pathname = construct_pathname(cmd_tbl->cmd, shell);
+	if (pathname == NULL)
+		return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);
+	add_command_to_args(pathname, i, shell);
+	execute_in_child(shell, pathname, cmd_tbl, i);
+	wait_child_processes();
+	if (cmd_tbl->in >= 0)
+		close_prevpipe(&prevpipe);
+	close_files(cmd_tbl);
 	return (TRUE);
+}
+void	handle_prevpipe(int *prevpipe)
+{
+	close_prevpipe(prevpipe);
+	*prevpipe = -1;
 }
 
 int	execute_command(t_shell *shell, int i, int *prevpipe)
@@ -123,30 +141,15 @@ int	execute_command(t_shell *shell, int i, int *prevpipe)
 	int			j;
 	char		*pathname;
 	pid_t		pid;
-	int			status;
 	int			fd[2];
 
 	cmd_tbl = &(shell->cmd_tbls[i]);
 	tkn_tbl = shell->tkn_tbl;
 	j = skip_n_pipes(tkn_tbl, i);
 	if (handle_redirections_pipes(tkn_tbl, shell->cmd_tbls, j, shell) == FALSE)
-	{
-		if (*prevpipe >= 0)
-		{
-			close(*prevpipe);
-			*prevpipe = -1;
-		}
-		return (FALSE);
-	}
+		return (handle_prevpipe(prevpipe), FALSE);
 	if (cmd_tbl->cmd == NULL)
-	{
-		if (*prevpipe >= 0)
-		{
-			close(*prevpipe);
-			*prevpipe = -1;
-		}
-		return (TRUE);
-	}
+		return (handle_prevpipe(prevpipe), TRUE);
 	pathname = construct_pathname(cmd_tbl->cmd, shell);
 	if (pathname == NULL)
 		return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);
@@ -168,11 +171,7 @@ int	execute_command(t_shell *shell, int i, int *prevpipe)
 	{
 		if (pipe(fd) == -1)
 		{
-			if (*prevpipe >= 0)
-			{
-				close(*prevpipe);
-				*prevpipe = -1;
-			}
+			handle_prevpipe(prevpipe);
 			clean_exit(shell, TRUE);
 		}
 		pid = fork();
@@ -191,60 +190,26 @@ int	execute_command(t_shell *shell, int i, int *prevpipe)
 			if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
 				exit (1);
 		}
-		else
-		{
-			//waitpid(pid, &status, 0);
-			close(fd[1]);
-			if (cmd_tbl->in >= 0 && *prevpipe >= 0)
-			{
-				close(*prevpipe);
-				*prevpipe = -1;
-			}
-			*prevpipe = fd[0];
-		}
+		close(fd[1]);
+		if (cmd_tbl->in >= 0)
+			handle_prevpipe(prevpipe);
+		*prevpipe = fd[0];
 	}
 	else if (cmd_tbl->out >= 0)
 	{
-		if (*prevpipe >= 0)
-		{
-			printf("before \n");
+		execute_in_child(shell, pathname, cmd_tbl, i);
+		if (cmd_tbl->in >= 0)
 			close(*prevpipe);
-			printf("after \n");
-		}
 		*prevpipe = -1;
-		pid = fork();
-		if (pid < 0)
-		{
-			print_error_and_exit(shell);
-		}
-		else if (pid == 0)
-		{
-			enable_redirections(shell->cmd_tbls, i);
-			if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
-				exit (1);
-		}
-		else
-		{
-			//waitpid(pid, &status, 0);
-			if (cmd_tbl->in >= 0 && *prevpipe >= 0)
-			{
-				close(*prevpipe);
-			}
-			*prevpipe = -1;
-		}
 	}
 	else if (shell->cmd_tbls[i + 1].in_file != NULL)
 	{
 		if (*prevpipe >= 0)
-		{
 			close(*prevpipe);
-		}
 		*prevpipe = -1;
 		pid = fork();
 		if (pid < 0)
-		{
 			print_error_and_exit(shell);
-		}
 		else if (pid == 0)
 		{
 			if (access("/dev/null", R_OK) == -1)
@@ -256,17 +221,9 @@ int	execute_command(t_shell *shell, int i, int *prevpipe)
 			if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
 				exit (1);
 		}
-		else
-		{
-			//waitpid(pid, &status, 0);
-			if (cmd_tbl->in >= 0 && *prevpipe >= 0)
-			{
-				printf("before last\n");
-				close(*prevpipe);
-				printf("after last\n");
-			}
-			*prevpipe = -1;
-		}
+		if (cmd_tbl->in >= 0 && *prevpipe >= 0)
+			close(*prevpipe);
+		*prevpipe = -1;
 	}
 	return (TRUE);
 }
