@@ -6,66 +6,133 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 13:03:05 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:14:15 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	skip_n_pipes(t_tkn_tbl	*tkn_tbl, int n)
+void	close_fd(int *fd)
 {
-	int	j;
-	int	i;
-
-	j = 0;
-	i = 0;
-	while (i != tkn_tbl->n_tkns)
-	{
-		if (j == n)
-			return (i);
-		if (tkn_tbl->tkns[i].type == FT_PIPE)
-			j++;
-		i++;
-	}
-	return (i);
+	if (*fd >= 0)
+		close(*fd);
 }
 
-int	handle_redirections_pipes(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, int n_cmd_tbl, t_shell *shell)
+void	handle_fd(int *fd)
 {
-	int		i;
-	t_type	type;
+	close_fd(fd);
+	*fd = -1;
+}
 
-	i = skip_n_pipes(tkn_tbl, n_cmd_tbl);
-	while (i != tkn_tbl->n_tkns)
+int	handle_infile(int i, int *prevpipe, t_shell *shell)
+{
+	t_cmd_tbl	*cmd_tbl;
+
+	cmd_tbl = &(shell->cmd_tbls[i]);
+	if (cmd_tbl->in >= 0)
+		return (handle_fd(prevpipe), TRUE);
+	else if (prevpipe >= 0)
 	{
-		type = tkn_tbl->tkns[i].type;
-		if (type == FT_PIPE)
-			return (TRUE);
-		if (type == FT_LESS || type == FT_DLESS
-			|| type == FT_GREAT || type == FT_DGREAT)
-		{
-			if (open_redirection(tkn_tbl, n_cmd_tbl, i, shell) == FALSE)
-				return (FALSE);
-			i += 2;
-		}
-		else
-			i += 1;
+		cmd_tbl->in = *prevpipe;
+		*prevpipe = -1;
+		return (TRUE);
+	}
+	else
+	{
+		if (access("/dev/null", R_OK) == -1)
+			return (write_file_error_message("/dev/null"), FALSE);
+		cmd_tbl->in = open("/dev/null", O_RDONLY);
+		if (cmd_tbl->in < 0)
+			return (write_file_error_message("/dev/null"), FALSE);
 	}
 	return (TRUE);
 }
 
-void	close_prevpipe(int *prevpipe)
+int	handle_outfile(int *fd, int i, int *prevpipe, t_shell *shell)
 {
-	if (*prevpipe >= 0)
-		close(*prevpipe);
+	t_cmd_tbl	*cmd_tbl;
+
+	cmd_tbl = &(shell->cmd_tbls[i]);
+	if (cmd_tbl->out >= 0)
+		return (handle_fd(prevpipe), TRUE);
+	else if (shell->cmd_tbls[i + 1].in_file != NULL)
+	{
+		handle_fd(prevpipe);
+		if (access("/dev/null", W_OK) == -1)
+			return (write_file_error_message("/dev/null"), FALSE);
+		cmd_tbl->out = open("/dev/null", O_WRONLY);
+		if (cmd_tbl->out < 0)
+			return (write_file_error_message("/dev/null"), FALSE);
+		return (TRUE);
+	}
+	else
+	{
+		if (pipe(fd) == -1)
+		{
+			handle_fd(prevpipe);
+			clean_exit(shell, TRUE);
+		}
+		if (cmd_tbl->out < 0)
+			cmd_tbl->out = fd[1];
+	}
+	return (TRUE);
 }
 
-void	wait_child_processes(void)
+int	construct_pathname_safely(char **pathname, int i, t_cmd_tbl *cmd_tbl,
+	t_shell *shell)
 {
-	int	status;
+	*pathname = construct_pathname(cmd_tbl->cmd, shell);
+	if (*pathname == NULL)
+		return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);
+	add_command_to_args(*pathname, i, shell);
+	return (TRUE);
+}
 
-	while (wait(&status) > 0)
-		;
+int	execute_child_and_parent(int *fd, int *prevpipe, int i, t_shell *shell)
+{
+	pid_t		pid;
+	char		*pathname;
+	t_cmd_tbl	*cmd_tbl;
+
+	cmd_tbl = &(shell->cmd_tbls[i]);
+	if (construct_pathname_safely(&pathname, i, cmd_tbl, shell) == FALSE)
+		return (FALSE);
+	pid = fork();
+	if (pid < 0)
+		print_error_and_exit(shell);
+	else if (pid == 0)
+	{
+		handle_fd(fd);
+		enable_redirections(shell->cmd_tbls, i);
+		if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
+			exit (1);
+	}
+	handle_fd(fd + 1);
+	*prevpipe = fd[0];
+	return (TRUE);
+}
+
+int	execute_cmd(int *prevpipe, int i, t_shell *shell)
+{
+	t_tkn_tbl	*tkn_tbl;
+	int			fd[2];
+	t_cmd_tbl	*cmd_tbl;
+
+	cmd_tbl = &(shell->cmd_tbls[i]);
+	tkn_tbl = shell->tkn_tbl;
+	if (handle_redirections(tkn_tbl, shell->cmd_tbls,
+			i, shell) == FALSE)
+		return (close_fd(prevpipe), FALSE);
+	if (cmd_tbl->cmd == NULL)
+		return (close_fd(prevpipe), TRUE);
+	fd[0] = -1;
+	fd[1] = -1;
+	if (handle_infile(i, prevpipe, shell) == FALSE)
+		return (FALSE);
+	if (handle_outfile(fd, i, prevpipe, shell) == FALSE)
+		return (FALSE);
+	if (execute_child_and_parent(fd, prevpipe, i, shell) == FALSE)
+		return (FALSE);
 }
 
 int	populate_infile(t_cmd_tbl *cmd_tbl, int prevpipe)
@@ -84,6 +151,14 @@ int	populate_infile(t_cmd_tbl *cmd_tbl, int prevpipe)
 		}
 	}
 	return (TRUE);
+}
+
+void	wait_child_processes(void)
+{
+	int	status;
+
+	while (wait(&status) > 0)
+		;
 }
 
 void	execute_in_child(t_shell *shell, char *pathname, t_cmd_tbl *cmd_tbl, int i)
@@ -105,16 +180,14 @@ int	execute_last_command(t_shell *shell, int i, int prevpipe)
 {
 	t_cmd_tbl	*cmd_tbl;
 	t_tkn_tbl	*tkn_tbl;
-	int			j;
 	char		*pathname;
 
 	cmd_tbl = &(shell->cmd_tbls[i]);
 	tkn_tbl = shell->tkn_tbl;
-	j = skip_n_pipes(tkn_tbl, i);
-	if (handle_redirections_pipes(tkn_tbl, shell->cmd_tbls, j, shell) == FALSE)
-		return (close_prevpipe(&prevpipe), FALSE);
+	if (handle_redirections(tkn_tbl, shell->cmd_tbls, i, shell) == FALSE)
+		return (close_fd(&prevpipe), FALSE);
 	if (cmd_tbl->cmd == NULL)
-		return (close_prevpipe(&prevpipe), TRUE);
+		return (close_fd(&prevpipe), TRUE);
 	if (populate_infile(cmd_tbl, prevpipe) == FALSE)
 		return (FALSE);
 	pathname = construct_pathname(cmd_tbl->cmd, shell);
@@ -124,128 +197,8 @@ int	execute_last_command(t_shell *shell, int i, int prevpipe)
 	execute_in_child(shell, pathname, cmd_tbl, i);
 	wait_child_processes();
 	if (cmd_tbl->in >= 0)
-		close_prevpipe(&prevpipe);
+		close_fd(&prevpipe);
 	close_files(cmd_tbl);
-	return (TRUE);
-}
-
-void	handle_prevpipe(int *prevpipe)
-{
-	close_prevpipe(prevpipe);
-	*prevpipe = -1;
-}
-
-int	construct_pathname_safely(char **pathname, int i, t_cmd_tbl *cmd_tbl,
-	t_shell *shell)
-{
-	*pathname = construct_pathname(cmd_tbl->cmd, shell);
-	if (*pathname == NULL)
-		return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);
-	add_command_to_args(*pathname, i, shell);
-	return (TRUE);
-}
-
-int	execute_cmd_with_null_write(int *prevpipe, int i, t_cmd_tbl *cmd_tbl,
-	t_shell *shell)
-{
-	pid_t	pid;
-	char	*pathname;
-
-	if (construct_pathname_safely(&pathname, i, cmd_tbl, shell) == FALSE)
-		return (FALSE);
-	if (*prevpipe >= 0)
-		close(*prevpipe);
-	*prevpipe = -1;
-	pid = fork();
-	if (pid < 0)
-		print_error_and_exit(shell);
-	else if (pid == 0)
-	{
-		if (access("/dev/null", W_OK) == -1)
-			return (write_file_error_message("/dev/null"), FALSE);
-		cmd_tbl->out = open("/dev/null", O_WRONLY);
-		if (cmd_tbl->out < 0)
-			return (write_file_error_message("/dev/null"), FALSE);
-		enable_redirections(shell->cmd_tbls, i);
-		return (execve(pathname, cmd_tbl->args, shell->envs), exit (1), FALSE);
-	}
-	if (cmd_tbl->in >= 0 && *prevpipe >= 0)
-		close(*prevpipe);
-	*prevpipe = -1;
-	return (TRUE);
-}
-
-int	execute_cmd(t_shell *shell, int i, int *prevpipe)
-{
-	t_cmd_tbl	*cmd_tbl;
-	t_tkn_tbl	*tkn_tbl;
-	int			j;
-	char		*pathname;
-	pid_t		pid;
-	int			fd[2];
-
-	cmd_tbl = &(shell->cmd_tbls[i]);
-	tkn_tbl = shell->tkn_tbl;
-	j = skip_n_pipes(tkn_tbl, i);
-	if (handle_redirections_pipes(tkn_tbl, shell->cmd_tbls, j, shell) == FALSE)
-		return (handle_prevpipe(prevpipe), FALSE);
-	if (cmd_tbl->cmd == NULL)
-		return (handle_prevpipe(prevpipe), TRUE);
-	pathname = construct_pathname(cmd_tbl->cmd, shell);
-	if (pathname == NULL)
-		return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);
-	add_command_to_args(pathname, i, shell);
-	if (cmd_tbl->in < 0)
-	{
-		if (*prevpipe >= 0)
-			cmd_tbl->in = *prevpipe;
-		else
-		{
-			if (access("/dev/null", R_OK) == -1)
-				return (write_file_error_message("/dev/null"), FALSE);
-			cmd_tbl->in = open("/dev/null", O_RDONLY);
-			if (cmd_tbl->in < 0)
-				return (write_file_error_message("/dev/null"), FALSE);
-		}
-	}
-	if (cmd_tbl->out < 0 && shell->cmd_tbls[i + 1].in_file == NULL)
-	{
-		if (pipe(fd) == -1)
-		{
-			handle_prevpipe(prevpipe);
-			clean_exit(shell, TRUE);
-		}
-		pid = fork();
-		if (pid < 0)
-		{
-			close(fd[0]);
-			close(fd[1]);
-			print_error_and_exit(shell);
-		}
-		else if (pid == 0)
-		{
-			close(fd[0]);
-			if (cmd_tbl->out < 0)
-				cmd_tbl->out = fd[1];
-			enable_redirections(shell->cmd_tbls, i);
-			if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
-				exit (1);
-		}
-		close(fd[1]);
-		if (cmd_tbl->in >= 0)
-			handle_prevpipe(prevpipe);
-		*prevpipe = fd[0];
-	}
-	else if (cmd_tbl->out >= 0)
-	{
-		execute_in_child(shell, pathname, cmd_tbl, i);
-		if (cmd_tbl->in >= 0)
-			close(*prevpipe);
-		*prevpipe = -1;
-	}
-	else if (shell->cmd_tbls[i + 1].in_file != NULL
-		&& execute_cmd_with_null_write(prevpipe, i, cmd_tbl, shell) == FALSE)
-		return (FALSE);
 	return (TRUE);
 }
 
@@ -267,7 +220,7 @@ void	execute_with_pipes(t_shell *shell)
 		}
 		else
 		{
-			if (execute_cmd(shell, i, prevpipe) == FALSE)
+			if (execute_cmd(prevpipe, i, shell) == FALSE)
 				return ;
 		}
 		i++;

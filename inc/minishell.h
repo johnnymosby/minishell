@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/19 15:02:56 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:06:28 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ int		find_last_heredoc_in_cmd(t_tkn_tbl *tkn_tbl, int i);
 
 // execute/...
 //	 .../execute.c
+int		handle_redirections(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls,
+			int n_cmd_tbl, t_shell *shell);
 int		open_redirection(t_tkn_tbl *tkn_tbl, int n_cmd_tbl,
 			int i, t_shell *shell);
 void	add_command_to_args(char *pathname, int i, t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/19 16:24:12 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:09:45 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,35 @@ int	open_redirection(t_tkn_tbl *tkn_tbl, int n_cmd_tbl,
 	return (TRUE);
 }
 
-int	handle_redirections_no_pipes(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, int n_cmd_tbl, t_shell *shell)
+int	skip_n_pipes(t_tkn_tbl	*tkn_tbl, int n)
+{
+	int	j;
+	int	i;
+
+	j = 0;
+	i = 0;
+	while (i != tkn_tbl->n_tkns)
+	{
+		if (j == n)
+			return (i);
+		if (tkn_tbl->tkns[i].type == FT_PIPE)
+			j++;
+		i++;
+	}
+	return (i);
+}
+
+int	handle_redirections(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, int n_cmd_tbl, t_shell *shell)
 {
 	int		i;
 	t_type	type;
 
-	i = 0;
+	i = skip_n_pipes(tkn_tbl, n_cmd_tbl);
 	while (i != tkn_tbl->n_tkns)
 	{
 		type = tkn_tbl->tkns[i].type;
+		if (type == FT_PIPE)
+			return (TRUE);
 		if (type == FT_LESS || type == FT_DLESS
 			|| type == FT_GREAT || type == FT_DGREAT)
 		{
@@ -166,7 +186,7 @@ void	execute_without_pipes(t_shell *shell)
 	char	*pathname;
 	int		status;
 
-	if (handle_redirections_no_pipes(shell->tkn_tbl, shell->cmd_tbls, 0, shell)
+	if (handle_redirections(shell->tkn_tbl, shell->cmd_tbls, 0, shell)
 		== FALSE)
 		return ;
 	if (shell->cmd_tbls[0].cmd == NULL)
