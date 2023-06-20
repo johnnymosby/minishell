@@ -6,75 +6,13 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 15:25:56 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:41:09 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 extern int	g_status;
-
-int	find_last_heredoc_in_cmd(t_tkn_tbl *tkn_tbl, int i)
-{
-	int	last_heredoc_ind;
-
-	last_heredoc_ind = -1;
-	while (i != tkn_tbl->n_tkns && tkn_tbl->tkns[i].type != FT_PIPE)
-	{
-		if (tkn_tbl->tkns[i].type == FT_DLESS)
-			last_heredoc_ind = i;
-		i++;
-	}
-	return (last_heredoc_ind);
-}
-
-int	skip_cmd(t_tkn_tbl *tkn_tbl, int i)
-{
-	while (i != tkn_tbl->n_tkns && tkn_tbl->tkns[i].type != FT_PIPE)
-	{
-		if (tkn_tbl->tkns[i].type == FT_PIPE)
-			return (i + 1);
-		i++;
-	}
-	return (i);
-}
-
-int	imitate_heredoc(char *s, t_shell *shell)
-{
-	char	*input;
-
-	g_status = 1;
-	while (TRUE)
-	{
-		input = readline("> ");
-		if (g_status == 130)
-		{
-			g_status = 1;
-			return (FALSE);
-		}
-		if (input == NULL)
-			return (TRUE);
-		else if (ft_strcmp(input, s) == 0)
-			return (free(input), TRUE);
-		free(input);
-	}
-	return (TRUE);
-}
-
-int	imitate_heredocs(t_tkn_tbl *tkn_tbl, int i, int last_heredoc_ind,
-	t_shell *shell)
-{
-	while (i != tkn_tbl->n_tkns && tkn_tbl->tkns[i].type != FT_PIPE)
-	{
-		if (tkn_tbl->tkns[i].type == FT_DLESS && i != last_heredoc_ind)
-		{
-			if (imitate_heredoc(tkn_tbl->tkns[i + 1].cntnt, shell) == FALSE)
-				return (FALSE);
-		}
-		i++;
-	}
-	return (TRUE);
-}
 
 int	check_access_to_file(const char *pathname, t_shell *shell)
 {
@@ -154,19 +92,22 @@ int	handle_heredoc(int *last_heredoc_ind, int *i, int *j, t_shell *shell)
 	cmd_tbls = shell->cmd_tbls;
 	tkn_tbl = shell->tkn_tbl;
 	*last_heredoc_ind = find_last_heredoc_in_cmd(tkn_tbl, *i);
-	if (*last_heredoc_ind != -1 && *i != *last_heredoc_ind)
+	if (*last_heredoc_ind != -1)
 	{
-		if (imitate_heredocs(tkn_tbl, *i, *last_heredoc_ind, shell) == FALSE)
-			return (FALSE);
-		*i = *last_heredoc_ind;
-	}
-	else
-	{
-		if (*last_heredoc_ind != -1 && *i == *last_heredoc_ind
-			&& add_heredoc(tkn_tbl->tkns[*last_heredoc_ind + 1].cntnt,
-				&cmd_tbls[*j], *j, shell) == FALSE)
-			return (FALSE);
-		*i = skip_cmd(tkn_tbl, *i);
+		if (*i != *last_heredoc_ind)
+		{
+			if (imitate_heredocs(tkn_tbl, *i, *last_heredoc_ind, shell)
+				== FALSE)
+				return (FALSE);
+			*i = *last_heredoc_ind;
+		}
+		else
+		{
+			if (add_heredoc(tkn_tbl->tkns[*last_heredoc_ind + 1].cntnt,
+					&cmd_tbls[*j], *j, shell) == FALSE)
+				return (FALSE);
+			*i = skip_cmd(tkn_tbl, *i);
+		}
 	}
 	return (TRUE);
 }

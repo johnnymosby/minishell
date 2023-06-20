@@ -35,7 +35,7 @@ EXPAND	=	expander expander_utils put_value
 EXPAND	:=	$(addprefix expander/, $(EXPAND))
 
 PARSER	=	parser concatenate_words check_syntax check_syntax_utils check_access construct_cmd_tables \
-			handle_heredocs
+			handle_heredocs imitate_heredocs heredocs_utils
 PARSER	:=	$(addprefix parser/, $(PARSER))
 
 EXEC	=	execute original_builtins execute_with_pipes

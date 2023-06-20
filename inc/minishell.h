@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 15:06:28 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:42:04 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,12 @@ void	construct_cmd_tables(t_tkn_tbl *tkn_tbl, t_shell *shell);
 int		handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls,
 			t_shell *shell);
 int		find_last_heredoc_in_cmd(t_tkn_tbl *tkn_tbl, int i);
+//	 .../imitate_heredocs.c
+int		imitate_heredocs(t_tkn_tbl *tkn_tbl, int i, int last_heredoc_ind,
+			t_shell *shell);
+//	 .../heredocs_utils.c
+int		find_last_heredoc_in_cmd(t_tkn_tbl *tkn_tbl, int i);
+int		skip_cmd(t_tkn_tbl *tkn_tbl, int i);
 
 // execute/...
 //	 .../execute.c
