@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:38:19 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/19 16:18:15 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:24:30 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ char	*ft_getenv(char **env, char *var)
 	int	j;
 
 	i = 0;
-	if(ft_strchr(var, '='))
+	if (ft_strchr(var, '='))
 		return (NULL);
 	j = ft_strlen(var);
-	if (j == 0)		// check??
+	if (j == 0)
 		return (NULL);
 	while (env && env[i])
 	{
@@ -39,10 +39,10 @@ char	*ft_getenv(char **env, char *var)
 	return (NULL);
 }
 
-char *join_with_equal(char *s1, char *s2)
+char	*join_with_equal(char *s1, char *s2)
 {
-	char *str;
-	char *tmp;
+	char	*str;
+	char	*tmp;
 
 	if (!s1)
 		return (NULL);
@@ -52,24 +52,23 @@ char *join_with_equal(char *s1, char *s2)
 	return (str);
 }
 
-/*
-This function inserts a value of an environmental vairable to the existing list of variables
-*/
-char **ft_set_new_env(char **env, char *var, char *value)
+/*This function inserts a value of an environmental 
+vairable to the existing list of variables*/
+char	**ft_set_new_env(char **env, char *var, char *value)
 {
-	int i[2];
-	char *str;
-	char *tmp;
+	int		i[2];
+	char	*str;
+	char	*tmp;
 
-	if(ft_strchr(var, '=') || !var)
+	if (ft_strchr(var, '=') || !var)
 		return (NULL);
 	str = join_with_equal(var, value);
 	i[0] = 0;
-	while(env && env[i[0]])
+	while (env && env[i[0]])
 	{
 		i[1] = ft_strlen(var);
-		if (!ft_strncmp(env[i[0]], var, i[1]) && 
-			env[i[0]][i[1]] == '=')
+		if (!ft_strncmp(env[i[0]], var, i[1])
+			&& env[i[0]][i[1]] == '=')
 		{
 			tmp = env[i[0]];
 			env[i[0]] = str;
@@ -78,20 +77,20 @@ char **ft_set_new_env(char **env, char *var, char *value)
 		}
 		i[0]++;
 	}
-	env = ft_add_line(env, str); 
+	env = ft_add_line(env, str);
 	free(str);
 	return (env);
 }
 
-/* 
-This function checks if a given variable *var exists in the list **env of environmental variables
+/* This function checks if a given variable *var
+exists in the list **env of environmental variables
 */
-static int 	is_in_envs(char *var, char **env)
+static	int	is_in_envs(char *var, char **env)
 {
-	int i;
-	int n;
+	int	i;
+	int	n;
 
-	if (!var|| !env || !*env)
+	if (!var || !env || !*env)
 		return (-1);
 	n = ft_strchr(var, '=');
 	i = 0;
@@ -103,5 +102,3 @@ static int 	is_in_envs(char *var, char **env)
 	}
 	return (-1);
 }
-
-

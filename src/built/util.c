@@ -6,13 +6,11 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 11:40:44 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/20 17:44:38 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:20:28 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builts.h"
-
-
 
 char	**free_n_lines(char **ss, char **ss1, int n)
 {
@@ -27,20 +25,6 @@ char	**free_n_lines(char **ss, char **ss1, int n)
 	if (!ss)
 		free(ss);
 	return (ss1);
-}
-
-void	n_lines_free(char **ss, int n)
-{
-	int	i;
-
-	i = -1;
-	while (++i < n)
-	{
-		if (!ss[i])
-			free(ss[i]);
-	}
-	if (!ss)
-		free(ss);
 }
 
 char	**ft_add_line(char **ss, char *str)
@@ -82,6 +66,7 @@ int	ft_strchr_p(char *s, unsigned char ch)
 		i++;
 	return (i);
 }
+
 static int	is_in_envs(char *var, char **env)
 {
 	int		i;
@@ -107,6 +92,7 @@ static int	is_in_envs(char *var, char **env)
 	free(var1);
 	return (-1);
 }
+
 char	**ft_remove_line(char **ss, char *str)
 {
 	char	**res;
@@ -135,9 +121,3 @@ char	**ft_remove_line(char **ss, char *str)
 	res[i[0]] = NULL;
 	return (res);
 }
-
-/*
-tmp= *ft_remove_line(env, str);
-free(env);
-env = tmp; 
-*/

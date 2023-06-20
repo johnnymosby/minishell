@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:59:34 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/20 17:41:40 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:16:14 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	is_repeatedn(char *s)
 		return (1);
 	return (0);
 }
+
 int	ft_echo(char **ss)
 {
 	int	i;
@@ -49,9 +50,3 @@ int	ft_echo(char **ss)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }
-
-/*int main(int c, char **v)
-{
-    (void)c;
-    ft_echo(v);
-}*/

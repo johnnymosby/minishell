@@ -6,13 +6,14 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/20 17:41:20 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:31:58 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builts.h" //"../inc/minishell.h"
+#include "builts.h"
+//"../inc/minishell.h"
 
-extern int	signal;
+extern int	g_status;
 
 int	ft_is_built(t_shell *shell)
 {
@@ -33,7 +34,7 @@ int	ft_is_built(t_shell *shell)
 		return (1);
 	else if (i == 4 && !ft_strncmp(cmd, "exit", i))
 		return (1);
-       	else if (i == 5 && !ft_strncmp(cmd, "unset", i)) 
+	else if (i == 5 && !ft_strncmp(cmd, "unset", i))
 		return (1);
 	else if (i == 6 && !ft_strncmp(cmd, "export", i))
 		return (1);
@@ -53,24 +54,17 @@ int	builtin(t_shell *shell)
 		cmd = shell->t_cmd_tbl[0];
 		i = ft_strlen(cmd);
 		if (i == 2 && !ft_strncmp(cmd, "cd", i))
-			signal = ft_cd(shell);
+			g_status = ft_cd(shell);
 		else if (i == 3 && !ft_strncmp(cmd, "pwd", i))
-			signal = ft_pwd(shell);
+			g_status = ft_pwd(shell);
 		else if (i == 4 && !ft_strncmp(cmd, "echo", i))
-			signal = ft_echo(shell);
+			g_status = ft_echo(shell);
 		else if (i == 4 && !ft_strncmp(cmd, "exit", i))
-			signal = ft_exit(shell);
+			g_status = ft_exit(shell);
 		else if (i == 5 && !ft_strncmp(cmd, "unset", i))
-			signal = ft_unset(shell);
+			g_status = ft_unset(shell);
 		else if (i == 6 && !ft_strncmp(cmd, "export", i))
-			signal = ft_export(shell);
+			g_status = ft_export(shell);
 	}
-	return (signal);
+	return (g_status);
 }
-/*
-int	main(int argc, char **argv)
-{
-	t_shell *shell;
-
-
-}*/
