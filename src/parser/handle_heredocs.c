@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 12:25:50 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:25:56 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ int	handle_heredoc(int *last_heredoc_ind, int *i, int *j, t_shell *shell)
 				&cmd_tbls[*j], *j, shell) == FALSE)
 			return (FALSE);
 		*i = skip_cmd(tkn_tbl, *i);
-		*j = *j + 1;
 	}
 	return (TRUE);
 }
