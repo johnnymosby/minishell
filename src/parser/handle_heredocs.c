@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 16:15:00 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:32:04 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,17 @@ int	add_heredoc(char *stopword, t_cmd_tbl *cmd_tbl, int j, t_shell *shell)
 		return (FALSE);
 	file_id = ft_itoa(j);
 	if (file_id == NULL)
-		clean_exit(shell, TRUE);
+		clean_exit(shell);
 	pathname = ft_strjoin("/tmp/tmp_heredoc_", file_id);
 	free(file_id);
 	if (pathname == NULL)
-		clean_exit(shell, TRUE);
+		clean_exit(shell);
 	fd = open(pathname, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (fd < 0)
 	{
 		write_file_error_message(pathname);
 		free(pathname);
-		clean_exit(shell, TRUE);
+		clean_exit(shell);
 	}
 	free(pathname);
 	if (fill_heredoc(stopword, fd, shell) == FALSE)

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:12:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 16:34:31 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:32:04 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*extract_folder(const char *path, int n, t_shell *shell)
 	{
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 		ft_putchar_fd('\n', STDERR_FILENO);
-		clean_exit(shell, TRUE);
+		clean_exit(shell);
 	}
 	i = 0;
 	while (i != len)
@@ -97,7 +97,7 @@ static char	*find_folder_with_command(char *cmd, const char *path,
 			{
 				write_file_error_message(folder);
 				free(folder);
-				clean_exit(shell, TRUE);
+				clean_exit(shell);
 			}
 			if (command_is_in_folder(dir, cmd) == TRUE)
 				return (folder);
@@ -133,7 +133,7 @@ char	*construct_pathname(char *cmd, t_shell *shell)
 	{
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 		ft_putchar_fd('\n', STDERR_FILENO);
-		clean_exit(shell, TRUE);
+		clean_exit(shell);
 	}
 	return (pathname);
 }

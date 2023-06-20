@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:48:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 16:48:41 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:32:04 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	handle_outfile(int *fd, int i, int *prevpipe, t_shell *shell)
 		if (pipe(fd) == -1)
 		{
 			handle_fd(prevpipe);
-			clean_exit(shell, TRUE);
+			clean_exit(shell);
 		}
 		if (cmd_tbl->out < 0)
 			cmd_tbl->out = fd[1];
