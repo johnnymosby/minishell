@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 10:33:57 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/26 15:17:36 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:32:49 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	add_word(t_tkn_tbl *tkn_tbl, const char *inp, int i, t_shell *shell)
 	ret = len;
 	tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt = ft_calloc(len + 1, sizeof(char));
 	if (tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt == NULL)
-		clean_exit(shell, FT_ERROR);
+		clean_exit(shell);
 	tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt[len] = '\0';
 	while (--len >= 0)
 		tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt[len] = inp[i + len];

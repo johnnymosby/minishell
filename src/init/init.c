@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:40:35 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/13 12:01:33 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:33:55 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*construct_prompt(t_shell *shell, char *username)
 	prompt_tail = "@minishell % ";
 	prompt_length = ft_strlen(username) + ft_strlen(prompt_tail) + 1;
 	prompt = malloc(sizeof(char) * prompt_length);
-	exit_if_true(shell, prompt == NULL, FT_ERROR);
+	exit_if_true(shell, prompt == NULL);
 	prompt[0] = '\0';
 	ft_strlcat(prompt, username, prompt_length);
 	ft_strlcat(prompt, prompt_tail, prompt_length);
@@ -51,12 +51,12 @@ void	dup_std_in_out(t_shell *shell)
 	int	out;
 
 	in = dup(STDIN_FILENO);
-	exit_if_true(shell, in == -1, FT_ERROR);
+	exit_if_true(shell, in == -1);
 	out = dup(STDOUT_FILENO);
 	if (out == -1)
 	{
 		close(in);
-		exit_if_true(shell, TRUE, FT_ERROR);
+		clean_exit(shell);
 	}
 	shell->std_in_out[0] = in;
 	shell->std_in_out[1] = out;
