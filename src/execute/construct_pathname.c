@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   original_builtins.c                                :+:      :+:    :+:   */
+/*   construct_pathname.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:12:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/14 15:13:35 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:19:18 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	find_path_variable(char **envs)
+static int	find_path_variable(char **envs)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	find_path_variable(char **envs)
 	return (-1);
 }
 
-char	*extract_folder(const char *path, int n,  t_shell *shell)
+static char	*extract_folder(const char *path, int n, t_shell *shell)
 {
 	int		len;
 	char	*folder;
@@ -53,7 +53,7 @@ char	*extract_folder(const char *path, int n,  t_shell *shell)
 	return (folder);
 }
 
-char *get_next_folder_from_path(const char *path, int i, t_shell *shell)
+static char	*get_next_folder_from_path(const char *path, int i, t_shell *shell)
 {
 	int		j;
 	int		n;
@@ -78,7 +78,7 @@ char *get_next_folder_from_path(const char *path, int i, t_shell *shell)
 		return (extract_folder(path, n, shell));
 }
 
-int	command_is_in_folder(DIR *dir, char *cmd)
+static int	command_is_in_folder(DIR *dir, char *cmd)
 {
 	struct dirent	*entry;
 
@@ -93,7 +93,8 @@ int	command_is_in_folder(DIR *dir, char *cmd)
 	return (FALSE);
 }
 
-char	*find_folder_with_command(char *cmd, const char *path, t_shell *shell)
+static char	*find_folder_with_command(char *cmd, const char *path,
+	t_shell *shell)
 {
 	DIR				*dir;
 	char			*folder;

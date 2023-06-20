@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 15:41:09 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:15:00 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,19 @@ int	handle_heredoc(int *last_heredoc_ind, int *i, int *j, t_shell *shell)
 	cmd_tbls = shell->cmd_tbls;
 	tkn_tbl = shell->tkn_tbl;
 	*last_heredoc_ind = find_last_heredoc_in_cmd(tkn_tbl, *i);
-	if (*last_heredoc_ind != -1)
+	if (*last_heredoc_ind != -1 && *i != *last_heredoc_ind)
 	{
-		if (*i != *last_heredoc_ind)
-		{
-			if (imitate_heredocs(tkn_tbl, *i, *last_heredoc_ind, shell)
-				== FALSE)
-				return (FALSE);
-			*i = *last_heredoc_ind;
-		}
-		else
-		{
-			if (add_heredoc(tkn_tbl->tkns[*last_heredoc_ind + 1].cntnt,
-					&cmd_tbls[*j], *j, shell) == FALSE)
-				return (FALSE);
-			*i = skip_cmd(tkn_tbl, *i);
-		}
+		if (imitate_heredocs(tkn_tbl, *i, *last_heredoc_ind, shell) == FALSE)
+			return (FALSE);
+		*i = *last_heredoc_ind;
+	}
+	else
+	{
+		if (*last_heredoc_ind != -1 && *i == *last_heredoc_ind
+			&& add_heredoc(tkn_tbl->tkns[*last_heredoc_ind + 1].cntnt,
+				&cmd_tbls[*j], *j, shell) == FALSE)
+			return (FALSE);
+		*i = skip_cmd(tkn_tbl, *i);
 	}
 	return (TRUE);
 }

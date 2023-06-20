@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:40:47 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 15:40:59 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:46:56 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,3 +36,4 @@ int	skip_cmd(t_tkn_tbl *tkn_tbl, int i)
 	}
 	return (i);
 }
+ 

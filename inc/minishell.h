@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 15:42:04 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:19:37 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,20 +141,13 @@ int		skip_cmd(t_tkn_tbl *tkn_tbl, int i);
 
 // execute/...
 //	 .../execute.c
-int		handle_redirections(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls,
-			int n_cmd_tbl, t_shell *shell);
-int		open_redirection(t_tkn_tbl *tkn_tbl, int n_cmd_tbl,
-			int i, t_shell *shell);
 void	add_command_to_args(char *pathname, int i, t_shell *shell);
 void	enable_redirections(t_cmd_tbl *cmd_tbls, int i);
 void	execute(t_shell *shell);
-
-//	 .../original_builtins.c
-int		find_path_variable(char **envs);
-char	*extract_folder(const char *path, int n,  t_shell *shell);
-char	*get_next_folder_from_path(const char *path, int i, t_shell *shell);
-int		command_is_in_folder(DIR *dir, char *cmd);
-char	*find_folder_with_command(char *cmd, const char *path, t_shell *shell);
+//	 .../handle_redirections.c
+int		handle_redirections(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls,
+			int n_cmd_tbl, t_shell *shell);
+//	 .../construct_pathname.c
 char	*construct_pathname(char *cmd, t_shell *shell);
 //	.../execute_with_pipes.c
 void	execute_with_pipes(t_shell *shell);
