@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 16:19:37 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:49:36 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,10 +147,16 @@ void	execute(t_shell *shell);
 //	 .../handle_redirections.c
 int		handle_redirections(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls,
 			int n_cmd_tbl, t_shell *shell);
+//	 .../handle.c
+
+//	.../execute_with_pipes.c
+void	close_fd(int *fd);
+void	execute_with_pipes(t_shell *shell);
+//	.../execute_last_cmd.c
+int		handle_infile(int i, int *prevpipe, t_shell *shell);
+int		execute_last_cmd(t_shell *shell, int i, int prevpipe);
 //	 .../construct_pathname.c
 char	*construct_pathname(char *cmd, t_shell *shell);
-//	.../execute_with_pipes.c
-void	execute_with_pipes(t_shell *shell);
 
 // 	exit/...
 //	 .../exit.c

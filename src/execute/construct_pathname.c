@@ -6,25 +6,11 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:12:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 16:19:18 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:34:31 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static int	find_path_variable(char **envs)
-{
-	int	i;
-
-	i = 0;
-	while (envs[i] != NULL)
-	{
-		if (ft_strncmp(envs[i], "PATH=", 5) == 0)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
 
 static char	*extract_folder(const char *path, int n, t_shell *shell)
 {
@@ -129,8 +115,14 @@ char	*construct_pathname(char *cmd, t_shell *shell)
 	char	*folder;
 	int		path_ind;
 
-	path_ind = find_path_variable(shell->envs);
-	if (path_ind < 0)
+	path_ind = 0;
+	while (shell->envs[path_ind] != NULL)
+	{
+		if (ft_strncmp(shell->envs[path_ind], "PATH=", 5) == 0)
+			break ;
+		path_ind++;
+	}
+	if (shell->envs[path_ind] == NULL)
 		return (NULL);
 	folder = find_folder_with_command(cmd, shell->envs[path_ind], shell);
 	if (folder == NULL)
