@@ -6,11 +6,17 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:57:51 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/14 13:11:58 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:56:33 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	return_std_fds(t_shell *shell)
+{
+	dup2(shell->std_in_out[0], STDIN_FILENO);
+	dup2(shell->std_in_out[1], STDOUT_FILENO);
+}
 
 void	free_input(t_shell *shell)
 {
@@ -25,5 +31,6 @@ void	clean_shell(t_shell *shell)
 		free_cmd_tbls(&shell->cmd_tbls, shell->n_cmd_tbls);
 		free_tkn_tbl(&shell->tkn_tbl);
 		free_input(shell);
+		return_std_fds(shell);
 	}
 }
