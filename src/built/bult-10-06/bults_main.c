@@ -2,63 +2,56 @@
 
 extern int	signal;
 
-int	builtin(t_shell *prompt, int *signal)
+int ft_is_built(t_shell *shell)
 {
-	t_cmd_tbl	*cmd_list;
-	char	*cmd;
-	char	**args;
-	int 	n;
-
-	cmd_list = t>shell->cmd_tbls;
-
-	while (cm_list)
-	{
-		
-		n = 0;
-		if (a)
-			n = ft_strlen(*a);
-		if (a && !ft_strncmp(*a, "exit", n) && n == 4)
-			signal = mini_exit(cmd, is_exit);
-		else if (!cmd->next && a && !ft_strncmp(*a, "cd", n) && n == 2)
-			signal = mini_cd(prompt);
-		else if (!cmd->next && a && !ft_strncmp(*a, "export", n) && n == 6)
-			signal = mini_export(prompt);
-		else if (!cmd->next && a && !ft_strncmp(*a, "unset", n) && n == 5)
-			signal = mini_unset(prompt);
-		else
-		{
-			signal(SIGINT, SIG_IGN);
-			signal(SIGQUIT, SIG_IGN);
-			exec_cmd(prompt, cmd);
-		}
-		cmd_list = cmd_list->next;
-	}
-	return (signal);
+	int	i;
+	char *cmd;
+	
+	cmd = shell->t_cmd_tbl[0];
+	i = ft_strlen(cmd);
+	if (i == 0)
+		return (0);
+	else if (i == 2 && !ft_strncmp(cmd, "cd", i))
+		return (1);
+	else if (i == 3 && !ft_strncmp(cmd, "env", i))
+		return (1);
+	else if (i == 3 && !ft_strncmp(cmd, "pwd", i))
+		return (1);
+	else if (i == 4 && !ft_strncmp(cmd, "echo", i))
+		return (1);
+	else if (i == 4 && !ft_strncmp(cmd, "exit", i))
+		return (1):
+	else if (i == 5 && !ft_strncmp(cmd, "unset", i))
+		return (1);
+	else if (i == 6 && !ft_strncmp(cmd, "export", i))
+		return(1);
+	return (0);
 }
 
-int	is_builtin(t_shell *s)
+int	builtin(t_shell *shell)
 {
-	int		l;
-
-	if (!s->full_cmd)
-		return (0);
-	if ((n->full_cmd && ft_strchr(*n->full_cmd, '/')) || (n->full_path && \
-		ft_strchr(n->full_path, '/')))
-		return (0);
-	l = ft_strlen(*n->full_cmd);
-	if (!ft_strncmp(*n->full_cmd, "pwd", l) && l == 3)
-		return (1);
-	if (!ft_strncmp(*n->full_cmd, "env", l) && l == 3)
-		return (1);
-	if (!ft_strncmp(*n->full_cmd, "cd", l) && l == 2)
-		return (1);
-	if (!ft_strncmp(*n->full_cmd, "export", l) && l == 6)
-		return (1);
-	if (!ft_strncmp(*n->full_cmd, "unset", l) && l == 5)
-		return (1);
-	if (!ft_strncmp(*n->full_cmd, "echo", l) && l == 4)
-		return (1);
-	if (!ft_strncmp(*n->full_cmd, "exit", l) && l == 4)
-		return (1);
-	return (0);
+	int	i;
+	int j;
+	char *cmd;
+	
+	j = 0;
+	i = 0;
+	while (j < n_cmd_tbls)
+	{
+		cmd = shell->t_cmd_tbl[0];
+		i = ft_strlen(cmd);
+	 if (i == 2 && !ft_strncmp(cmd, "cd", i))
+		signal = ft_cd(shell);
+	else if (i == 3 && !ft_strncmp(cmd, "pwd", i))
+		signal = ft_pwd(shell);
+	else if (i == 4 && !ft_strncmp(cmd, "echo", i))
+		signal = ft_echo(shell);
+	else if (i == 4 && !ft_strncmp(cmd, "exit", i))
+		signal = ft_exit(shell);
+	else if (i == 5 && !ft_strncmp(cmd, "unset", i))
+		signal = ft_unset(shell);
+	else if (i == 6 && !ft_strncmp(cmd, "export", i))
+		signal = ft_export(shell);
+	}
+	return (signal);
 }

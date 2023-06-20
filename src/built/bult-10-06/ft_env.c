@@ -29,9 +29,9 @@ char	*ft_getenv(char **env, char *var)
 		return (NULL);
 	while (env && env[i])
 	{
-		//j = ft_strlen(var);
-		//if (j < ft_strchr(cmd->envs[i], '='))
-		//	j = ft_strchr(cmd->envs[i], '=');
+		j = ft_strlen(var);
+		if (j < ft_strchr(cmd->envs[i], '='))
+			j = ft_strchr(cmd->envs[i], '=');
 		if (!ft_strncmp(env[i], var, j))
 			return (ft_substr(env[i], j + 1, ft_strlen(env[i])));
 		i++;

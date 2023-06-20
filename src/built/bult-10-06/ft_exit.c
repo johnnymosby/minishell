@@ -12,11 +12,13 @@
 
 #include "builts.h"
 
-int ft_exit(t_cmd_tbl *cmd, int *exit_code)
+//i think  exit code should be a global variable coming from signals etc.
+int ft_exit(t_shell *shell, int *exit_code)
 {
-    t_shell	*cmd_tbls;	 
+    t_cmd_tbl	*cmdtbls;	 
 	long int	status[2];
 
+	
 	current = !cmd->content;
 	if (!cmd_tbls->cmd_tbls || !cmd_tbls->cmd_tbls[1])
 		return (0);

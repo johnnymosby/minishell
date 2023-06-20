@@ -20,7 +20,6 @@ old and current dicrectory addresses are updated
 int change_address(char **env, char *new)
 {
     char    s[MAX_PATH];
-    //char    s1[MAX_PATH];
 
     if (!getcwd(s, MAX_PATH))
         return(2);
@@ -28,31 +27,39 @@ int change_address(char **env, char *new)
         ft_set_new_env(env, "PWD", s);
     s = ft_getenv(env, "PWD");
     ft_set_new_env(env, "PWD", new);
-    //if(!is_in_envs("OLDPWD", cmd->env))  
-      //  ft_set_new_env(cmd, "OLDPWD", s);
+    if(!is_in_envs("OLDPWD", cmd->env))  
+        ft_set_new_env(cmd, "OLDPWD", s);
     ft_set_new_env(env, "OLDPWD", s);  
     return(0);
 }
-int  go_to_old_dir(t_shell *cmd)
+int  go_to_oldpwd(t_shell *shell)
 {
     char    *old;
 
-    old = ft_getenv(cmd, "OLDPWD");
-    chdir(old);
+    if (!is_in_envs("OLPPWD"))
+        code = error_message("ch", "no OLDPWD");
+    else
+    {
+        if (!chdir(old))
+        {
+            code = change_address(shell->envs, old);
+        }
+        else 
+            code = error_message("chdir", "Chdir Error");
     
 }
-int go_to_home(t_shell *cmd)
+int go_to_home(t_shell *shell)
 {
     char *hom;
     int     code;
     
     if (!is_in_envs("HOME"))
-        ft_set_new_env(cmd, "HOME", "/home");
+        ft_set_new_env(shell->envs, "HOME", "/home");
     else
     {
-        hom = ft_getenv(cmd, "HOME");
+        hom = ft_getenv(shell->envs, "HOME");
         if (!chdir(hom))
-            code = change_address(cmd, "HOME");
+            code = change_address(shell->envs, "HOME");
         else 
             code = error_message("chdir", "Chdir Error");
     }
@@ -65,8 +72,8 @@ int go_to_home(t_shell *cmd)
 /*
 Changes the current working directory
 */
-int ft_cd_init(t_shell *cmd)
-{chdir
+int ft_cd_init(t_shell *shell)
+{
     char    *s;
     int     ex_code;
     char    **cd_args;
@@ -86,5 +93,5 @@ int ft_cd_init(t_shell *cmd)
 		else
             ex_code = invalid_error("cd", errno, arg);
 	}
-	return (status);
+	return (ex_code);
 }
