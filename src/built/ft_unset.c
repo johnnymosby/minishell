@@ -6,11 +6,12 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:19:40 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/11 18:55:11 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:42:51 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builts.h"
+
 /*
 Unset without options
 */
@@ -31,8 +32,8 @@ int	ft_unset(t_shell *cmd, char **args)
 				args[a[0]] = tmp;
 			}
 			a[1] = is_in_envs(args[a[0]], cmd->envs);
-            if (a[1] >= 0)
-                ft_remove_line(cmd->envs, NULL, a[1]);
+			if (a[1] >= 0)
+				ft_remove_line(cmd->envs, NULL, a[1]);
 		}
 	}
 	return (0);

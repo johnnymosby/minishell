@@ -6,18 +6,18 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:40:40 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/20 15:38:13 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:41:50 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builts.h"
 
 //i think  exit code should be a global variable coming from signals etc.
-int ft_exit(t_shell *shell, int *exit_code)
+int	ft_exit(t_shell *shell, int *exit_code)
 {
-    t_cmd_tbl	*cmdtbls;	 
+	t_cmd_tbl	*cmdtbls;
 	long int	status[2];
-	
+
 	current = !cmd->content;
 	if (!cmd_tbls->cmd_tbls || !cmd_tbls->cmd_tbls[1])
 		return (0);
