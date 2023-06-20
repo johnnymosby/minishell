@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:29:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/14 14:27:07 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 12:28:39 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ void	remove_all_spaces(t_tkn_tbl *tkn_tbl, t_shell *shell)
 int	parser(t_shell *shell)
 {
 	concatenate_words(shell->tkn_tbl, shell);
-	//printf("after concat\n");
 	remove_all_spaces(shell->tkn_tbl, shell);
-	//after
 	if (check_syntax(shell->tkn_tbl, shell) == FALSE)
 		return (FALSE);
 	construct_cmd_tables(shell->tkn_tbl, shell);

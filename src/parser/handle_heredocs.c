@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/14 14:27:01 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 12:25:50 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,9 @@ int	imitate_heredoc(char *s, t_shell *shell)
 			return (FALSE);
 		}
 		if (input == NULL)
-		{
 			return (TRUE);
-		}
 		else if (ft_strcmp(input, s) == 0)
-		{
-			free(input);
-			return (TRUE);
-		}
+			return (free(input), TRUE);
 		free(input);
 	}
 	return (TRUE);
@@ -106,15 +101,10 @@ int	fill_heredoc(char *stopword, int fd, t_shell *shell)
 		if (g_status == 130)
 		{
 			g_status = 1;
-			free(input);
-			close(fd);
-			return (FALSE);
+			return (free(input), close(fd), FALSE);
 		}
 		if (input == NULL)
-		{
-			close(fd);
-			return (TRUE);
-		}
+			return (close(fd), TRUE);
 		if (ft_strcmp(input, stopword) == 0)
 		{
 			free(input);
@@ -125,8 +115,7 @@ int	fill_heredoc(char *stopword, int fd, t_shell *shell)
 		write(fd, "\n", 1);
 		free(input);
 	}
-	close(fd);
-	return (TRUE);
+	return (close(fd), TRUE);
 }
 
 int	add_heredoc(char *stopword, t_cmd_tbl *cmd_tbl, int j, t_shell *shell)
@@ -157,6 +146,32 @@ int	add_heredoc(char *stopword, t_cmd_tbl *cmd_tbl, int j, t_shell *shell)
 	return (TRUE);
 }
 
+int	handle_heredoc(int *last_heredoc_ind, int *i, int *j, t_shell *shell)
+{
+	t_cmd_tbl	*cmd_tbls;
+	t_tkn_tbl	*tkn_tbl;
+
+	cmd_tbls = shell->cmd_tbls;
+	tkn_tbl = shell->tkn_tbl;
+	*last_heredoc_ind = find_last_heredoc_in_cmd(tkn_tbl, *i);
+	if (*last_heredoc_ind != -1 && *i != *last_heredoc_ind)
+	{
+		if (imitate_heredocs(tkn_tbl, *i, *last_heredoc_ind, shell) == FALSE)
+			return (FALSE);
+		*i = *last_heredoc_ind;
+	}
+	else
+	{
+		if (*last_heredoc_ind != -1 && *i == *last_heredoc_ind
+			&& add_heredoc(tkn_tbl->tkns[*last_heredoc_ind + 1].cntnt,
+				&cmd_tbls[*j], *j, shell) == FALSE)
+			return (FALSE);
+		*i = skip_cmd(tkn_tbl, *i);
+		*j = *j + 1;
+	}
+	return (TRUE);
+}
+
 int	handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, t_shell *shell)
 {
 	int	i;
@@ -173,26 +188,8 @@ int	handle_heredocs(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls, t_shell *shell)
 			j++;
 			continue ;
 		}
-		last_heredoc_ind = find_last_heredoc_in_cmd(tkn_tbl, i);
-		if (last_heredoc_ind != -1 && i != last_heredoc_ind)
-		{
-			if (imitate_heredocs(tkn_tbl, i, last_heredoc_ind, shell) == FALSE)
-				return (FALSE);
-			i = last_heredoc_ind;
-		}
-		else if (last_heredoc_ind != -1 && i == last_heredoc_ind)
-		{
-			if (add_heredoc(tkn_tbl->tkns[last_heredoc_ind + 1].cntnt, &cmd_tbls[j],
-					j, shell) == FALSE)
-				return (FALSE);
-			i = skip_cmd(tkn_tbl, i);
-			j++;
-		}
-		else
-		{
-			i = skip_cmd(tkn_tbl, i);
-			j++;
-		}
+		if (handle_heredoc(&last_heredoc_ind, &i, &j, shell) == FALSE)
+			return (FALSE);
 	}
 	return (TRUE);
 }

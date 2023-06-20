@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_with_pipes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/19 23:47:56 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 13:03:05 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,54 @@ int	execute_last_command(t_shell *shell, int i, int prevpipe)
 	close_files(cmd_tbl);
 	return (TRUE);
 }
+
 void	handle_prevpipe(int *prevpipe)
 {
 	close_prevpipe(prevpipe);
 	*prevpipe = -1;
 }
 
-int	execute_command(t_shell *shell, int i, int *prevpipe)
+int	construct_pathname_safely(char **pathname, int i, t_cmd_tbl *cmd_tbl,
+	t_shell *shell)
+{
+	*pathname = construct_pathname(cmd_tbl->cmd, shell);
+	if (*pathname == NULL)
+		return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);
+	add_command_to_args(*pathname, i, shell);
+	return (TRUE);
+}
+
+int	execute_cmd_with_null_write(int *prevpipe, int i, t_cmd_tbl *cmd_tbl,
+	t_shell *shell)
+{
+	pid_t	pid;
+	char	*pathname;
+
+	if (construct_pathname_safely(&pathname, i, cmd_tbl, shell) == FALSE)
+		return (FALSE);
+	if (*prevpipe >= 0)
+		close(*prevpipe);
+	*prevpipe = -1;
+	pid = fork();
+	if (pid < 0)
+		print_error_and_exit(shell);
+	else if (pid == 0)
+	{
+		if (access("/dev/null", W_OK) == -1)
+			return (write_file_error_message("/dev/null"), FALSE);
+		cmd_tbl->out = open("/dev/null", O_WRONLY);
+		if (cmd_tbl->out < 0)
+			return (write_file_error_message("/dev/null"), FALSE);
+		enable_redirections(shell->cmd_tbls, i);
+		return (execve(pathname, cmd_tbl->args, shell->envs), exit (1), FALSE);
+	}
+	if (cmd_tbl->in >= 0 && *prevpipe >= 0)
+		close(*prevpipe);
+	*prevpipe = -1;
+	return (TRUE);
+}
+
+int	execute_cmd(t_shell *shell, int i, int *prevpipe)
 {
 	t_cmd_tbl	*cmd_tbl;
 	t_tkn_tbl	*tkn_tbl;
@@ -202,29 +243,9 @@ int	execute_command(t_shell *shell, int i, int *prevpipe)
 			close(*prevpipe);
 		*prevpipe = -1;
 	}
-	else if (shell->cmd_tbls[i + 1].in_file != NULL)
-	{
-		if (*prevpipe >= 0)
-			close(*prevpipe);
-		*prevpipe = -1;
-		pid = fork();
-		if (pid < 0)
-			print_error_and_exit(shell);
-		else if (pid == 0)
-		{
-			if (access("/dev/null", R_OK) == -1)
-				return (write_file_error_message("/dev/null"), FALSE);
-			cmd_tbl->out = open("/dev/null", O_RDONLY);
-			if (cmd_tbl->out < 0)
-				return (write_file_error_message("/dev/null"), FALSE);
-			enable_redirections(shell->cmd_tbls, i);
-			if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
-				exit (1);
-		}
-		if (cmd_tbl->in >= 0 && *prevpipe >= 0)
-			close(*prevpipe);
-		*prevpipe = -1;
-	}
+	else if (shell->cmd_tbls[i + 1].in_file != NULL
+		&& execute_cmd_with_null_write(prevpipe, i, cmd_tbl, shell) == FALSE)
+		return (FALSE);
 	return (TRUE);
 }
 
@@ -246,7 +267,7 @@ void	execute_with_pipes(t_shell *shell)
 		}
 		else
 		{
-			if (execute_command(shell, i, prevpipe) == FALSE)
+			if (execute_cmd(shell, i, prevpipe) == FALSE)
 				return ;
 		}
 		i++;
