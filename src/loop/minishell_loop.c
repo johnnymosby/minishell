@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 12:02:38 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:07:31 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static int	get_input(t_shell *shell)
 	return (TRUE);
 }
 
-//check signals
-//read line
 void	minishell_loop(t_shell *shell)
 {
 	while (1)

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 16:49:36 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:15:13 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,12 +148,13 @@ void	execute(t_shell *shell);
 int		handle_redirections(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls,
 			int n_cmd_tbl, t_shell *shell);
 //	 .../handle.c
-
-//	.../execute_with_pipes.c
 void	close_fd(int *fd);
+void	handle_fd(int *fd);
+int		handle_infile(int i, int *prevpipe, t_shell *shell);
+int		handle_outfile(int *fd, int i, int *prevpipe, t_shell *shell);
+//	.../execute_with_pipes.c
 void	execute_with_pipes(t_shell *shell);
 //	.../execute_last_cmd.c
-int		handle_infile(int i, int *prevpipe, t_shell *shell);
 int		execute_last_cmd(t_shell *shell, int i, int prevpipe);
 //	 .../construct_pathname.c
 char	*construct_pathname(char *cmd, t_shell *shell);
@@ -164,9 +165,9 @@ void	free_tkn_tbl(t_tkn_tbl **tkn_tbl);
 void	clean_exit(t_shell *shell, int if_error);
 void	exit_if_true(t_shell *shell, int if_true, int if_error);
 void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n);
-char	*translate_enum(int n);
-void	free_str_array(char ***args, int n_args);
+//	 .../free_cmd_tbl.c
 void	close_files(t_cmd_tbl *cmd_tbl);
+void	free_cmd_tbl(t_cmd_tbl *cmd_tbl);
 //	 .../clean_shell.c
 void	free_input(t_shell *shell);
 void	clean_shell(t_shell *shell);
@@ -177,4 +178,5 @@ void	print_error_and_exit(t_shell *shell);
 //TO DELETE
 void	print_tokens(t_shell *shell);
 void	print_contents(t_shell *shell);
+char	*translate_enum(int n);
 #endif
