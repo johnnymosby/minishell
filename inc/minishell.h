@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 17:15:13 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:22:36 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	init_minishell(t_shell *shell, char **envs);
 //	 .../init_tkn_tbl.c
 void	init_tkn_tbl(t_shell *shell);
 void	increase_tkn_tbl(t_shell *shell);
+//	 .../init_cmd_and_args.c
+int		init_cmd_and_args(t_tkn_tbl *tkn_tbl, t_shell *shell, int i, int j);
 
 // lexer/...
 //	 .../lexer.c

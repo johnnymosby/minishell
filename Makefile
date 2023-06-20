@@ -25,7 +25,7 @@ SIG		:=	$(addprefix signals/, $(SIG))
 LOOP	=	minishell_loop
 LOOP	:=	$(addprefix loop/, $(LOOP))
 
-INIT	=	init init_tkn_tbl
+INIT	=	init init_tkn_tbl init_cmd_and_args
 INIT	:=	$(addprefix init/, $(INIT))
 
 LEXER	=	lexer add_token add_space
