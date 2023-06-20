@@ -6,11 +6,12 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:59:34 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/05/30 19:39:16 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/11 14:37:27 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_echo.h"
+//#include "ft_echo.h"
+#include "builts.h"
 
 int is_repeatedn(char *s)
 {
@@ -52,7 +53,5 @@ int ft_echo(char **ss)
 /*int main(int c, char **v)
 {
     (void)c;
-    
-    printf("%d", is_repeatedn(v[1]));
-    return(0);
+    ft_echo(v);
 }*/

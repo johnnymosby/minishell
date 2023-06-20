@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 15:16:01 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/19 18:19:00 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:36:59 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int  go_to_oldpwd(t_shell *shell)
         }
         else 
             code = error_message("chdir", "Chdir Error");
-    
+    }
 }
 int go_to_home(t_shell *shell)
 {
@@ -74,12 +74,11 @@ Changes the current working directory
 */
 int ft_cd_init(t_shell *shell)
 {
-    char    *s;
     int     ex_code;
     char    **cd_args;
     
     cd_args = cmd->cmd_tbls->args;
-    if (!cd_args) //this is the case: cd (nothing here)
+    if (!cd_args) //no argument for cd it goes to home
         ex_code = go_to_home(cmd); 
     else if (nb_of_rows(cd_args) > 1) // more than 1 arg for cd
         ex_code = error_message("cd", "too many arguments");

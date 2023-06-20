@@ -1,4 +1,18 @@
-#include "../inc/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bults_main.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
+/*   Updated: 2023/06/20 16:11:50 by maruzibo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+
+#include  "builts.h"     //"../inc/minishell.h"
 
 extern int	signal;
 
@@ -55,3 +69,10 @@ int	builtin(t_shell *shell)
 	}
 	return (signal);
 }
+/*
+int main(int argc, char **argv)
+{
+	t_shell *shell;
+
+
+}*/

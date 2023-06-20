@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   util1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/04 13:40:15 by rbasyrov          #+#    #+#             */
-/*   Updated: 2022/10/04 13:40:24 by rbasyrov         ###   ########.fr       */
+/*   Created: 2023/06/11 17:52:49 by maruzibo          #+#    #+#             */
+/*   Updated: 2023/06/20 15:45:43 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "builts.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+int error_message(char *name_of_func, char *mess)
 {
-	unsigned char	*ss;
-	unsigned char	cc;
-
-	ss = (unsigned char *)s;
-	cc = (unsigned char) c;
-	while (n > 0)
-	{
-		if (*ss == cc)
-			return (ss);
-		ss++;
-		n--;
-	}
-	return (0);
+    int STDERR_FILENO = 2;
+    
+    ft_putendl_fd(mess, STDERR_FILENO);
+    return (2);
 }

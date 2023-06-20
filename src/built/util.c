@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 11:40:44 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/13 16:26:42 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:42:16 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,22 +152,3 @@ tmp= *ft_remove_line(env, str);
 free(env);
 env = tmp; 
 */
- 
-
-int main(int c, char **v, char **envp)
-{
-    char **tmp = envp;
-    int i;
-    (void)c;
-
-    printf("%d\n", is_in_envs(v[1], tmp));
-    tmp = ft_remove_line(tmp, v[1]);
-    i = 0;
-    while (tmp[i] != NULL)
-    {
-        printf("%s\n", tmp[i]);
-        i++;
-    }
-    n_lines_free(tmp, nb_of_rows(tmp));
-    return 0;
-}
