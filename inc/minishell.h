@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:22:18 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:51:49 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,15 @@ int		add_space(t_tkn_tbl *tkn_tbl, const char *inp, int i);
 //	 .../expander.c
 int		expander(t_shell *shell);
 //	 .../expander_utils.c
+int		env_finishes_with_equal_sign(char *var, int len);
 void	remove_repeating_dollars(char *s);
 void	remove_trailing_dollar(char *s);
 int		find_len_var(char *s);
 void	cut_out_variable(char *s, int ind);
 //	 .../put_value.c
 void	put_value(char *value, int ind, t_tkn *tkn, t_shell *shell);
+//	 .../expand_exit_code.c
+int		expand_exit_code(int ind, t_tkn *tkn, t_shell *shell);
 
 // parser/...
 //	 .../parser.c

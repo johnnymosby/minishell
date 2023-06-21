@@ -31,7 +31,7 @@ INIT	:=	$(addprefix init/, $(INIT))
 LEXER	=	lexer add_token add_space
 LEXER	:=	$(addprefix lexer/, $(LEXER))
 
-EXPAND	=	expander expander_utils put_value
+EXPAND	=	expander expander_utils put_value expand_exit_code
 EXPAND	:=	$(addprefix expander/, $(EXPAND))
 
 PARSER	=	parser concatenate_words check_syntax check_syntax_utils check_access construct_cmd_tables \

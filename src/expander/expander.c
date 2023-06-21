@@ -6,25 +6,11 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:19:31 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 13:42:44 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:22:26 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	env_finishes_with_equal_sign(char *var, int len)
-{
-	int	i;
-
-	i = 0;
-	while (var[i] != '\0' && i < len)
-		i++;
-	if (var[i] == '\0')
-		return (FALSE);
-	if (var[i] == '=')
-		return (TRUE);
-	return (FALSE);
-}
 
 static char	*find_env_value(char **envs, char *var, int len, t_shell *shell)
 {
@@ -57,6 +43,10 @@ static int	expand_variable(int ind, t_tkn *tkn, t_shell *shell)
 	char	*value;
 	int		len_val;
 
+	if (tkn->cntnt[ind + 1] == '?')
+	{
+		return (expand_exit_code(ind, tkn, shell));
+	}
 	len_var = find_len_var(tkn->cntnt + ind + 1);
 	var = ft_substr(tkn->cntnt, ind + 1, len_var);
 	if (var == NULL)

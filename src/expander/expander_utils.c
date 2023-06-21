@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:31:45 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 13:24:33 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 13:58:26 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@ int	find_len_var(char *s)
 			|| s[i] == '_'))
 		i++;
 	return (i);
+}
+
+int	env_finishes_with_equal_sign(char *var, int len)
+{
+	int	i;
+
+	i = 0;
+	while (var[i] != '\0' && i < len)
+		i++;
+	if (var[i] == '\0')
+		return (FALSE);
+	if (var[i] == '=')
+		return (TRUE);
+	return (FALSE);
 }
 
 void	remove_trailing_dollar(char *s)
