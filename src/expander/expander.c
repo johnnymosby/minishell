@@ -6,11 +6,25 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:19:31 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 12:01:49 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 13:42:44 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	env_finishes_with_equal_sign(char *var, int len)
+{
+	int	i;
+
+	i = 0;
+	while (var[i] != '\0' && i < len)
+		i++;
+	if (var[i] == '\0')
+		return (FALSE);
+	if (var[i] == '=')
+		return (TRUE);
+	return (FALSE);
+}
 
 static char	*find_env_value(char **envs, char *var, int len, t_shell *shell)
 {
@@ -20,7 +34,8 @@ static char	*find_env_value(char **envs, char *var, int len, t_shell *shell)
 	i = 0;
 	while (envs[i] != NULL)
 	{
-		if (ft_strncmp(envs[i], var, len) == 0)
+		if (env_finishes_with_equal_sign(envs[i], len) == TRUE
+			&& ft_strncmp(envs[i], var, len) == 0)
 		{
 			value = ft_substr(envs[i], len + 1, ft_strlen(envs[i]));
 			if (value == NULL)
@@ -40,6 +55,7 @@ static int	expand_variable(int ind, t_tkn *tkn, t_shell *shell)
 	char	*var;
 	int		len_var;
 	char	*value;
+	int		len_val;
 
 	len_var = find_len_var(tkn->cntnt + ind + 1);
 	var = ft_substr(tkn->cntnt, ind + 1, len_var);
@@ -47,11 +63,12 @@ static int	expand_variable(int ind, t_tkn *tkn, t_shell *shell)
 		clean_exit(shell, FT_ERROR);
 	value = find_env_value(shell->envs, var, len_var, shell);
 	free(var);
+	len_val = (int)ft_strlen(value);
 	if (value == NULL)
 		cut_out_variable(tkn->cntnt, ind);
 	else
 		put_value(value, ind, tkn, shell);
-	return (len_var);
+	return (len_val);
 }
 
 static void	expand_tkn(t_tkn *tkn, t_shell *shell)
