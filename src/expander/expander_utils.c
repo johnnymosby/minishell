@@ -6,11 +6,34 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:31:45 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/26 13:51:15 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:45:11 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	find_len_var(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (('A' <= s[i] && s[i] <= 'Z'
+			|| ('0' <= s[i] && s[i] <= '9')
+			|| s[i] == '_'))
+		i++;
+	return (i);
+}
+
+void	remove_trailing_dollar(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	if (i > 0 && s[i - 1] == '$')
+		s[i - 1] = '\0';
+}
 
 void	remove_repeating_dollars(char *s)
 {
@@ -29,27 +52,6 @@ void	remove_repeating_dollars(char *s)
 		i++;
 	}
 	s[j] = '\0';
-}
-
-void	remove_trailing_dollar(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	if (i > 0 && s[i - 1] == '$')
-		s[i - 1] = '\0';
-}
-
-int	find_len_var(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0' && s[i] != '$')
-		i++;
-	return (i);
 }
 
 void	cut_out_variable(char *s, int ind)

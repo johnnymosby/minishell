@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:19:31 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:05:48 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:01:49 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*find_env_value(char **envs, char *var, int len, t_shell *shell)
 	return (NULL);
 }
 
-static void	expand_variable(int ind, t_tkn *tkn, t_shell *shell)
+static int	expand_variable(int ind, t_tkn *tkn, t_shell *shell)
 {
 	char	*var;
 	int		len_var;
@@ -51,6 +51,7 @@ static void	expand_variable(int ind, t_tkn *tkn, t_shell *shell)
 		cut_out_variable(tkn->cntnt, ind);
 	else
 		put_value(value, ind, tkn, shell);
+	return (len_var);
 }
 
 static void	expand_tkn(t_tkn *tkn, t_shell *shell)
@@ -64,8 +65,7 @@ static void	expand_tkn(t_tkn *tkn, t_shell *shell)
 	{
 		if (tkn->cntnt[i] == '$')
 		{
-			expand_variable(i, tkn, shell);
-			i = -1;
+			i += expand_variable(i, tkn, shell) - 1;
 		}
 		i++;
 	}
