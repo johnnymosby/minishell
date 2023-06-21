@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:12:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:27:16 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:27:27 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,12 @@ char	*construct_pathname(char *cmd, t_shell *shell)
 	char	*folder;
 	int		path_ind;
 
+	if (strchr(cmd, '/') != NULL)
+	{
+		pathname = ft_strdup(cmd);
+		exit_if_true(shell, pathname == NULL, FT_ERROR);
+		return (pathname);
+	}
 	path_ind = 0;
 	while (shell->envs[path_ind] != NULL)
 	{
