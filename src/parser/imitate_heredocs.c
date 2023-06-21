@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   imitate_heredoc.c                                  :+:      :+:    :+:   */
+/*   imitate_heredocs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:30:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 15:31:04 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:43:46 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	imitate_heredoc(char *s, t_shell *shell)
 		if (g_status == 130)
 		{
 			g_status = 1;
-			return (FALSE);
+			return (set_exit_code(shell, 130), FALSE);
 		}
 		if (input == NULL)
 			return (TRUE);

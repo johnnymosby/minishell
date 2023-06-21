@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:03:15 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:22:18 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n);
 void	close_files(t_cmd_tbl *cmd_tbl);
 void	free_cmd_tbl(t_cmd_tbl *cmd_tbl);
 //	 .../clean_shell.c
+void	set_exit_code(t_shell *shell, int exit_code);
 void	free_input(t_shell *shell);
 void	clean_shell(t_shell *shell);
 //	 .../error.c

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:09:03 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:43:57 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_access_to_file(const char *pathname, t_shell *shell)
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 		ft_putchar_fd('\n', STDERR_FILENO);
-		return (FALSE);
+		return (set_exit_code(shell, 1), FALSE);
 	}
 	return (TRUE);
 }
@@ -39,7 +39,7 @@ int	fill_heredoc(char *stopword, int fd, t_shell *shell)
 		if (g_status == 130)
 		{
 			g_status = 1;
-			return (free(input), close(fd), FALSE);
+			return (free(input), close(fd), set_exit_code(shell, 130), FALSE);
 		}
 		if (input == NULL)
 			return (close(fd), TRUE);
@@ -63,7 +63,7 @@ int	add_heredoc(char *stopword, t_cmd_tbl *cmd_tbl, int j, t_shell *shell)
 	char	*file_id;
 
 	if (check_access_to_file("/tmp/", shell) == FALSE)
-		return (FALSE);
+		return (set_exit_code(shell, 1), FALSE);
 	file_id = ft_itoa(j);
 	if (file_id == NULL)
 		clean_exit(shell, FT_ERROR);

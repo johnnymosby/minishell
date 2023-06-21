@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 16:45:51 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:28:13 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	execute_last_cmd(t_shell *shell, int i, int prevpipe)
 	if (cmd_tbl->cmd == NULL)
 		return (close_fd(&prevpipe), TRUE);
 	if (handle_infile(i, &prevpipe, shell) == FALSE)
-		return (FALSE);
+		return (set_exit_code(shell, 1), FALSE);
 	pathname = construct_pathname(cmd_tbl->cmd, shell);
 	if (pathname == NULL)
 		return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);

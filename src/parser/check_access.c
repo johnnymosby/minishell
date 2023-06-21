@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 20:39:57 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/13 16:07:55 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:38:07 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_access(t_tkn_tbl *tkn_tbl, t_shell *shell)
 			if (tkn_tbl->tkns[i].type == FT_DLESS)
 				i += 2;
 			else if (check_file(tkn_tbl->tkns[i + 1].cntnt, type) == FALSE)
-				return (FALSE);
+				return (set_exit_code(shell, 1), FALSE);
 			else
 				i += 2;
 		}

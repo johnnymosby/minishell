@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:54:45 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:09:33 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:30:13 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static int	open_redirection(t_tkn_tbl *tkn_tbl, int n_cmd_tbl,
 	else if (type == FT_DLESS && i == last_heredoc_id)
 		if_no_error = open_heredoc(shell->cmd_tbls, n_cmd_tbl, shell);
 	if (if_no_error == FALSE)
-		return (FALSE);
+		return (set_exit_code(shell, 1), FALSE);
 	return (TRUE);
 }
 

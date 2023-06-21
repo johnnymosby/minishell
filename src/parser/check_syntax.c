@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 12:54:18 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/05/30 18:53:53 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:41:13 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,17 @@ int	check_syntax(t_tkn_tbl *tkn_tbl, t_shell *shell)
 		if (tkn_tbl->tkns[*i].type == FT_PIPE)
 		{
 			if (handle_pipe(tkn_tbl, i) == FALSE)
-				return (FALSE);
+				return (set_exit_code(shell, 2), FALSE);
 		}
 		else if (tkn_tbl->tkns[*i].type == FT_WORD)
 			skip_words(tkn_tbl, i);
 		else if (if_redirection(tkn_tbl->tkns[*i].type) == TRUE)
 		{
 			if (handle_redirection(tkn_tbl, i) == FALSE)
-				return (FALSE);
+				return (set_exit_code(shell, 2), FALSE);
 		}
 		else
-			return (FALSE);
+			return (set_exit_code(shell, 1), FALSE);
 	}
 	return (TRUE);
 }

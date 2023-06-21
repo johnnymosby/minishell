@@ -6,16 +6,21 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:57:51 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 18:12:36 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:22:39 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	return_std_fds(t_shell *shell)
+static void	return_std_fds(t_shell *shell)
 {
 	dup2(shell->std_in_out[0], STDIN_FILENO);
 	dup2(shell->std_in_out[1], STDOUT_FILENO);
+}
+
+void	set_exit_code(t_shell *shell, int exit_code)
+{
+	shell->exit_code = exit_code;
 }
 
 void	free_input(t_shell *shell)

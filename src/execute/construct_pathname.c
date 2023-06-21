@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:12:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:09:19 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:27:16 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static char	*find_folder_with_command(char *cmd, const char *path,
 		i++;
 		folder = get_next_folder_from_path(path, i, shell);
 	}
-	return (NULL);
+	return (set_exit_code(shell, 127), NULL);
 }
 
 char	*construct_pathname(char *cmd, t_shell *shell)
@@ -123,7 +123,7 @@ char	*construct_pathname(char *cmd, t_shell *shell)
 		path_ind++;
 	}
 	if (shell->envs[path_ind] == NULL)
-		return (NULL);
+		return (set_exit_code(shell, 1), NULL);
 	folder = find_folder_with_command(cmd, shell->envs[path_ind], shell);
 	if (folder == NULL)
 		return (NULL);

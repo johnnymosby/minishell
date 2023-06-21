@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 16:48:27 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:29:37 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ int	execute_cmd(int *prevpipe, int i, t_shell *shell)
 	fd[0] = -1;
 	fd[1] = -1;
 	if (handle_infile(i, prevpipe, shell) == FALSE)
-		return (FALSE);
+		return (set_exit_code(shell, 1), FALSE);
 	if (handle_outfile(fd, i, prevpipe, shell) == FALSE)
-		return (FALSE);
+		return (set_exit_code(shell, 1), FALSE);
 	if (execute_child_and_parent(fd, prevpipe, i, shell) == FALSE)
-		return (FALSE);
+		return (set_exit_code(shell, 1), FALSE);
 }
 
 void	execute_with_pipes(t_shell *shell)
