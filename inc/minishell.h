@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 18:31:12 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:03:15 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,8 @@ char	*construct_pathname(char *cmd, t_shell *shell);
 // 	exit/...
 //	 .../exit.c
 void	free_tkn_tbl(t_tkn_tbl **tkn_tbl);
-void	clean_exit(t_shell *shell);
-void	exit_if_true(t_shell *shell, int if_true);
+void	clean_exit(t_shell *shell, int exit_code);
+void	exit_if_true(t_shell *shell, int if_true, int exit_code);
 void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n);
 //	 .../free_cmd_tbl.c
 void	close_files(t_cmd_tbl *cmd_tbl);

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:19:31 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 18:32:49 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:05:48 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*find_env_value(char **envs, char *var, int len, t_shell *shell)
 			if (value == NULL)
 			{
 				free(var);
-				clean_exit(shell);
+				clean_exit(shell, FT_ERROR);
 			}
 			return (value);
 		}
@@ -44,7 +44,7 @@ static void	expand_variable(int ind, t_tkn *tkn, t_shell *shell)
 	len_var = find_len_var(tkn->cntnt + ind + 1);
 	var = ft_substr(tkn->cntnt, ind + 1, len_var);
 	if (var == NULL)
-		clean_exit(shell);
+		clean_exit(shell, FT_ERROR);
 	value = find_env_value(shell->envs, var, len_var, shell);
 	free(var);
 	if (value == NULL)

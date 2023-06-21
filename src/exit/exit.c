@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:34:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 18:30:43 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:02:56 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,8 @@ static void	delete_heredocs(void)
 	closedir(dir);
 }
 
-void	clean_exit(t_shell *shell)
+void	clean_exit(t_shell *shell, int exit_code)
 {
-	int	exit_code;
-
-	exit_code = shell->exit_code;
 	free_cmd_tbls(&shell->cmd_tbls, shell->n_cmd_tbls);
 	delete_heredocs();
 	free_tkn_tbl(&shell->tkn_tbl);
@@ -97,8 +94,9 @@ void	clean_exit(t_shell *shell)
 	exit (exit_code);
 }
 
-void	exit_if_true(t_shell *shell, int if_true)
+void	exit_if_true(t_shell *shell, int if_true, int exit_code)
 {
+	shell->exit_code = exit_code;
 	if (if_true == TRUE)
-		clean_exit(shell);
+		clean_exit(shell, exit_code);
 }

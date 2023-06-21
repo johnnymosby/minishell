@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 18:32:04 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:04:15 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	add_command_to_args(char *pathname, int i, t_shell *shell)
 	if (new_argv == NULL)
 	{
 		free(new_argv);
-		clean_exit(shell);
+		clean_exit(shell, FT_ERROR);
 	}
 	new_argv[0] = pathname;
 	n = 1;

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:54:45 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 18:34:56 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:09:33 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	open_file(const char *pathname, t_type type, int n_cmd_tbl,
 	else if (type == FT_GREAT)
 		fd = open(pathname, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd <= -1)
-		return (write_file_error_message(pathname), clean_exit(shell), 0);
+		return (write_file_error_message(pathname), clean_exit(shell, 1), 0);
 	if (type == FT_LESS)
 	{
 		if (shell->cmd_tbls[n_cmd_tbl].in != -1)
@@ -68,11 +68,11 @@ static int	open_heredoc(t_cmd_tbl *cmd_tbls, int n_cmd_tbl, t_shell *shell)
 
 	file_id = ft_itoa(n_cmd_tbl);
 	if (file_id == NULL)
-		clean_exit(shell);
+		exit_if_true(shell, TRUE, FT_ERROR);
 	pathname = ft_strjoin("/tmp/tmp_heredoc_", file_id);
 	free(file_id);
 	if (pathname == NULL)
-		clean_exit(shell);
+		exit_if_true(shell, TRUE, FT_ERROR);
 	if (access(pathname, R_OK) != 0)
 		return (write_file_error_message(pathname), free(pathname), FALSE);
 	fd = open(pathname, O_RDONLY);
@@ -80,7 +80,7 @@ static int	open_heredoc(t_cmd_tbl *cmd_tbls, int n_cmd_tbl, t_shell *shell)
 	{
 		write_file_error_message(pathname);
 		free(pathname);
-		clean_exit(shell);
+		exit_if_true(shell, TRUE, FT_ERROR);
 	}
 	if (cmd_tbls[n_cmd_tbl].in != -1)
 		close(cmd_tbls[n_cmd_tbl].in);
