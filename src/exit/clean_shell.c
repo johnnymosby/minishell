@@ -6,11 +6,13 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:57:51 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:22:39 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:37:14 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+extern int	g_status;
 
 static void	return_std_fds(t_shell *shell)
 {
@@ -37,5 +39,10 @@ void	clean_shell(t_shell *shell)
 		free_tkn_tbl(&shell->tkn_tbl);
 		free_input(shell);
 		return_std_fds(shell);
+		if (g_status == 130)
+		{
+			g_status = 0;
+			shell->exit_code = 130;
+		}
 	}
 }

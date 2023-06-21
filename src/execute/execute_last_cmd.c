@@ -6,18 +6,19 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:28:13 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:29:03 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	wait_child_processes(void)
+static void	wait_child_processes(t_shell *shell)
 {
 	int	status;
 
 	while (wait(&status) > 0)
 		;
+	shell->exit_code = status;
 }
 
 static void	execute_in_child(t_shell *shell, char *pathname, t_cmd_tbl *cmd_tbl,
@@ -55,7 +56,7 @@ int	execute_last_cmd(t_shell *shell, int i, int prevpipe)
 		return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);
 	add_command_to_args(pathname, i, shell);
 	execute_in_child(shell, pathname, cmd_tbl, i);
-	wait_child_processes();
+	wait_child_processes(shell);
 	if (cmd_tbl->in >= 0)
 		close_fd(&prevpipe);
 	close_files(cmd_tbl);

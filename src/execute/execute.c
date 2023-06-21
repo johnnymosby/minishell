@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:04:15 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:28:20 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	execute_without_pipes(t_shell *shell)
 	}
 	else
 		waitpid(pid, &status, 0);
+	shell->exit_code = status;
 }
 
 void	execute(t_shell *shell)

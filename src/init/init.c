@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:40:35 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:09:44 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:38:18 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,5 @@ void	init_minishell(t_shell *shell, char **envs)
 	shell->envs = envs;
 	shell->prompt = return_prompt(shell);
 	dup_std_in_out(shell);
+	shell->exit_code = 0;
 }
