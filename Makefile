@@ -41,6 +41,9 @@ PARSER	:=	$(addprefix parser/, $(PARSER))
 EXEC	=	execute construct_pathname execute_with_pipes handle handle_redirections execute_last_cmd
 EXEC	:=	$(addprefix execute/, $(EXEC))
 
+BUILTINS	=	
+BUILTINS	:=	$(addprefix builtins/, $(BUILTINS))
+
 EXIT	=	exit clean_shell error free_cmd_tbl
 EXIT	:=	$(addprefix exit/, $(EXIT))
 

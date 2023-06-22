@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:38:19 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/20 18:24:30 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/22 22:33:04 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 //#include "../inc/minishell.h"
 
 /*
-This function tries to extract a environtment variable from **envs in *cmd
+This function tries to extract an environment variable from **envs in *cmd
 */
 char	*ft_getenv(char **env, char *var)
 {
@@ -90,7 +90,7 @@ static	int	is_in_envs(char *var, char **env)
 	int	i;
 	int	n;
 
-	if (!var || !env || !*env)
+	if (!var || !env)
 		return (-1);
 	n = ft_strchr(var, '=');
 	i = 0;

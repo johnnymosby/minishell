@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 15:51:49 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/22 22:42:12 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int		add_space(t_tkn_tbl *tkn_tbl, const char *inp, int i);
 
 // expander/...
 //	 .../expander.c
+char	*find_env_value(char **envs, char *var, int len, t_shell *shell);
 int		expander(t_shell *shell);
 //	 .../expander_utils.c
 int		env_finishes_with_equal_sign(char *var, int len);
