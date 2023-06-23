@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 16:29:03 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/23 17:10:34 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,19 @@ int	execute_last_cmd(t_shell *shell, int i, int prevpipe)
 		return (close_fd(&prevpipe), TRUE);
 	if (handle_infile(i, &prevpipe, shell) == FALSE)
 		return (set_exit_code(shell, 1), FALSE);
-	pathname = construct_pathname(cmd_tbl->cmd, shell);
-	if (pathname == NULL)
-		return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);
-	add_command_to_args(pathname, i, shell);
-	execute_in_child(shell, pathname, cmd_tbl, i);
+	if (what_command(cmd_tbl->cmd) != FT_OTHER)
+	{
+		enable_redirections(shell->cmd_tbls, i);
+		shell->exit_code = execute_builtin(cmd_tbl, shell);
+	}
+	else
+	{
+		pathname = construct_pathname(cmd_tbl->cmd, shell);
+		if (pathname == NULL)
+			return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);
+		add_command_to_args(pathname, i, shell);
+		execute_in_child(shell, pathname, cmd_tbl, i);
+	}
 	wait_child_processes(shell);
 	if (cmd_tbl->in >= 0)
 		close_fd(&prevpipe);

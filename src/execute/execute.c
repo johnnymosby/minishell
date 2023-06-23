@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/23 16:17:43 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:57:34 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	execute_without_pipes(t_shell *shell)
 	if (what_command(shell->cmd_tbls[0].cmd) != FT_OTHER)
 	{
 		enable_redirections(shell->cmd_tbls, 0);
-		execute_builtin(shell->cmd_tbls, shell);
+		shell->exit_code = execute_builtin(shell->cmd_tbls, shell);
 		return ;
 	}
 	pathname = construct_pathname(shell->cmd_tbls[0].cmd, shell);

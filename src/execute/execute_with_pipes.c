@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 15:57:39 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/23 17:10:31 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,19 @@ int	execute_cmd(int *prevpipe, int i, t_shell *shell)
 		return (set_exit_code(shell, 1), FALSE);
 	if (handle_outfile(fd, i, prevpipe, shell) == FALSE)
 		return (set_exit_code(shell, 1), FALSE);
-	if (execute_child_and_parent(fd, prevpipe, i, shell) == FALSE)
-		return (set_exit_code(shell, 1), FALSE);
+	if (what_command(cmd_tbl->cmd) != FT_OTHER)
+	{
+		handle_fd(fd);
+		enable_redirections(shell->cmd_tbls, i);
+		shell->exit_code = execute_builtin(cmd_tbl, shell);
+		handle_fd(fd + 1);
+		*prevpipe = fd[0];
+	}
+	else
+	{
+		if (execute_child_and_parent(fd, prevpipe, i, shell) == FALSE)
+			return (set_exit_code(shell, 1), FALSE);
+	}
 	return (TRUE);
 }
 
