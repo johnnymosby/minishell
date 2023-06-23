@@ -6,13 +6,13 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:59:35 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 17:14:43 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:59:08 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	free_str_array(char ***args, int n_args)
+void	free_str_array(char ***args, int n_args)
 {
 	char	**arr;
 	int		i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:19:31 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/22 22:42:01 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:31:53 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*find_env_value(char **envs, char *var, int len, t_shell *shell)
 {
 	int		i;
-	char	*value;
 
 	i = 0;
 	while (envs[i] != NULL)
@@ -23,13 +22,7 @@ char	*find_env_value(char **envs, char *var, int len, t_shell *shell)
 		if (env_finishes_with_equal_sign(envs[i], len) == TRUE
 			&& ft_strncmp(envs[i], var, len) == 0)
 		{
-			value = ft_substr(envs[i], len + 1, ft_strlen(envs[i]));
-			if (value == NULL)
-			{
-				free(var);
-				clean_exit(shell, FT_ERROR);
-			}
-			return (value);
+			return (envs[i] + len + 1);
 		}
 		i++;
 	}

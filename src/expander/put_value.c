@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:34:38 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:17:57 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:32:30 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	put_value(char *value, int ind, t_tkn *tkn, t_shell *shell)
 		return (free(value), clean_exit(shell, FT_ERROR));
 	left_and_value = ft_strjoin(left, value);
 	free(left);
-	free(value);
 	if (left_and_value == NULL)
 		clean_exit(shell, FT_ERROR);
 	right = ft_substr(tkn->cntnt, ind + find_len_var(tkn->cntnt + ind + 1) + 1,

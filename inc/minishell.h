@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/22 22:42:12 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:14:26 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,13 @@ int		execute_last_cmd(t_shell *shell, int i, int prevpipe);
 //	 .../construct_pathname.c
 char	*construct_pathname(char *cmd, t_shell *shell);
 
+// builtins/...
+//	 .../builtins_entrypoint.c
+t_cmd	what_command(char *cmd);
+int		execute_builtin(t_cmd_tbl *cmd_tbl, t_shell *shell);
+//	 .../ft_cd.c
+int		ft_cd(t_cmd_tbl *cmd_tbl, t_shell *shell);
+
 // 	exit/...
 //	 .../exit.c
 void	free_tkn_tbl(t_tkn_tbl **tkn_tbl);
@@ -172,6 +179,7 @@ void	clean_exit(t_shell *shell, int exit_code);
 void	exit_if_true(t_shell *shell, int if_true, int exit_code);
 void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n);
 //	 .../free_cmd_tbl.c
+void	free_str_array(char ***args, int n_args);
 void	close_files(t_cmd_tbl *cmd_tbl);
 void	free_cmd_tbl(t_cmd_tbl *cmd_tbl);
 //	 .../clean_shell.c

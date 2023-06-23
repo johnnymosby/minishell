@@ -41,13 +41,13 @@ PARSER	:=	$(addprefix parser/, $(PARSER))
 EXEC	=	execute construct_pathname execute_with_pipes handle handle_redirections execute_last_cmd
 EXEC	:=	$(addprefix execute/, $(EXEC))
 
-BUILTINS	=	
+BUILTINS	=	builtins_entrypoint ft_cd
 BUILTINS	:=	$(addprefix builtins/, $(BUILTINS))
 
 EXIT	=	exit clean_shell error free_cmd_tbl
 EXIT	:=	$(addprefix exit/, $(EXIT))
 
-SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG) $(LEXER) $(EXPAND) $(PARSER) $(EXEC) $(EXIT)
+SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG) $(LEXER) $(EXPAND) $(PARSER) $(EXEC) $(EXIT) $(BUILTINS)
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SOURCE)))
 OBJ		=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SOURCE)))
 

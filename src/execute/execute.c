@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/22 14:36:36 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:17:43 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,16 @@ void	execute_without_pipes(t_shell *shell)
 		return ;
 	if (shell->cmd_tbls[0].cmd == NULL)
 		return ;
+	if (what_command(shell->cmd_tbls[0].cmd) != FT_OTHER)
+	{
+		enable_redirections(shell->cmd_tbls, 0);
+		execute_builtin(shell->cmd_tbls, shell);
+		return ;
+	}
 	pathname = construct_pathname(shell->cmd_tbls[0].cmd, shell);
 	if (pathname == NULL)
 		return (write_file_error_message(shell->cmd_tbls[0].cmd));
 	add_command_to_args(pathname, 0, shell);
-	if (())
 	pid = fork();
 	if (pid < 0)
 		print_error_and_exit(shell);

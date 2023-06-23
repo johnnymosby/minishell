@@ -6,11 +6,37 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:40:35 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 16:38:18 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:19:08 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+char	**copy_environment(char **envs, t_shell *shell)
+{
+	int		len;
+	char	**new_envs;
+	int		i;
+
+	len = 0;
+	while (envs[len] != NULL)
+		len++;
+	new_envs = ft_calloc(len + 1, sizeof(char *));
+	exit_if_true(shell, new_envs == NULL, FT_ERROR);
+	i = 0;
+	while (i != len)
+	{
+		new_envs[i] = ft_strdup(envs[i]);
+		if (new_envs[i] == NULL)
+		{
+			free_str_array(&new_envs, len);
+			clean_exit(shell, FT_ERROR);
+		}
+		i++;
+	}
+	new_envs[i] = NULL;
+	return (new_envs);
+}
 
 char	*construct_prompt(t_shell *shell, char *username)
 {
@@ -66,7 +92,7 @@ void	init_minishell(t_shell *shell, char **envs)
 {
 	if (!isatty(STDIN_FILENO))
 		exit(EXIT_FAILURE);
-	shell->envs = envs;
+	shell->envs = copy_environment(envs, shell);
 	shell->prompt = return_prompt(shell);
 	dup_std_in_out(shell);
 	shell->exit_code = 0;
