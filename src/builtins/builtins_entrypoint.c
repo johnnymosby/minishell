@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/23 23:55:31 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 00:15:23 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_cmd	what_command(char *cmd)
 		return (FT_CD);
 	else if (i == 4 && !ft_strncmp(cmd, "echo", i))
 		return (FT_ECHO);
+	else if (i == 3 && !ft_strncmp(cmd, "pwd", i))
+		return (FT_PWD);
 	else
 		return (FT_OTHER);
 }
@@ -33,6 +35,8 @@ int	execute_builtin(t_cmd_tbl *cmd_tbl, t_shell *shell)
 		return (ft_cd(cmd_tbl, shell));
 	else if (what_command(cmd_tbl->cmd) == FT_ECHO)
 		return (ft_echo(cmd_tbl->args));
+	else if (what_command(cmd_tbl->cmd) == FT_PWD)
+		return (ft_pwd());
 	else
 		return (FALSE);
 }

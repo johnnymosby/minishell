@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:46:26 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/20 18:21:32 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/24 00:16:31 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "ft_pwd.h"
-#include "builts.h"
+#include "../../inc/minishell.h"
 
 /*
 This function prints the address of currenct directory 
 */
 int	ft_pwd(void)
 {
-	char	path[PATH_MAX];
+	char	path[FT_PATH_MAX];
 
 	if (getcwd(path, sizeof(path)))
 		ft_putendl_fd(path, STDOUT_FILENO);

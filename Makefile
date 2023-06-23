@@ -41,7 +41,7 @@ PARSER	:=	$(addprefix parser/, $(PARSER))
 EXEC	=	execute construct_pathname execute_with_pipes handle handle_redirections execute_last_cmd
 EXEC	:=	$(addprefix execute/, $(EXEC))
 
-BUILTINS	=	builtins_entrypoint ft_cd ft_echo
+BUILTINS	=	builtins_entrypoint ft_cd ft_echo ft_pwd
 BUILTINS	:=	$(addprefix builtins/, $(BUILTINS))
 
 EXIT	=	exit clean_shell error free_cmd_tbl
