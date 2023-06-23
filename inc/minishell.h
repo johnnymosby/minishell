@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/23 16:14:26 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/23 23:51:43 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,8 @@ t_cmd	what_command(char *cmd);
 int		execute_builtin(t_cmd_tbl *cmd_tbl, t_shell *shell);
 //	 .../ft_cd.c
 int		ft_cd(t_cmd_tbl *cmd_tbl, t_shell *shell);
+//	 .../ft_echo.c
+int		ft_echo(char **ss);
 
 // 	exit/...
 //	 .../exit.c
