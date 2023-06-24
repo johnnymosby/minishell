@@ -14,15 +14,16 @@
 //#include "../inc/minishell.h"
 
 /*
-This function tries to extract an environment variable from **envs in *cmd
+This function tries to extract the value of environment variable from **envs in *cmd
 */
-char	*ft_getenv(char **env, char *var)
+char	*ft_getenv(char **env, char *var, )
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*s;
 
 	i = 0;
-	if (ft_strchr(var, '='))
+	if (!ft_strchr(var, '='))
 		return (NULL);
 	j = ft_strlen(var);
 	if (j == 0)
@@ -33,7 +34,8 @@ char	*ft_getenv(char **env, char *var)
 		if (j < ft_strchr(cmd->envs[i], '='))
 			j = ft_strchr(cmd->envs[i], '=');
 		if (!ft_strncmp(env[i], var, j))
-			return (ft_substr(env[i], j + 1, ft_strlen(env[i])));
+			z = ft_substr(env[i], j + 1, ft_strlen(env[i])));
+			if ()
 		i++;
 	}
 	return (NULL);
