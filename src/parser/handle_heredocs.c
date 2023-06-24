@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredocs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:43:57 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:49:44 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,16 @@ int	add_heredoc(char *stopword, t_cmd_tbl *cmd_tbl, int j, t_shell *shell)
 	pathname = ft_strjoin("/tmp/tmp_heredoc_", file_id);
 	free(file_id);
 	if (pathname == NULL)
+	{
+		ft_putstr_fd("minishell: ft_strjoin failed to create pathname for temporary heredoc\n", STDERR_FILENO);
 		clean_exit(shell, FT_ERROR);
+	}
 	fd = open(pathname, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (fd < 0)
 	{
 		write_file_error_message(pathname);
 		free(pathname);
+		ft_putstr_fd("minishell: temporary heredoc failed to be opened\n", STDERR_FILENO);
 		clean_exit(shell, FT_ERROR);
 	}
 	free(pathname);

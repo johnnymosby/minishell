@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:40:35 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/23 16:19:08 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:55:30 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	**copy_environment(char **envs, t_shell *shell)
 		if (new_envs[i] == NULL)
 		{
 			free_str_array(&new_envs, len);
+			ft_putstr_fd("minishell: ft_strdup failed with an environment variable\n", STDERR_FILENO);
 			clean_exit(shell, FT_ERROR);
 		}
 		i++;
@@ -77,11 +78,16 @@ void	dup_std_in_out(t_shell *shell)
 	int	out;
 
 	in = dup(STDIN_FILENO);
-	exit_if_true(shell, in == -1, FT_ERROR);
+	if (in == -1)
+	{
+		ft_putstr_fd("minishell: dup failed\n", STDERR_FILENO);
+		clean_exit(shell, FT_ERROR);
+	}
 	out = dup(STDOUT_FILENO);
 	if (out == -1)
 	{
 		close(in);
+		ft_putstr_fd("minishell: dup failed\n", STDERR_FILENO);
 		clean_exit(shell, FT_ERROR);
 	}
 	shell->std_in_out[0] = in;

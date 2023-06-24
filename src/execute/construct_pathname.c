@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   construct_pathname.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:12:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 17:27:27 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:32:20 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

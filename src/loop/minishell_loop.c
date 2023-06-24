@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 16:29:53 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:07:57 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	get_input(t_shell *shell)
 {
 	shell->input = readline(shell->prompt);
 	if (shell->input == NULL)
-		return (FALSE);
+		return (ft_putstr_fd("wtf\n", STDERR_FILENO), FALSE);
 	shell->trimmed_input = ft_strtrim(shell->input, SPACES);
 	if (shell->trimmed_input == NULL)
 		return (set_exit_code(shell, 1), FALSE);

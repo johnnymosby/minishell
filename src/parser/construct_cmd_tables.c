@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   construct_cmd_tables.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:06:15 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:08:51 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:50:41 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ void	construct_cmd_tables(t_tkn_tbl *tkn_tbl, t_shell *shell)
 	shell->n_cmd_tbls = count_pipes(tkn_tbl) + 1;
 	shell->cmd_tbls = ft_calloc(shell->n_cmd_tbls, sizeof(t_cmd_tbl));
 	if (shell->cmd_tbls == NULL)
+	{
+		ft_putstr_fd("minishell: calloc failed with shell->cmd_tbls\n", STDERR_FILENO);
 		clean_exit(shell, FT_ERROR);
+	}
 	i = 0;
 	j = 0;
 	while (i != tkn_tbl->n_tkns)

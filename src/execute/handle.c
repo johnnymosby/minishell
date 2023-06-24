@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:48:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:04:35 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:45:28 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	handle_outfile(int *fd, int i, int *prevpipe, t_shell *shell)
 		if (pipe(fd) == -1)
 		{
 			handle_fd(prevpipe);
+			ft_putstr_fd("minishell: pipe failed\n", STDERR_FILENO);
 			clean_exit(shell, FT_ERROR);
 		}
 		if (cmd_tbl->out < 0)

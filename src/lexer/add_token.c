@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 10:33:57 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:08:09 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 23:53:36 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ int	add_word(t_tkn_tbl *tkn_tbl, const char *inp, int i, t_shell *shell)
 	ret = len;
 	tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt = ft_calloc(len + 1, sizeof(char));
 	if (tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt == NULL)
+	{
+		ft_putstr_fd("minishell: calloc failed with tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt\n", STDERR_FILENO);
 		clean_exit(shell, FT_ERROR);
+	}
 	tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt[len] = '\0';
 	while (--len >= 0)
 		tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt[len] = inp[i + len];

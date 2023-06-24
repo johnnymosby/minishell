@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:54:45 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/23 13:31:48 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 00:05:09 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	open_file(const char *pathname, t_type type, int n_cmd_tbl,
 	else if (type == FT_GREAT)
 		fd = open(pathname, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd <= -1)
-		return (write_file_error_message(pathname), clean_exit(shell, 1), 0);
+		return (write_file_error_message(pathname), FALSE);
 	if (type == FT_LESS)
 	{
 		if (shell->cmd_tbls[n_cmd_tbl].in != -1)
@@ -85,7 +85,7 @@ static int	open_heredoc(t_cmd_tbl *cmd_tbls, int n_cmd_tbl, t_shell *shell)
 	if (cmd_tbls[n_cmd_tbl].in != -1)
 		close(cmd_tbls[n_cmd_tbl].in);
 	cmd_tbls[n_cmd_tbl].in = fd;
-	free(pathname); 
+	free(pathname);
 	return (TRUE);
 }
 
