@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:20:53 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:08:39 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 21:22:30 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	add_quote(t_tkn_tbl *tkn_tbl, const char *inp, int i, t_shell *shell)
 	while (inp[i + len + 1] != '\0' && inp[i + len + 1] != '\'')
 		len++;
 	if (len == 0)
-		return (1 + inp[i + len + 1] == '\0');
+		return (1 + (inp[i + len + 1] == '\0'));
 	tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt = ft_calloc(len + 1, sizeof(char));
 	if (tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt == NULL)
 		clean_exit(shell, FT_ERROR);
@@ -46,7 +46,7 @@ int	add_dquote(t_tkn_tbl *tkn_tbl, const char *inp, int i, t_shell *shell)
 	while (inp[i + len + 1] != '\0' && inp[i + len + 1] != '"')
 		len++;
 	if (len == 0)
-		return (1 + inp[i + len + 1] == '"');
+		return (1 + (inp[i + len + 1] == '"'));
 	tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt = ft_calloc(len + 1, sizeof(char));
 	if (tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt == NULL)
 		clean_exit(shell, FT_ERROR);
