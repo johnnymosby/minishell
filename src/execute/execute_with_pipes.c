@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/24 22:36:30 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 00:11:50 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,7 @@ void	execute_with_pipes(t_shell *shell)
 		}
 		else
 		{
-			if (execute_cmd(prevpipe, i, shell) == FALSE)
-				return ;
+			execute_cmd(prevpipe, i, shell);
 		}
 		i++;
 	}
