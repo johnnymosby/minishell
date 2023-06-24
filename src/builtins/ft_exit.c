@@ -3,41 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:40:40 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/20 17:41:50 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/24 02:10:27 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builts.h"
+#include "../../inc/minishell.h"
+
+int	is_zero(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s[0] == '-')
+		i++;
+	while (s[i] != '\0' && s[i] == '0')
+		i++;
+	if (s[i] != '\0')
+		return (FALSE);
+	else
+		return (TRUE);
+}
+
+int	is_numeric_argument(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s[i] == '-')
+		i++;
+	while (s[i] != '\0' && ('0' <= s[i] && s[i] <= '9'))
+		i++;
+	if (s[i] == '\0')
+		return (TRUE);
+	else
+		return (FALSE);
+}
 
 //i think  exit code should be a global variable coming from signals etc.
-int	ft_exit(t_shell *shell, int *exit_code)
+int	ft_exit(t_shell *shell, t_cmd_tbl *cmd_tbl)
 {
-	t_cmd_tbl	*cmdtbls;
-	long int	status[2];
+	int	arg;
 
-	current = !cmd->content;
-	if (!cmd_tbls->cmd_tbls || !cmd_tbls->cmd_tbls[1])
-		return (0);
-	*exit_code = !cmd->next;
-	if (*exit_code)
-		ft_putstr_fd("exit\n", 2);
-	status[1] = ft_atoi(cmd_tbls->cmd_tbls[1], &status[0]);
-	if (status[1] == -1)
+	if (cmd_tbl->args == NULL)
 	{
-		ft_putstr_fd("minishell: exit: ", 2);
-		ft_putstr_fd(cmd_tbls->cmd_tbls[1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
-		return (255);
+		if (shell->n_cmd_tbls == 1)
+		{
+			ft_putstr_fd("exit\n", STDERR_FILENO);
+			clean_exit(shell, shell->exit_code);
+		}
+		return (TRUE);
 	}
-	else if (cmd_tbls->cmd_tbls[2])
+	if (cmd_tbl->args[1] == NULL)
 	{
-		*exit_code = 0;
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		return (1);
+		if (is_numeric_argument(cmd_tbl->args[0]) == TRUE)
+		{
+			arg = ft_atoi(cmd_tbl->args[0]) % 256;
+			if (shell->n_cmd_tbls == 1)
+			{
+				ft_putstr_fd("exit\n", STDERR_FILENO);
+				clean_exit(shell, arg);
+			}
+			return (TRUE);
+		}
+		else
+		{
+			if (shell->n_cmd_tbls == 1)
+				ft_putstr_fd("exit\n", STDERR_FILENO);
+			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+			ft_putstr_fd(cmd_tbl->args[0], STDERR_FILENO);
+			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+			if (shell->n_cmd_tbls == 1)
+				clean_exit(shell, 255);
+			return (FALSE);
+		}
 	}
-	status[0] %= 256 + 256 * (status[0] < 0);
-	return (status[0]);
+	if (is_numeric_argument(cmd_tbl->args[0]) == TRUE)
+	{
+		if (shell->n_cmd_tbls == 1)
+			ft_putstr_fd("exit\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+		shell->exit_code = 255;
+		return (FALSE);
+	}
+	else
+	{
+		if (shell->n_cmd_tbls == 1)
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
+		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+		ft_putstr_fd(cmd_tbl->args[0], STDERR_FILENO);
+		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+		if (shell->n_cmd_tbls == 1)
+			clean_exit(shell, 255);
+		return (FALSE);
+	}
 }

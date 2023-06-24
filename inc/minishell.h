@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/24 00:14:34 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 01:15:30 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,8 @@ int		ft_cd(t_cmd_tbl *cmd_tbl, t_shell *shell);
 int		ft_echo(char **ss);
 //	 .../ft_pwd.c
 int		ft_pwd(void);
+//	 .../ft_exit.c
+int		ft_exit(t_shell *shell, t_cmd_tbl *cmd_tbl);
 
 // 	exit/...
 //	 .../exit.c
