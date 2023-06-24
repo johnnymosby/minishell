@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_last_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/23 17:10:34 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 22:41:04 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

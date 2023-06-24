@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_with_pipes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/23 17:10:31 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/24 22:36:30 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,15 @@ int	execute_cmd(int *prevpipe, int i, t_shell *shell)
 		return (close_fd(prevpipe), TRUE);
 	fd[0] = -1;
 	fd[1] = -1;
-	if (handle_infile(i, prevpipe, shell) == FALSE)
-		return (set_exit_code(shell, 1), FALSE);
-	if (handle_outfile(fd, i, prevpipe, shell) == FALSE)
-		return (set_exit_code(shell, 1), FALSE);
+	handle_infile(i, prevpipe, shell);
+	handle_outfile(fd, i, prevpipe, shell);
 	if (what_command(cmd_tbl->cmd) != FT_OTHER)
 	{
 		handle_fd(fd);
 		enable_redirections(shell->cmd_tbls, i);
 		shell->exit_code = execute_builtin(cmd_tbl, shell);
 		handle_fd(fd + 1);
+		dup2(shell->std_in_out[1], STDOUT_FILENO);
 		*prevpipe = fd[0];
 	}
 	else
