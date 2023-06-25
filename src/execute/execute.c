@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 13:36:07 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:29:07 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	execute_without_pipes(t_shell *shell)
 	{
 		waitpid(pid, &status, 0);
 	}
-	if (g_status == CMD_SIG)
+	if (g_status == CMD_SIG || g_status == NOCMD_SIG)
 		shell->exit_code = 130;
 	else
 		shell->exit_code = status;

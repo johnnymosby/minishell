@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 16:17:40 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 15:51:43 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:41:47 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static void	handle_sigint(int sig)
 {
-	// int	fd;
-
 	if (sig == SIGINT)
 	{
 		if (g_status == NOCMD_NOSIG || g_status == NOCMD_SIG)

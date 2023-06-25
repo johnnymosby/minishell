@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 11:07:50 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:47:17 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 static int	get_input(t_shell *shell)
 {
 	shell->input = readline(shell->prompt);
+	if (g_status == CMD_SIG || g_status == NOCMD_SIG)
+	{
+		shell->exit_code = 130;
+	}
 	if (shell->input == NULL)
 		return (ft_putstr_fd("exit\n", STDERR_FILENO), FALSE);
 	shell->trimmed_input = ft_strtrim(shell->input, SPACES);

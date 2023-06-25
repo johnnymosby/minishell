@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 13:36:07 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:32:39 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	wait_child_processes(t_shell *shell)
 
 	while (wait(&status) > 0)
 		;
-	if (g_status == CMD_SIG)
+	if (g_status == CMD_SIG || g_status == NOCMD_SIG)
 		shell->exit_code = 130;
 	else
 		shell->exit_code = status;
