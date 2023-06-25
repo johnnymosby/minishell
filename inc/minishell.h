@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 14:42:09 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:06:51 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ int		ft_exit(t_shell *shell, t_cmd_tbl *cmd_tbl);
 //	 .../ft_env.c
 int		ft_env(t_shell *shell);
 //	 .../ft_export.c
-int	ft_export(t_shell *shell, char **args);
+int		ft_export(t_shell *shell, char **args);
 // 	exit/...
 //	 .../exit.c
 void	free_tkn_tbl(t_tkn_tbl **tkn_tbl);
@@ -204,4 +204,7 @@ void	print_error_and_exit(t_shell *shell);
 void	print_tokens(t_shell *shell);
 void	print_contents(t_shell *shell);
 char	*translate_enum(int n);
+
+extern int	g_status;
+
 #endif

@@ -1,6 +1,5 @@
 .vscode
 obj/
-plots/
 tests/obj/
 minishell
 test

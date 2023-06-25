@@ -6,27 +6,22 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:30:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:43:46 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 14:49:28 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern int	g_status;
-
 int	imitate_heredoc(char *s, t_shell *shell)
 {
 	char	*input;
 
-	g_status = 1;
 	while (TRUE)
 	{
+		g_status = HEREDOC;
 		input = readline("> ");
-		if (g_status == 130)
-		{
-			g_status = 1;
-			return (set_exit_code(shell, 130), FALSE);
-		}
+		if (g_status == NOCMD_SIG || g_status == CMD_SIG)
+			return (FALSE);
 		if (input == NULL)
 			return (TRUE);
 		else if (ft_strcmp(input, s) == 0)

@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:01:48 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 16:38:41 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:01:21 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ size_t	ft_strlen(const char *str)
 	if (!str)
 		return (0);
 	n = 0;
+	if (str == NULL)
+		return (0);
 	while (*(str + n) != '\0')
 		n++;
 	return (n);

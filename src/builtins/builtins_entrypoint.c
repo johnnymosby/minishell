@@ -6,13 +6,13 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 17:27:25 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:02:45 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern int	g_status;
+
 
 t_cmd	what_command(char *cmd)
 {

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredocs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/24 23:49:44 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:42:54 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-extern int	g_status;
 
 int	check_access_to_file(const char *pathname, t_shell *shell)
 {
@@ -32,14 +30,13 @@ int	fill_heredoc(char *stopword, int fd, t_shell *shell)
 {
 	char	*input;
 
-	g_status = 1;
 	while (TRUE)
 	{
+		g_status = HEREDOC;
 		input = readline("> ");
-		if (g_status == 130)
+		if (g_status == NOCMD_SIG || g_status == CMD_SIG)
 		{
-			g_status = 1;
-			return (free(input), close(fd), set_exit_code(shell, 130), FALSE);
+			return (free(input), close(fd), FALSE);
 		}
 		if (input == NULL)
 			return (close(fd), TRUE);

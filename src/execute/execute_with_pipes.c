@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_with_pipes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 00:11:50 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 13:40:42 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	execute_child_and_parent(int *fd, int *prevpipe, int i, t_shell *shell)
 		print_error_and_exit(shell);
 	else if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		handle_fd(fd);
 		enable_redirections(shell->cmd_tbls, i);
 		if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
@@ -93,11 +95,13 @@ void	execute_with_pipes(t_shell *shell)
 	{
 		if (i == shell->n_cmd_tbls - 1)
 		{
+			g_status = CMD_NOSIG;
 			execute_last_cmd(shell, i, *prevpipe);
 			return ;
 		}
 		else
 		{
+			g_status = CMD_NOSIG;
 			execute_cmd(prevpipe, i, shell);
 		}
 		i++;
