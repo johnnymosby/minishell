@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:13:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/19 13:21:53 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:34:04 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ typedef enum e_type
 	FT_SPACE,
 	FT_WORD
 }	t_type;
+
+typedef enum e_cmd
+{
+	FT_ECHO,
+	FT_CD,
+	FT_PWD,
+	FT_EXPORT,
+	FT_UNSET,
+	FT_ENV,
+	FT_EXIT,
+	FT_OTHER
+}	t_cmd;
 
 typedef struct s_tkn
 {
