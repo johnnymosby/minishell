@@ -3,46 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:19:40 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 19:26:27 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 23:41:39 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builts.h"
+#include "../../inc/minishell.h"
+
+void	remove_env_variable(t_shell *shell, int i)
+{
+	free(shell->envs[i]);
+	while (shell->envs[i] != NULL)
+	{
+		shell->envs[i] = shell->envs[i + 1];
+		i++;
+	}
+}
+
+static int	is_char_or_underscore(char c)
+{
+	if (('a' <= c && c <= 'z')
+		|| ('A' <= c && c <= 'Z')
+		|| c == '_')
+		return (TRUE);
+	else
+		return (FALSE);
+}
+
+static int	is_valid_identifier(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (is_char_or_underscore(s[0]) == FALSE)
+		return (FALSE);
+	else
+		i++;
+	while (s[i] != '\0')
+	{
+		if ((is_char_or_underscore(s[i]) == TRUE)
+			|| ('0' <= s[i] && s[i] <= '9'))
+			i++;
+		else
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
+static void	write_identifier_error_message(char *s)
+{
+	ft_putstr_fd("minishell: unset: '", STDERR_FILENO);
+	ft_putstr_fd(s, STDERR_FILENO);
+	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+}
 
 /*
 Unset without options
 */
 int	ft_unset(t_shell *shell, char **args)
 {
-	char	*tmp;
-	char	**ss;
 	int		i;
-	int		j;
+	int		index;
 
-	if (!shell->envs || !args || !args[0])
+	if (!args || !args[0] || !shell->envs)
 		return (0);
-	i = -1;
-	while (args[++i])
+	i = 0;
+	while (args[i] != NULL)
 	{
-		if (args[ft_strlen(args) - 1] != '=')
+		if (is_valid_identifier(args[i]) == FALSE)
 		{
-			tmp = ft_strjoin(args[i], "=");
-			if (tmp == NULL)
-			{
-				n_lines_free(args);
-				clean_exit(shell, FT_ERROR);
-			}
-			free(args[i]);
-			args[i] = tmp;
+			write_identifier_error_message(args[i]);
+			i++;
+			continue ;
 		}
-		if (is_in_envsv(args[i], shell->envs))
-			ss = ft_remove_line(shell->envs, args[i]);
-		n_lines_free(shell->envs);
-		shell->envs = ss;
-		ss = NULL;
+		index = return_env_var_index(args[i], shell->envs);
+		if (index < 0)
+		{
+			i++;
+			continue ;
+		}
+		remove_env_variable(shell, index);
+		i++;
 	}
 	return (0);
 }

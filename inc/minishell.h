@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 16:06:51 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 23:30:24 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,12 @@ int		ft_exit(t_shell *shell, t_cmd_tbl *cmd_tbl);
 int		ft_env(t_shell *shell);
 //	 .../ft_export.c
 int		ft_export(t_shell *shell, char **args);
+//	 .../ft_unset.c
+int		ft_unset(t_shell *shell, char **args);
+//	 .../environment_utils.c
+char	*get_env_var_name(t_shell *shell, char *var);
+int		return_env_var_index(char *var, char **env);
+
 // 	exit/...
 //	 .../exit.c
 void	free_tkn_tbl(t_tkn_tbl **tkn_tbl);
