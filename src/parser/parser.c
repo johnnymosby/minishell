@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:29:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 16:14:53 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 23:59:39 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	remove_all_spaces(t_tkn_tbl *tkn_tbl, t_shell *shell)
 	j = 0;
 	while (i != tkn_tbl->n_tkns)
 	{
-		if (tkn_tbl->tkns[i].type == FT_SPACE && (i + 1) != tkn_tbl->n_tkns)
+		if (tkn_tbl->tkns[i].type == FT_SPACE)
 		{
 			shift_array_by_one_to_left(tkn_tbl, i);
 			tkn_tbl->n_tkns -= 1;
