@@ -6,7 +6,7 @@
 #    By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 13:15:57 by maruzibo          #+#    #+#              #
-#    Updated: 2023/06/11 13:15:58 by maruzibo         ###   ########.fr        #
+#    Updated: 2023/06/25 12:00:31 by maruzibo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME = built
 
-SRC = util.c#builts.c env.c main_buils.c
+SRC = util.c ft_cd.c ft_export.c util1.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 13:36:07 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:07:30 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ t_cmd	what_command(char *cmd)
 		return (FT_PWD);
 	else if (i == 4 && !ft_strncmp(cmd, "exit", i))
 		return (FT_EXIT);
+	else if (i == 3 && !ft_strncmp(cmd, "env", i))
+		return (FT_ENV);
+	else if (i == 6 && !ft_strncmp(cmd, "export", i))
+		return (FT_EXPORT);
 	else
 		return (FT_OTHER);
 }
@@ -41,6 +45,10 @@ int	execute_builtin(t_cmd_tbl *cmd_tbl, t_shell *shell)
 		return (ft_pwd());
 	else if (what_command(cmd_tbl->cmd) == FT_EXIT)
 		return (ft_exit(shell, cmd_tbl));
+	else if (what_command(cmd_tbl->cmd) == FT_ENV)
+		return (ft_env(shell));
+	else if (what_command(cmd_tbl->cmd) == FT_EXPORT)
+		return (ft_export(shell, shell->envs));
 	else
 		return (FALSE);
 }

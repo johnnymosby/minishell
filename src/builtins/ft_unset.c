@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:19:40 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/20 17:42:51 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 12:17:16 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_unset(t_shell *cmd, char **args)
 				free(args[a[0]]);
 				args[a[0]] = tmp;
 			}
-			a[1] = is_in_envs(args[a[0]], cmd->envs);
+			a[1] = is_in_envsv(args[a[0]], cmd->envs);
 			if (a[1] >= 0)
 				ft_remove_line(cmd->envs, NULL, a[1]);
 		}

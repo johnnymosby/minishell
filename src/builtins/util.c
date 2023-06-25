@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 11:40:44 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/20 18:20:28 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 12:21:54 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,11 @@ char	**ft_remove_line(char **ss, char *str)
 	while (++i < len_of_ss)
 	{
 		j = i;
-		if (is_in_envs(str, ss))
+		if (is_in_envsv(str, ss))
 			j++;
-		res[i] =  ss[j];
+		res[i] = ss[j];
 		free(ss[j]);
 	}
 	res[i] = NULL;
-	free(ss);
 	return (res);
 }

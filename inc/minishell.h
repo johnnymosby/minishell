@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 13:38:39 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:06:51 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../lib/libft/libft.h"
 # include "structs.h"
 # include "defines.h"
+# include "../src/builtins/builts.h"
 // macros:		EXIT_SUCCESS, EXIT_FAILURE
 // functions:	exit, getenv
 # include <stdlib.h>
@@ -177,7 +178,10 @@ int		ft_echo(char **ss);
 int		ft_pwd(void);
 //	 .../ft_exit.c
 int		ft_exit(t_shell *shell, t_cmd_tbl *cmd_tbl);
-
+//	 .../ft_env.c
+int		ft_env(t_shell *shell);
+//	 .../ft_export.c
+int		ft_export(t_shell *shell, char **args);
 // 	exit/...
 //	 .../exit.c
 void	free_tkn_tbl(t_tkn_tbl **tkn_tbl);

@@ -3,104 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:38:19 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/23 23:38:54 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 13:30:46 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builts.h"
-//#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-/*
-This function tries to extract the value of environment variable from **envs in *cmd
-*/
-char	*ft_getenv(char **env, char *var, )
+int	ft_env(t_shell *shell)
 {
 	int		i;
-	int		j;
-	char	*s;
 
 	i = 0;
-	if (!ft_strchr(var, '='))
-		return (NULL);
-	j = ft_strlen(var);
-	if (j == 0)
-		return (NULL);
-	while (env && env[i])
+	while (shell->envs[i])
 	{
-		j = ft_strlen(var);
-		if (j < ft_strchr(cmd->envs[i], '='))
-			j = ft_strchr(cmd->envs[i], '=');
-		if (!ft_strncmp(env[i], var, j))
-			z = ft_substr(env[i], j + 1, ft_strlen(env[i])));
-			if ()
+		ft_putendl_fd(shell->envs[i], STDOUT_FILENO);
 		i++;
 	}
-	return (NULL);
-}
-
-char	*join_with_equal(char *s1, char *s2)
-{
-	char	*str;
-	char	*tmp;
-
-	if (!s1)
-		return (NULL);
-	tmp = ft_strjoin(s1, '=');
-	str = ft_strjoin(tmp, s2);
-	free(tmp);
-	return (str);
-}
-
-/*This function inserts a value of an environmental 
-vairable to the existing list of variables*/
-char	**ft_set_new_env(char **env, char *var, char *value)
-{
-	int		i[2];
-	char	*str;
-	char	*tmp;
-
-	if (ft_strchr(var, '=') || !var)
-		return (NULL);
-	str = join_with_equal(var, value);
-	i[0] = 0;
-	while (env && env[i[0]])
-	{
-		i[1] = ft_strlen(var);
-		if (!ft_strncmp(env[i[0]], var, i[1])
-			&& env[i[0]][i[1]] == '=')
-		{
-			tmp = env[i[0]];
-			env[i[0]] = str;
-			free(tmp);
-			return (env[i[0]]);
-		}
-		i[0]++;
-	}
-	env = ft_add_line(env, str);
-	free(str);
-	return (env);
-}
-
-/* This function checks if a given variable *var
-exists in the list **env of environmental variables
-*/
-static	int	is_in_envs(char *var, char **env)
-{
-	int	i;
-	int	n;
-
-	if (!var || !env)
-		return (-1);
-	n = ft_strchr(var, '=');
-	i = 0;
-	while (env[i])
-	{
-		if (!ft_strncmp(env[i], var, n + 1))
-			return (i);
-		i++;
-	}
-	return (-1);
+	return (0);
 }
