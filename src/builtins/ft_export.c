@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 11:25:19 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 17:49:52 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:22:03 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	ft_export(t_shell *shell, char **args)
 			}
 			else
 			{
-				//printf("\n", );
 				name = get_env_var_name(shell, args[i]);
 				index = return_env_var_index(name, shell->envs);
 				free(name);

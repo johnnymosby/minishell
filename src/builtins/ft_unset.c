@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:19:40 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 12:17:16 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:26:27 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,34 @@
 /*
 Unset without options
 */
-int	ft_unset(t_shell *cmd, char **args)
+int	ft_unset(t_shell *shell, char **args)
 {
 	char	*tmp;
-	int		a[2];
+	char	**ss;
+	int		i;
+	int		j;
 
-	a[0] = 0;
-	if (nb_of_rows(args) >= 1)
+	if (!shell->envs || !args || !args[0])
+		return (0);
+	i = -1;
+	while (args[++i])
 	{
-		while (args[++a[0]])
+		if (args[ft_strlen(args) - 1] != '=')
 		{
-			if (args[a[0]][ft_strlen(args[a[0]]) - 1] != '=')
+			tmp = ft_strjoin(args[i], "=");
+			if (tmp == NULL)
 			{
-				tmp = ft_strjoin(args[a[0]], "=");
-				free(args[a[0]]);
-				args[a[0]] = tmp;
+				n_lines_free(args);
+				clean_exit(shell, FT_ERROR);
 			}
-			a[1] = is_in_envsv(args[a[0]], cmd->envs);
-			if (a[1] >= 0)
-				ft_remove_line(cmd->envs, NULL, a[1]);
+			free(args[i]);
+			args[i] = tmp;
 		}
+		if (is_in_envsv(args[i], shell->envs))
+			ss = ft_remove_line(shell->envs, args[i]);
+		n_lines_free(shell->envs);
+		shell->envs = ss;
+		ss = NULL;
 	}
 	return (0);
 }

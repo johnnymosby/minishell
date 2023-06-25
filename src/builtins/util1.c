@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:52:49 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 14:48:01 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:14:44 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,17 @@ int	error_message(char *name_of_func, char *mess)
 	return (2);
 }
 
-int	nb_of_rows(char **ss)
+
+void	n_lines_free(char **ss)
 {
 	int	i;
 
-	i = 0;
-	if (!ss)
-		return (0);
-	while (ss[i])
-		i++;
-	return (i);
-}
-
-void	n_lines_free(char **ss, int n)
-{
-	int	i;
-
-	i = -1;
-	while (++i < n)
+	while (ss)
 	{
-		if (!ss[i])
-			free(ss[i]);
+		free(ss[i]);
+		ss++;
 	}
-	if (!ss)
-		free(ss);
+	free(ss);
 }
 
 int	is_in_envsv(char *var, char **env)

@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:59:34 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 17:54:31 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:05:32 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,3 @@ int	ft_echo(char **ss)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }
-
-/*int	ft_echo(t_shell *shell)
-{
-	if (!shell->cmd_tbls->args)
-		
-		
-}*/
