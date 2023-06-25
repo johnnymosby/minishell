@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_cmd_tbl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:59:35 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/23 13:59:08 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 17:41:14 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ void	free_str_array(char ***args, int n_args)
 	i = 0;
 	while (i != n_args)
 	{
-		if (arr[i] != NULL)
-		{
-			free(arr[i]);
-		}
+		free_if_not_null((void **)(arr + i));
 		i++;
 	}
 	free_if_not_null((void **)args);

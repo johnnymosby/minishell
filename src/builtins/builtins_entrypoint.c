@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 15:17:47 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 17:27:25 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern int	g_status;
 
 t_cmd	what_command(char *cmd)
 {
-	int		i;
+	int	i;
 
 	i = ft_strlen(cmd);
 	if (i == 2 && !ft_strncmp(cmd, "cd", i))
@@ -48,7 +48,7 @@ int	execute_builtin(t_cmd_tbl *cmd_tbl, t_shell *shell)
 	else if (what_command(cmd_tbl->cmd) == FT_ENV)
 		return (ft_env(shell));
 	else if (what_command(cmd_tbl->cmd) == FT_EXPORT)
-		return (ft_export(shell, shell->envs));
+		return (ft_export(shell, cmd_tbl->args));
 	else
 		return (FALSE);
 }

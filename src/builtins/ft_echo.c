@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:59:34 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/23 23:54:35 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 17:54:31 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	ft_echo(char **ss)
 	int	i;
 	int	end;
 
+	if (ss == NULL || ss[0] == NULL)
+		return (ft_putchar_fd('\n', STDOUT_FILENO), 0);
 	i = 0;
 	end = 1;
 	if (is_repeatedn(ss[0]))
@@ -49,3 +51,10 @@ int	ft_echo(char **ss)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }
+
+/*int	ft_echo(t_shell *shell)
+{
+	if (!shell->cmd_tbls->args)
+		
+		
+}*/

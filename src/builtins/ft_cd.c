@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 15:16:01 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 12:22:01 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 17:33:55 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	add_new_env(char *env_var, t_shell *shell)
 		clean_exit(shell, FT_ERROR);
 	}
 	i = 0;
-	while (i != len)
+	while (i < len)
 	{
 		new_envs[i] = shell->envs[i];
 		i++;
@@ -60,7 +60,7 @@ void	add_new_env(char *env_var, t_shell *shell)
 }
 
 char	*construct_env_var(const char *name, char *value, int to_free_value,
-	t_shell *shell)
+		t_shell *shell)
 {
 	char	*env_var_with_sign;
 	char	*env_var;
@@ -84,7 +84,7 @@ char	*construct_env_var(const char *name, char *value, int to_free_value,
 }
 
 void	change_env_value(const char *name, char *value, int to_free_value,
-	t_shell *shell)
+		t_shell *shell)
 {
 	int		i;
 	char	*env_var;
@@ -105,7 +105,7 @@ void	change_env_value(const char *name, char *value, int to_free_value,
 }
 
 void	set_new_value(const char *name, char *value, int to_free_value,
-	t_shell *shell)
+		t_shell *shell)
 {
 	char	*env_var;
 

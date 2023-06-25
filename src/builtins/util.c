@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 11:40:44 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 12:21:54 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:52:56 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,21 @@ char	**ft_add_line(char **ss, char *str)
 		return (ss);
 	i = -1;
 	while (++i < len_of_ss)
-	{	res[i] = ss[i];
-		free(ss[i]);
+	{
+		res[i] = ss[i];
 	}
 	res[i] = str;
-	free(str);
-	res[i + 1] = NULL,
-	free(ss);
-	return(res);
+	res[i + 1] = NULL;
+	//free(ss);
+	return (res);
 }
 
 char	**ft_remove_line(char **ss, char *str)
 {
 	char	**res;
 	int		len_of_ss;
-	int		i;
-	int		j;
-
+	int		i[2];
+	
 	if (!ss)
 		return (NULL);
 	else if (!str)
@@ -55,16 +53,16 @@ char	**ft_remove_line(char **ss, char *str)
 	res = (char **)malloc(len_of_ss * sizeof(char *));
 	if (!res)
 		return (ss);
-	i = -1;
-	j = 0;
-	while (++i < len_of_ss)
+	i[0] = -1;
+	i[1] = 0;
+	while (++i[0] < len_of_ss)
 	{
-		j = i;
+		i[1] = i[0];
 		if (is_in_envsv(str, ss))
-			j++;
-		res[i] = ss[j];
-		free(ss[j]);
+			i[1]++;
+		res[i[0]] = ss[i[1]];
 	}
-	res[i] = NULL;
+	res[i[0]] = NULL;
+	//free(ss);
 	return (res);
 }

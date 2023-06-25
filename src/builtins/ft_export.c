@@ -6,48 +6,11 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 11:25:19 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 15:21:11 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/25 17:49:52 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	print_env_variable(char *var)
-{
-	int	i;
-
-	i = 0;
-	while (var[i] && var[i] != '=')
-	{
-		ft_putchar_fd(var[i], STDOUT_FILENO);
-		i++;
-	}
-	if (var[i] == '=')
-	{
-		ft_putchar_fd(var[i], STDOUT_FILENO);
-		i++;
-	}
-	ft_putchar_fd('"', STDOUT_FILENO);
-	ft_putstr_fd(var, STDOUT_FILENO);
-	ft_putchar_fd('"', STDOUT_FILENO);
-	ft_putchar_fd('\n', STDOUT_FILENO);
-}
-
-void export_no_arg_value(t_shell *shell, char *var)
-{
-	int	i;
-
-	i = 0;
-	if (!var)
-	{
-		while (shell->envs[i])
-		{
-			//print_env_variable(shell->envs[i]);
-			ft_env(shell->envs[i]);
-			i++;
-		}
-	}
-}
 
 char	*get_env_var_name(t_shell *shell, char *var)
 {
@@ -69,31 +32,56 @@ char	*get_env_var_name(t_shell *shell, char *var)
 	return (NULL);
 }
 
+int	return_env_var_index(char *var, char **env)
+{
+	int	i;
+	int	n;
+
+	if (!var || !env)
+		return (-1);
+	n = 0;
+	while (var[n] != '\0' && var[n] != '=')
+		n++;
+	i = 0;
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i], var, n))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
 int	ft_export(t_shell *shell, char **args)
 {
 	int		i;
 	char	*name;
-	char	*value;
+	int		index;
 
 	if (!args || !*args)
-		export_no_arg_value(shell, *args);
-	if (nb_of_rows(args) >= 1)
+		ft_env(shell);
+	i = 0;
+	while (args[i])
 	{
-		i = 0;
-		while (args[i])
+		if (ft_strchr(args[i], '='))
 		{
-			if (!ft_strchr(args[i], '=') && !is_in_envsv(args[i], shell->envs))
-				add_new_env(args[i], shell); 
-			if (ft_strchr(args[i], '=') && is_in_envsv(args[i], shell->envs))
+			if (!is_in_envsv(args[i], shell->envs))
 			{
-				name = get_env_var_name(shell, args[i]);
-				value = ft_strchr(args[i], '=');
-				construct_env_var(name, value, TRUE, shell);
+				add_new_env(args[i], shell);
+				args[i] = NULL;
 			}
 			else
-				shell->envs = ft_add_line(shell->envs, args[i]);
-			i++;
+			{
+				//printf("\n", );
+				name = get_env_var_name(shell, args[i]);
+				index = return_env_var_index(name, shell->envs);
+				free(name);
+				free(shell->envs[index]);
+				shell->envs[index] = args[i];
+				args[i] = NULL;
+			}
 		}
+		i++;
 	}
 	return (0);
 }
