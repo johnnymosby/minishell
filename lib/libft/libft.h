@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 18:47:49 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/20 18:45:23 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 15:16:35 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "unistd.h"
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 256
 # endif
 
 typedef struct s_list

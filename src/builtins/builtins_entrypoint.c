@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_entrypoint.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/24 01:18:08 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 13:36:07 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern int	g_status;
+
 
 t_cmd	what_command(char *cmd)
 {

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_last_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/24 22:41:04 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 13:36:07 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+
 
 static void	wait_child_processes(t_shell *shell)
 {
@@ -18,7 +20,10 @@ static void	wait_child_processes(t_shell *shell)
 
 	while (wait(&status) > 0)
 		;
-	shell->exit_code = status;
+	if (g_status == CMD_SIG)
+		shell->exit_code = 130;
+	else
+		shell->exit_code = status;
 }
 
 static void	execute_in_child(t_shell *shell, char *pathname, t_cmd_tbl *cmd_tbl,
@@ -31,6 +36,8 @@ static void	execute_in_child(t_shell *shell, char *pathname, t_cmd_tbl *cmd_tbl,
 		print_error_and_exit(shell);
 	else if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		enable_redirections(shell->cmd_tbls, i);
 		if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
 			exit (1);

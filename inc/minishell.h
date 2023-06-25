@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/24 01:15:30 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 13:38:39 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,4 +200,7 @@ void	print_error_and_exit(t_shell *shell);
 void	print_tokens(t_shell *shell);
 void	print_contents(t_shell *shell);
 char	*translate_enum(int n);
+
+extern int	g_status;
+
 #endif

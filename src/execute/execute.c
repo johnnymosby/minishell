@@ -6,11 +6,13 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/23 16:57:34 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/25 13:36:07 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+
 
 void	add_command_to_args(char *pathname, int i, t_shell *shell)
 {
@@ -71,17 +73,25 @@ void	execute_without_pipes(t_shell *shell)
 		print_error_and_exit(shell);
 	else if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		enable_redirections(shell->cmd_tbls, 0);
 		if (execve(pathname, shell->cmd_tbls->args, shell->envs) < 0)
 			exit (1);
 	}
 	else
+	{
 		waitpid(pid, &status, 0);
-	shell->exit_code = status;
+	}
+	if (g_status == CMD_SIG)
+		shell->exit_code = 130;
+	else
+		shell->exit_code = status;
 }
 
 void	execute(t_shell *shell)
 {
+	g_status = CMD_NOSIG;
 	if (shell->n_cmd_tbls <= 1)
 		execute_without_pipes(shell);
 	else
