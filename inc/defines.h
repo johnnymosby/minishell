@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:30:44 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 14:44:22 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 16:16:29 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@
 # define CMD_NOSIG 2
 # define CMD_SIG 3
 # define HEREDOC 4
+
+# define PATH_MAX 256
 
 #endif

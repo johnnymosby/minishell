@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:59:34 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 18:05:32 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/26 16:17:17 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_repeatedn(char *s)
+static int	is_repeatedn(char *s)
 {
 	int	i;
 
