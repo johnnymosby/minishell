@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 14:37:50 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:18:02 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int	execute_cmd(int *prevpipe, int i, t_shell *shell)
 	tkn_tbl = shell->tkn_tbl;
 	if (handle_redirections(tkn_tbl, shell->cmd_tbls,
 			i, shell) == FALSE)
-		return (close_fd(prevpipe), FALSE);
+		return (handle_fd(prevpipe), FALSE);
 	if (cmd_tbl->cmd == NULL)
-		return (close_fd(prevpipe), TRUE);
+		return (handle_fd(prevpipe), TRUE);
 	fd[0] = -1;
 	fd[1] = -1;
 	handle_infile(i, prevpipe, shell);

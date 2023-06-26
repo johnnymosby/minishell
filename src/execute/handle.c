@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:48:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 14:35:10 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:18:21 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	handle_infile(int i, int *prevpipe, t_shell *shell)
 	cmd_tbl = &(shell->cmd_tbls[i]);
 	if (cmd_tbl->in >= 0)
 		return (handle_fd(prevpipe), TRUE);
-	else if (prevpipe >= 0)
+	else if (*prevpipe >= 0)
 	{
 		cmd_tbl->in = *prevpipe;
 		*prevpipe = -1;
@@ -55,7 +55,7 @@ int	handle_outfile(int *fd, int i, int *prevpipe, t_shell *shell)
 	cmd_tbl = &(shell->cmd_tbls[i]);
 	if (cmd_tbl->out >= 0)
 		return (handle_fd(prevpipe), TRUE);
-	else if (shell->cmd_tbls[i + 1].in_file != NULL)
+	else if (shell->cmd_tbls[i + 1].in_file != NULL || cmd_tbl->cmd == NULL)
 	{
 		handle_fd(prevpipe);
 		if (access("/dev/null", W_OK) == -1)
