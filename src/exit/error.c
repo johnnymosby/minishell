@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:45:02 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:04:46 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 17:42:45 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ void	print_error_and_exit(t_shell *shell)
 	ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 	clean_exit(shell, FT_ERROR);
+}
+
+void	write_failed_message(const char *pathname)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd((char *)pathname, STDERR_FILENO);
+	ft_putstr_fd(" failed\n", STDERR_FILENO);
 }
 
 char	*translate_enum(int n)

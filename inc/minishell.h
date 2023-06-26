@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 16:57:55 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 17:55:25 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,10 @@ void	execute_with_pipes(t_shell *shell);
 int		execute_last_cmd(t_shell *shell, int i, int prevpipe);
 //	 .../construct_pathname.c
 char	*construct_pathname(char *cmd, t_shell *shell);
+//	 .../operate_with_filepaths.c
+char	*find_folder_with_command(char *cmd, const char *path,
+			t_shell *shell);
+int		is_directory(char *cmd, t_shell *shell);
 
 // builtins/...
 //	 .../builtins_entrypoint.c
@@ -215,6 +219,7 @@ void	clean_shell(t_shell *shell);
 //	 .../error.c
 void	write_file_error_message(const char *pathname);
 void	print_error_and_exit(t_shell *shell);
+void	write_failed_message(const char *pathname);
 
 //TO DELETE
 void	print_tokens(t_shell *shell);

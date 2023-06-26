@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:48:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 15:18:21 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 17:44:36 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,8 @@ int	handle_outfile(int *fd, int i, int *prevpipe, t_shell *shell)
 	else
 	{
 		if (pipe(fd) == -1)
-		{
-			handle_fd(prevpipe);
-			ft_putstr_fd("minishell: pipe failed\n", STDERR_FILENO);
-			clean_exit(shell, FT_ERROR);
-		}
+			return (handle_fd(prevpipe), write_failed_message("pipe"),
+				clean_exit(shell, FT_ERROR), FALSE);
 		if (cmd_tbl->out < 0)
 			cmd_tbl->out = fd[1];
 	}

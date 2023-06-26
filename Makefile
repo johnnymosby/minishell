@@ -38,7 +38,8 @@ PARSER	=	parser concatenate_words check_syntax check_syntax_utils check_access c
 			handle_heredocs imitate_heredocs heredocs_utils
 PARSER	:=	$(addprefix parser/, $(PARSER))
 
-EXEC	=	execute construct_pathname execute_with_pipes handle handle_redirections execute_last_cmd
+EXEC	=	execute construct_pathname execute_with_pipes handle handle_redirections execute_last_cmd \
+			operate_with_filepaths
 EXEC	:=	$(addprefix execute/, $(EXEC))
 
 BUILTINS	=	builtins_entrypoint ft_cd ft_echo ft_pwd ft_exit ft_env ft_export ft_unset \

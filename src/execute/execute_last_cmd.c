@@ -6,13 +6,11 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 13:25:01 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 17:40:09 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-
 
 static void	wait_child_processes(t_shell *shell)
 {
