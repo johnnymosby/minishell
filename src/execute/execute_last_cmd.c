@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 17:40:09 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:29:13 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,17 @@ static void	wait_child_processes(t_shell *shell)
 		shell->exit_code = status;
 }
 
-static void	execute_in_child(t_shell *shell, char *pathname, t_cmd_tbl *cmd_tbl,
-	int i)
+static int	execute_in_child(t_shell *shell, int i)
 {
 	pid_t		pid;
+	t_cmd_tbl	*cmd_tbl;
+	char		*pathname;
 
+	cmd_tbl = &(shell->cmd_tbls[i]);
+	pathname = construct_pathname(cmd_tbl->cmd, shell);
+	if (pathname == NULL)
+		return (FALSE);
+	add_command_to_args(pathname, i, shell);
 	pid = fork();
 	if (pid < 0)
 		print_error_and_exit(shell);
@@ -40,6 +46,7 @@ static void	execute_in_child(t_shell *shell, char *pathname, t_cmd_tbl *cmd_tbl,
 		if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
 			exit (1);
 	}
+	return (TRUE);
 }
 
 int	execute_last_cmd(t_shell *shell, int i, int prevpipe)
@@ -61,14 +68,8 @@ int	execute_last_cmd(t_shell *shell, int i, int prevpipe)
 		enable_redirections(shell->cmd_tbls, i);
 		shell->exit_code = execute_builtin(cmd_tbl, shell);
 	}
-	else
-	{
-		pathname = construct_pathname(cmd_tbl->cmd, shell);
-		if (pathname == NULL)
-			return (FALSE);
-		add_command_to_args(pathname, i, shell);
-		execute_in_child(shell, pathname, cmd_tbl, i);
-	}
+	else if (execute_in_child(shell, i) == FALSE)
+		return (FALSE);
 	wait_child_processes(shell);
 	if (cmd_tbl->in >= 0)
 		close_fd(&prevpipe);

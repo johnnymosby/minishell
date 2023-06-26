@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 15:18:02 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:33:33 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,31 @@ int	execute_child_and_parent(int *fd, int *prevpipe, int i, t_shell *shell)
 	return (TRUE);
 }
 
-int	execute_cmd(int *prevpipe, int i, t_shell *shell)
+static int	prepare_to_execution(int *prevpipe, int i, int *fd, t_shell *shell)
 {
-	t_tkn_tbl	*tkn_tbl;
-	int			fd[2];
 	t_cmd_tbl	*cmd_tbl;
+	t_tkn_tbl	*tkn_tbl;
 
 	cmd_tbl = &(shell->cmd_tbls[i]);
 	tkn_tbl = shell->tkn_tbl;
 	if (handle_redirections(tkn_tbl, shell->cmd_tbls,
 			i, shell) == FALSE)
 		return (handle_fd(prevpipe), FALSE);
-	if (cmd_tbl->cmd == NULL)
-		return (handle_fd(prevpipe), TRUE);
 	fd[0] = -1;
 	fd[1] = -1;
+	return (TRUE);
+}
+
+int	execute_cmd(int *prevpipe, int i, t_shell *shell)
+{
+	int			fd[2];
+	t_cmd_tbl	*cmd_tbl;
+
+	cmd_tbl = &(shell->cmd_tbls[i]);
+	if (prepare_to_execution(prevpipe, i, fd, shell) == FALSE)
+		return (FALSE);
+	if (cmd_tbl->cmd == NULL)
+		return (handle_fd(prevpipe), TRUE);
 	handle_infile(i, prevpipe, shell);
 	handle_outfile(fd, i, prevpipe, shell);
 	if (what_command(cmd_tbl->cmd) != FT_OTHER)
@@ -74,11 +84,8 @@ int	execute_cmd(int *prevpipe, int i, t_shell *shell)
 		dup2(shell->std_in_out[1], STDOUT_FILENO);
 		*prevpipe = fd[0];
 	}
-	else
-	{
-		if (execute_child_and_parent(fd, prevpipe, i, shell) == FALSE)
-			return (set_exit_code(shell, 1), FALSE);
-	}
+	else if (execute_child_and_parent(fd, prevpipe, i, shell) == FALSE)
+		return (set_exit_code(shell, 1), FALSE);
 	return (TRUE);
 }
 

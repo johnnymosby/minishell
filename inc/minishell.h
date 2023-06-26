@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 17:55:25 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:19:00 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,6 @@ int		skip_cmd(t_tkn_tbl *tkn_tbl, int i);
 
 // execute/...
 //	 .../execute.c
-void	add_command_to_args(char *pathname, int i, t_shell *shell);
-void	enable_redirections(t_cmd_tbl *cmd_tbls, int i);
 void	execute(t_shell *shell);
 //	 .../handle_redirections.c
 int		handle_redirections(t_tkn_tbl *tkn_tbl, t_cmd_tbl *cmd_tbls,
@@ -168,6 +166,12 @@ char	*construct_pathname(char *cmd, t_shell *shell);
 char	*find_folder_with_command(char *cmd, const char *path,
 			t_shell *shell);
 int		is_directory(char *cmd, t_shell *shell);
+//	 .../execute_utils.c
+void	add_command_to_args(char *pathname, int i, t_shell *shell);
+void	enable_redirections(t_cmd_tbl *cmd_tbls, int i);
+//	 .../execute_without_pipes.c
+void	execute_without_pipes(t_shell *shell);
+
 
 // builtins/...
 //	 .../builtins_entrypoint.c
