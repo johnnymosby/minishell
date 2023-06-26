@@ -6,13 +6,13 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:59:34 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/26 18:06:03 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:08:49 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_repeatedn(char *s)
+static int	is_repeatedn(char *s)
 {
 	int	i;
 

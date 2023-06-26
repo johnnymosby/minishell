@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 23:30:24 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 17:55:25 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "../lib/libft/libft.h"
 # include "structs.h"
 # include "defines.h"
-# include "../src/builtins/builts.h"
 // macros:		EXIT_SUCCESS, EXIT_FAILURE
 // functions:	exit, getenv
 # include <stdlib.h>
@@ -165,12 +164,17 @@ void	execute_with_pipes(t_shell *shell);
 int		execute_last_cmd(t_shell *shell, int i, int prevpipe);
 //	 .../construct_pathname.c
 char	*construct_pathname(char *cmd, t_shell *shell);
+//	 .../operate_with_filepaths.c
+char	*find_folder_with_command(char *cmd, const char *path,
+			t_shell *shell);
+int		is_directory(char *cmd, t_shell *shell);
 
 // builtins/...
 //	 .../builtins_entrypoint.c
 t_cmd	what_command(char *cmd);
 int		execute_builtin(t_cmd_tbl *cmd_tbl, t_shell *shell);
 //	 .../ft_cd.c
+void	change_pwd_and_oldpwd(char *oldpwd_val, t_shell *shell);
 int		ft_cd(t_cmd_tbl *cmd_tbl, t_shell *shell);
 //	 .../ft_echo.c
 int		ft_echo(char **ss);
@@ -185,8 +189,18 @@ int		ft_export(t_shell *shell, char **args);
 //	 .../ft_unset.c
 int		ft_unset(t_shell *shell, char **args);
 //	 .../environment_utils.c
+void	remove_env_variable(t_shell *shell, int i);
 char	*get_env_var_name(t_shell *shell, char *var);
 int		return_env_var_index(char *var, char **env);
+int		is_in_envs(char *var, char **env);
+void	add_new_env(char *env_var, t_shell *shell);
+//	 .../check_environment_identifier.c
+int		is_valid_identifier(char *cmd, char *s);
+void	write_identifier_error_message(char *cmd, char *s);
+//	 .../go_to_a_directory.c
+int		go_to_dir(char *pathname, t_shell *shell);
+int		go_to_old_dir(t_shell *shell);
+int		go_to_home(t_shell *shell);
 
 // 	exit/...
 //	 .../exit.c
@@ -205,6 +219,7 @@ void	clean_shell(t_shell *shell);
 //	 .../error.c
 void	write_file_error_message(const char *pathname);
 void	print_error_and_exit(t_shell *shell);
+void	write_failed_message(const char *pathname);
 
 //TO DELETE
 void	print_tokens(t_shell *shell);
