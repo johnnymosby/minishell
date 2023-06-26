@@ -6,13 +6,11 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 13:07:34 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 16:29:07 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:32:27 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-
 
 void	add_command_to_args(char *pathname, int i, t_shell *shell)
 {
@@ -66,7 +64,7 @@ void	execute_without_pipes(t_shell *shell)
 	}
 	pathname = construct_pathname(shell->cmd_tbls[0].cmd, shell);
 	if (pathname == NULL)
-		return (write_file_error_message(shell->cmd_tbls[0].cmd));
+		return ;
 	add_command_to_args(pathname, 0, shell);
 	pid = fork();
 	if (pid < 0)

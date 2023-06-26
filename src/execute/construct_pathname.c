@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   construct_pathname.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:12:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/24 23:32:20 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:24:31 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,21 @@ static char	*find_folder_with_command(char *cmd, const char *path,
 	return (set_exit_code(shell, 127), NULL);
 }
 
+int	is_directory(char *cmd, t_shell *shell)
+{
+	struct stat	path_stat;
+
+	if (stat(cmd, &path_stat) == 0)
+	{
+		if (S_ISDIR(path_stat.st_mode) == 0)
+			return (FALSE);
+		else
+			return (TRUE);
+	}
+	clean_exit(shell, FT_ERROR);
+	return (FALSE);
+}
+
 char	*construct_pathname(char *cmd, t_shell *shell)
 {
 	char	*pathname;
@@ -117,6 +132,15 @@ char	*construct_pathname(char *cmd, t_shell *shell)
 
 	if (strchr(cmd, '/') != NULL)
 	{
+		if (access(cmd, F_OK) != 0)
+			return (write_file_error_message(cmd), NULL);
+		if (is_directory(cmd, shell) == TRUE)
+		{
+			ft_putstr_fd("minishell: permission denied: ", STDERR_FILENO);
+			ft_putstr_fd(cmd, STDERR_FILENO);
+			ft_putstr_fd("\n", STDERR_FILENO);
+			return (NULL);
+		}
 		pathname = ft_strdup(cmd);
 		exit_if_true(shell, pathname == NULL, FT_ERROR);
 		return (pathname);
@@ -132,7 +156,12 @@ char	*construct_pathname(char *cmd, t_shell *shell)
 		return (set_exit_code(shell, 1), NULL);
 	folder = find_folder_with_command(cmd, shell->envs[path_ind], shell);
 	if (folder == NULL)
+	{
+		ft_putstr_fd("minishell: command not found: ", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putchar_fd('\n', STDERR_FILENO);
 		return (NULL);
+	}
 	pathname = ft_strjoin(folder, cmd);
 	free(folder);
 	if (pathname == NULL)

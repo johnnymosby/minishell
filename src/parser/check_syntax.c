@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 12:54:18 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/21 11:41:13 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:52:25 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	handle_redirection(t_tkn_tbl *tkn_tbl, int *i)
 
 int	handle_pipe(t_tkn_tbl *tkn_tbl, int *i)
 {
-	if (i == 0)
+	if (*i == 0)
 		return (print_syntax_error("|"), FALSE);
 	else if (*i + 1 == tkn_tbl->n_tkns)
 		return (print_syntax_error("newline"), FALSE);

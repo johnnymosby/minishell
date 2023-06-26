@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 13:40:42 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:37:50 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	construct_pathname_safely(char **pathname, int i, t_cmd_tbl *cmd_tbl,
 {
 	*pathname = construct_pathname(cmd_tbl->cmd, shell);
 	if (*pathname == NULL)
-		return (write_file_error_message(shell->cmd_tbls[i].cmd), FALSE);
+		return (FALSE);
 	add_command_to_args(*pathname, i, shell);
 	return (TRUE);
 }
@@ -67,10 +67,10 @@ int	execute_cmd(int *prevpipe, int i, t_shell *shell)
 	handle_outfile(fd, i, prevpipe, shell);
 	if (what_command(cmd_tbl->cmd) != FT_OTHER)
 	{
-		handle_fd(fd);
 		enable_redirections(shell->cmd_tbls, i);
 		shell->exit_code = execute_builtin(cmd_tbl, shell);
-		handle_fd(fd + 1);
+		if (fd[1] >= 0)
+			close(fd[1]);
 		dup2(shell->std_in_out[1], STDOUT_FILENO);
 		*prevpipe = fd[0];
 	}
@@ -88,7 +88,7 @@ void	execute_with_pipes(t_shell *shell)
 	int	prevpipe_val;
 	int	i;
 
-	prevpipe_val = STDIN_FILENO;
+	prevpipe_val = 0;
 	prevpipe = &prevpipe_val;
 	i = 0;
 	while (i != shell->n_cmd_tbls)

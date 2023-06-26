@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_entrypoint.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 23:29:34 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:59:07 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-
 
 t_cmd	what_command(char *cmd)
 {
