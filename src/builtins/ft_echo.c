@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:59:34 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/26 18:49:07 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/26 19:01:01 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	ft_echo(char **ss)
 		ft_putstr_fd(ss[i], STDOUT_FILENO);
 		if (ss[i + 1])
 			ft_putchar_fd(' ', STDOUT_FILENO);
-
 		i++;
 	}
 	if (end == 1)

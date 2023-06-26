@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 18:58:22 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 19:13:40 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,13 @@ int	add_heredoc(char *stopword, t_cmd_tbl *cmd_tbl, int j, t_shell *shell)
 	pathname = ft_strjoin("/tmp/tmp_heredoc_", file_id);
 	free(file_id);
 	if (pathname == NULL)
-	{
-		write_failed_message("ft_strjoin");
-		clean_exit(shell, FT_ERROR);
-	}
+		return (write_failed_message("ft_strjoin"),
+			clean_exit(shell, FT_ERROR), FALSE);
 	fd = open(pathname, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (fd < 0)
 	{
 		write_file_error_message(pathname);
 		free(pathname);
-		ft_putstr_fd("minishell: temporary heredoc failed to be opened\n", STDERR_FILENO);
 		clean_exit(shell, FT_ERROR);
 	}
 	free(pathname);
