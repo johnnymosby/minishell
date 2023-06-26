@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:40:35 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/24 23:55:30 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:54:32 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**copy_environment(char **envs, t_shell *shell)
 		if (new_envs[i] == NULL)
 		{
 			free_str_array(&new_envs, len);
-			ft_putstr_fd("minishell: ft_strdup failed with an environment variable\n", STDERR_FILENO);
+			write_failed_message("ft_strdup");
 			clean_exit(shell, FT_ERROR);
 		}
 		i++;

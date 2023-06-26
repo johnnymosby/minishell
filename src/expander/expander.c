@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:19:31 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 00:01:44 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:53:40 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,13 @@ static int	expand_variable(int ind, t_tkn *tkn, t_shell *shell)
 	int		len_val;
 
 	if (tkn->cntnt[ind + 1] == '?')
-	{
 		return (expand_exit_code(ind, tkn, shell));
-	}
 	len_var = find_len_var(tkn->cntnt + ind + 1);
 	var = ft_substr(tkn->cntnt, ind + 1, len_var);
 	if (var == NULL)
 	{
-		ft_putstr_fd("minishell: ft_substr failed in expand_variable\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: ft_substr failed in expand_variable\n",
+			STDERR_FILENO);
 		clean_exit(shell, FT_ERROR);
 	}
 	value = find_env_value(shell->envs, var, len_var, shell);

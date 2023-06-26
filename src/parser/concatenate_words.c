@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   concatenate_words.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:49:00 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/24 23:51:33 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:58:50 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	concatenate_two_words(t_tkn_tbl *tkn_tbl, int i, t_shell *shell)
 	result = ft_strjoin(tkn_tbl->tkns[i].cntnt, tkn_tbl->tkns[i + 1].cntnt);
 	if (result == NULL)
 	{
-		ft_putstr_fd("miinishell: ft_strjoin failed with concatenate_two_words\n", STDERR_FILENO);
+		write_failed_message("ft_strjoin");
 		clean_exit(shell, FT_ERROR);
 	}
 	free(tkn_tbl->tkns[i].cntnt);

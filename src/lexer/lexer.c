@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:20:53 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 23:59:57 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:57:45 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	add_quote(t_tkn_tbl *tkn_tbl, const char *inp, int i, t_shell *shell)
 	tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt = ft_calloc(len + 1, sizeof(char));
 	if (tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt == NULL)
 	{
-		ft_putstr_fd("minishell: calloc failed with tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt\n", STDERR_FILENO);
+		write_failed_message("ft_calloc");
 		clean_exit(shell, FT_ERROR);
 	}
 	ret = len;
@@ -53,7 +53,7 @@ int	add_dquote(t_tkn_tbl *tkn_tbl, const char *inp, int i, t_shell *shell)
 	tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt = ft_calloc(len + 1, sizeof(char));
 	if (tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt == NULL)
 	{
-		ft_putstr_fd("minishell: calloc failed with tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt\n", STDERR_FILENO);
+		write_failed_message("ft_calloc");
 		clean_exit(shell, FT_ERROR);
 	}
 	tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt[len] = '\0';

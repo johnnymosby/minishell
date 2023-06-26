@@ -46,7 +46,7 @@ BUILTINS	=	builtins_entrypoint ft_cd ft_echo ft_pwd ft_exit ft_env ft_export ft_
 				environment_utils check_environment_identifier go_to_a_directory
 BUILTINS	:=	$(addprefix builtins/, $(BUILTINS))
 
-EXIT	=	exit clean_shell error free_cmd_tbl
+EXIT	=	exit clean_shell error free_cmd_tbl clean_data_structures
 EXIT	:=	$(addprefix exit/, $(EXIT))
 
 SOURCE	=	$(MAIN) $(UTILS) $(LOOP) $(INIT) $(SIG) $(LEXER) $(EXPAND) $(PARSER) $(EXEC) $(EXIT) $(BUILTINS)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_and_args.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:20:58 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/24 23:59:31 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:57:05 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	increase_args_array(char ***args, t_cmd_tbl *cmd_tbl,
 	new_args_array = ft_calloc(cmd_tbl->max_n_args, sizeof(char *));
 	if (new_args_array == NULL)
 	{
-		ft_putstr_fd("minishell: calloc failed in increase_args_array\n", STDERR_FILENO);
+		write_failed_message("ft_calloc");
 		clean_exit(shell, FT_ERROR);
 	}
 	i = 0;
@@ -46,7 +46,7 @@ static void	add_arg(char *arg, t_cmd_tbl *cmd_tbl, t_shell *shell)
 		cmd_tbl->args = ft_calloc(cmd_tbl->max_n_args + 1, sizeof (char *));
 		if (cmd_tbl->args == NULL)
 		{
-			ft_putstr_fd("minishell: calloc failed in add_arg\n", STDERR_FILENO);
+			write_failed_message("ft_calloc");
 			clean_exit(shell, FT_ERROR);
 		}
 	}
@@ -55,7 +55,7 @@ static void	add_arg(char *arg, t_cmd_tbl *cmd_tbl, t_shell *shell)
 	cmd_tbl->args[cmd_tbl->n_args] = ft_strdup(arg);
 	if (cmd_tbl->args[cmd_tbl->n_args] == NULL)
 	{
-		ft_putstr_fd("minishell: ft_strdup failed\n", STDERR_FILENO);
+		write_failed_message("ft_strdup");
 		clean_exit(shell, FT_ERROR);
 	}
 	cmd_tbl->n_args += 1;
@@ -69,23 +69,18 @@ int	init_cmd_and_args(t_tkn_tbl *tkn_tbl, t_shell *shell, int i, int j)
 	while (i != tkn_tbl->n_tkns)
 	{
 		if (tkn_tbl->tkns[i].type == FT_PIPE)
-		{
-			i++;
-			return (i);
-		}
+			return (i + 1);
 		if (tkn_tbl->tkns[i].type == FT_WORD && cmd_tbl->cmd == NULL)
 		{
 			cmd_tbl->cmd = ft_strdup(tkn_tbl->tkns[i].cntnt);
 			if (cmd_tbl->cmd == NULL)
 			{
-				ft_putstr_fd("minishell: ft_strdup failed with cmd_tbl->cmd\n", STDERR_FILENO);
+				write_failed_message("ft_strdup");
 				clean_exit(shell, FT_ERROR);
 			}
 		}
 		else if (tkn_tbl->tkns[i].type == FT_WORD)
-		{
 			add_arg(tkn_tbl->tkns[i].cntnt, cmd_tbl, shell);
-		}
 		else
 			i++;
 		i++;

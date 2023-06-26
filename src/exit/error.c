@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:45:02 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 17:42:45 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:46:54 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,58 +35,58 @@ void	write_failed_message(const char *pathname)
 	ft_putstr_fd(" failed\n", STDERR_FILENO);
 }
 
-char	*translate_enum(int n)
-{
-	if (n == FT_PIPE)
-		return ("FT_PIPE");
-	else if (n == FT_GREAT)
-		return ("FT_GREAT");
-	else if (n == FT_DGREAT)
-		return ("FT_DGREAT");
-	else if (n == FT_LESS)
-		return ("FT_LESS");
-	else if (n == FT_DLESS)
-		return ("FT_DLESS");
-	else if (n == FT_QUOTE)
-		return ("FT_QUOTE");
-	else if (n == FT_DQUOTE)
-		return ("FT_DQUOTE");
-	else if (n == FT_SPACE)
-		return ("FT_SPACE");
-	else if (n == FT_WORD)
-		return ("FT_WORD");
-	else
-		return ("not token");
-}
+// char	*translate_enum(int n)
+// {
+// 	if (n == FT_PIPE)
+// 		return ("FT_PIPE");
+// 	else if (n == FT_GREAT)
+// 		return ("FT_GREAT");
+// 	else if (n == FT_DGREAT)
+// 		return ("FT_DGREAT");
+// 	else if (n == FT_LESS)
+// 		return ("FT_LESS");
+// 	else if (n == FT_DLESS)
+// 		return ("FT_DLESS");
+// 	else if (n == FT_QUOTE)
+// 		return ("FT_QUOTE");
+// 	else if (n == FT_DQUOTE)
+// 		return ("FT_DQUOTE");
+// 	else if (n == FT_SPACE)
+// 		return ("FT_SPACE");
+// 	else if (n == FT_WORD)
+// 		return ("FT_WORD");
+// 	else
+// 		return ("not token");
+// }
 
-void	print_tokens(t_shell *shell)
-{
-	int	i;
+// void	print_tokens(t_shell *shell)
+// {
+// 	int	i;
 
-	i = 0;
-	if (shell != NULL && shell->tkn_tbl != NULL)
-	{
-		while (i != shell->tkn_tbl->n_tkns)
-		{
-			printf("%s\n", translate_enum(shell->tkn_tbl->tkns[i].type));
-			i++;
-		}
-	}
-}
+// 	i = 0;
+// 	if (shell != NULL && shell->tkn_tbl != NULL)
+// 	{
+// 		while (i != shell->tkn_tbl->n_tkns)
+// 		{
+// 			printf("%s\n", translate_enum(shell->tkn_tbl->tkns[i].type));
+// 			i++;
+// 		}
+// 	}
+// }
 
-void	print_contents(t_shell *shell)
-{
-	int	i;
+// void	print_contents(t_shell *shell)
+// {
+// 	int	i;
 
-	i = 0;
-	if (shell != NULL && shell->tkn_tbl != NULL
-		&& shell->tkn_tbl->tkns != NULL)
-	{
-		while (i != shell->tkn_tbl->n_tkns)
-		{
-			if (shell->tkn_tbl->tkns[i].cntnt != NULL)
-				printf("%s\n", shell->tkn_tbl->tkns[i].cntnt);
-			i++;
-		}
-	}
-}
+// 	i = 0;
+// 	if (shell != NULL && shell->tkn_tbl != NULL
+// 		&& shell->tkn_tbl->tkns != NULL)
+// 	{
+// 		while (i != shell->tkn_tbl->n_tkns)
+// 		{
+// 			if (shell->tkn_tbl->tkns[i].cntnt != NULL)
+// 				printf("%s\n", shell->tkn_tbl->tkns[i].cntnt);
+// 			i++;
+// 		}
+// 	}
+// }

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 18:19:00 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:46:17 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,10 +208,8 @@ int		go_to_home(t_shell *shell);
 
 // 	exit/...
 //	 .../exit.c
-void	free_tkn_tbl(t_tkn_tbl **tkn_tbl);
 void	clean_exit(t_shell *shell, int exit_code);
 void	exit_if_true(t_shell *shell, int if_true, int exit_code);
-void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n);
 //	 .../free_cmd_tbl.c
 void	free_str_array(char ***args, int n_args);
 void	close_files(t_cmd_tbl *cmd_tbl);
@@ -224,6 +222,9 @@ void	clean_shell(t_shell *shell);
 void	write_file_error_message(const char *pathname);
 void	print_error_and_exit(t_shell *shell);
 void	write_failed_message(const char *pathname);
+//	 .../clean_data_structures.c
+void	free_tkn_tbl(t_tkn_tbl **tkn_tbl);
+void	free_cmd_tbls(t_cmd_tbl **cmd_tbls, int n);
 
 //TO DELETE
 void	print_tokens(t_shell *shell);

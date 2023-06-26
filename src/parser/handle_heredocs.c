@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 16:42:54 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:58:22 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	add_heredoc(char *stopword, t_cmd_tbl *cmd_tbl, int j, t_shell *shell)
 	free(file_id);
 	if (pathname == NULL)
 	{
-		ft_putstr_fd("minishell: ft_strjoin failed to create pathname for temporary heredoc\n", STDERR_FILENO);
+		write_failed_message("ft_strjoin");
 		clean_exit(shell, FT_ERROR);
 	}
 	fd = open(pathname, O_RDWR | O_CREAT | O_TRUNC, 0777);
