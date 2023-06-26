@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:59:34 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/26 18:08:49 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:49:07 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,17 @@ int	ft_echo(char **ss)
 		return (ft_putchar_fd('\n', STDOUT_FILENO), 0);
 	i = 0;
 	end = 1;
-	if (is_repeatedn(ss[0]))
+	while (is_repeatedn(ss[i]))
 	{
 		end = 0;
 		i++;
 	}
-	while (ss[i] && !is_repeatedn(ss[i]))
+	while (ss[i])
 	{
 		ft_putstr_fd(ss[i], STDOUT_FILENO);
 		if (ss[i + 1])
 			ft_putchar_fd(' ', STDOUT_FILENO);
+
 		i++;
 	}
 	if (end == 1)
