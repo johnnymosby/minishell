@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:59:34 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/25 18:05:32 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:06:03 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_echo(char **ss)
 		end = 0;
 		i++;
 	}
-	while (ss[i])
+	while (ss[i] && !is_repeatedn(ss[i]))
 	{
 		ft_putstr_fd(ss[i], STDOUT_FILENO);
 		if (ss[i + 1])
