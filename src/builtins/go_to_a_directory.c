@@ -6,7 +6,7 @@
 /*   By: maruzibo <maruzibo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 16:49:02 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/27 17:20:09 by maruzibo         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:21:17 by maruzibo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ static int	change_dir_to_home(t_shell *shell)
 		clean_exit(shell, FT_ERROR);
 	if (chdir(home) == -1)
 	{
+		free(home);
 		free(oldpwd_val);
-		write_file_error_message("chdir");
+		write_file_error_message("cmd");
 		return (FALSE);
 	}
 	else
