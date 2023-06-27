@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 18:16:18 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 18:16:35 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:36:00 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,19 @@ void	enable_redirections(t_cmd_tbl *cmd_tbls, int i)
 		dup2(cmd_tbls[i].in, STDIN_FILENO);
 	if (cmd_tbls[i].out != -1)
 		dup2(cmd_tbls[i].out, STDOUT_FILENO);
+}
+
+void	finalise_exit_code(t_shell *shell, int status)
+{
+	if (g_status == CMD_SIG || g_status == NOCMD_SIG)
+		shell->exit_code = 130;
+	else
+	{
+		if (status == 0)
+			shell->exit_code = status;
+		else if (status % 256 == 0)
+			shell->exit_code = status / 256;
+		else
+			shell->exit_code = status % 256;
+	}
 }

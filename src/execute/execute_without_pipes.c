@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 18:17:09 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 18:29:03 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:32:08 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,6 @@ static int	prepare_to_execution(t_shell *shell)
 		return (FALSE);
 	}
 	return (TRUE);
-}
-
-static void	set_exit_code_no_pipes(t_shell *shell, int status)
-{
-	if (g_status == CMD_SIG || g_status == NOCMD_SIG)
-		shell->exit_code = 130;
-	else
-		shell->exit_code = status;
 }
 
 void	execute_without_pipes(t_shell *shell)
@@ -61,5 +53,5 @@ void	execute_without_pipes(t_shell *shell)
 	}
 	else
 		waitpid(pid, &status, 0);
-	set_exit_code_no_pipes(shell, status);
+	finalise_exit_code(shell, status);
 }

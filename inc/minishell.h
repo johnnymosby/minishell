@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 19:15:05 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:31:52 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ int		is_directory(char *cmd, t_shell *shell);
 //	 .../execute_utils.c
 void	add_command_to_args(char *pathname, int i, t_shell *shell);
 void	enable_redirections(t_cmd_tbl *cmd_tbls, int i);
+void	finalise_exit_code(t_shell *shell, int status);
 //	 .../execute_without_pipes.c
 void	execute_without_pipes(t_shell *shell);
 
