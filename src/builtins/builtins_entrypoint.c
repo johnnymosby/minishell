@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/26 13:59:07 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:36:56 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	execute_builtin(t_cmd_tbl *cmd_tbl, t_shell *shell)
 	else if (what_command(cmd_tbl->cmd) == FT_EXIT)
 		return (ft_exit(shell, cmd_tbl));
 	else if (what_command(cmd_tbl->cmd) == FT_ENV)
-		return (ft_env(shell));
+		return (ft_env(shell, cmd_tbl->args));
 	else if (what_command(cmd_tbl->cmd) == FT_EXPORT)
 		return (ft_export(shell, cmd_tbl->args));
 	else if (what_command(cmd_tbl->cmd) == FT_UNSET)

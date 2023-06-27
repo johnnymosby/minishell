@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:12:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 18:03:34 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:46:48 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ static char	*return_cmd_as_pathname(char *cmd, t_shell *shell)
 	return (pathname);
 }
 
+static void	print_no_such_file(char *pathname)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(pathname, STDERR_FILENO);
+	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+}
+
 char	*construct_pathname(char *cmd, t_shell *shell)
 {
 	char	*pathname;
@@ -55,7 +62,7 @@ char	*construct_pathname(char *cmd, t_shell *shell)
 		path_ind++;
 	}
 	if (shell->envs[path_ind] == NULL)
-		return (set_exit_code(shell, 1), NULL);
+		return (print_no_such_file(cmd), NULL);
 	folder = find_folder_with_command(cmd, shell->envs[path_ind], shell);
 	if (folder == NULL)
 		return (print_command_not_found(cmd), NULL);

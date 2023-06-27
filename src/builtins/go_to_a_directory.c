@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 16:49:02 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/27 17:25:58 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:28:52 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	go_to_dir(char *pathname, t_shell *shell)
 	if (chdir(pathname) == -1)
 	{
 		free(oldpwd_val);
-		write_file_error_message("cmd");
+		write_file_error_message(pathname);
 		return (FALSE);
 	}
 	change_pwd_and_oldpwd(oldpwd_val, shell);
