@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:57:17 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 18:51:08 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:50:52 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,18 @@ int	expand_exit_code(int ind, t_tkn *tkn, t_shell *shell)
 	len_val = (int)ft_strlen(value);
 	change_dollar_with_value(value, ind, tkn, shell);
 	return (len_val);
+}
+
+int	skip_dollar_number(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i + 2] != '\0')
+	{
+		s[i] = s[i + 2];
+		i++;
+	}
+	s[i] = '\0';
+	return (2);
 }
