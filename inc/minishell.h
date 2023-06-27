@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/27 14:31:52 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:51:09 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	cut_out_variable(char *s, int ind);
 void	put_value(char *value, int ind, t_tkn *tkn, t_shell *shell);
 //	 .../expand_exit_code.c
 int		expand_exit_code(int ind, t_tkn *tkn, t_shell *shell);
+int		skip_dollar_number(char *s);
 
 // parser/...
 //	 .../parser.c

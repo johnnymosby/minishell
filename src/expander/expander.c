@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:19:31 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 18:53:40 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:50:01 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ static void	expand_tkn(t_tkn *tkn, t_shell *shell)
 	{
 		if (tkn->cntnt[i] == '$')
 		{
-			i += expand_variable(i, tkn, shell) - 1;
+			if ('0' <= tkn->cntnt[i + 1] && tkn->cntnt[i + 1] <= '9')
+				i += skip_dollar_number(tkn->cntnt + i) - 1;
+			else
+				i += expand_variable(i, tkn, shell) - 1;
 		}
 		i++;
 	}
