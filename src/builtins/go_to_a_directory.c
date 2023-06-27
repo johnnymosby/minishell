@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 16:49:02 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/27 16:58:15 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:17:31 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,23 @@ static int	change_dir_to_home(t_shell *shell)
 	char	*var;
 	char	*oldpwd_val;
 
-	var = ft_strdup("cmd");
+	var = ft_strdup("HOME");
 	exit_if_true(shell, var == NULL, FT_ERROR);
-	home = find_env_value(shell->envs, var, 3, shell);
+	home = find_env_value(shell->envs, var, 4, shell);
 	free(var);
-	exit_if_true(shell, home == NULL, FT_ERROR);
+	if (home == NULL)
+		return (FALSE);
 	oldpwd_val = getcwd(NULL, FT_PATH_MAX);
 	if (oldpwd_val == NULL)
-	{
-		free(home);
 		clean_exit(shell, FT_ERROR);
-	}
 	if (chdir(home) == -1)
 	{
-		free(home);
+		write_file_error_message(oldpwd_val);
 		free(oldpwd_val);
-		write_file_error_message("cmd");
 		return (FALSE);
 	}
 	else
-		return (free(home), change_pwd_and_oldpwd(oldpwd_val, shell), TRUE);
+		return (change_pwd_and_oldpwd(oldpwd_val, shell), TRUE);
 }
 
 int	go_to_home(t_shell *shell)
