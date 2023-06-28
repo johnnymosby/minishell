@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:59:34 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/26 19:01:01 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:54:58 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	is_repeatedn(char *s)
 {
 	int	i;
 
+	if (s == NULL)
+		return (1);
 	if (ft_strncmp(s, "-n", 2))
 		return (0);
 	i = 2;
@@ -35,7 +37,7 @@ int	ft_echo(char **ss)
 		return (ft_putchar_fd('\n', STDOUT_FILENO), 0);
 	i = 0;
 	end = 1;
-	while (is_repeatedn(ss[i]))
+	while (ss[i] != NULL && is_repeatedn(ss[i]))
 	{
 		end = 0;
 		i++;
