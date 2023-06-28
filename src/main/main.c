@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 10:16:01 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 13:42:44 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/28 13:20:37 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	main(int argc, char **argv, char **envs)
 {
 	t_shell	*shell;
 
-	(void)argc;
+	if (argc > 1)
+		return (ft_putstr_fd("The program does not take any arguments\n",
+				STDERR_FILENO), 1);
 	(void)argv;
 	g_status = NOCMD_NOSIG;
 	shell = ft_calloc(1, sizeof(t_shell));

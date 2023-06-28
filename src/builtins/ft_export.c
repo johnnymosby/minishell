@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 11:25:19 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/26 16:43:48 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/28 13:20:27 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_export(t_shell *shell, char **args)
 	int		i;
 
 	if (!args || !*args)
-		return (ft_env(shell));
+		return (ft_env(shell, args));
 	i = 0;
 	while (args[i])
 	{
