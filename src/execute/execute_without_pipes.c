@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_without_pipes.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 18:17:09 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/27 14:32:08 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:00:00 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

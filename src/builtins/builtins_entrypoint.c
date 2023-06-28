@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_entrypoint.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/27 17:36:56 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:10:17 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,23 @@ t_cmd	what_command(char *cmd)
 		return (FT_OTHER);
 }
 
+static int	is_not_executable_in_pipe(char *cmd, t_shell *shell)
+{
+	if (shell->n_cmd_tbls > 1
+		&& (what_command(cmd) == FT_CD
+			|| what_command(cmd) == FT_EXIT
+			|| what_command(cmd) == FT_EXPORT
+			|| what_command(cmd) == FT_UNSET))
+		return (TRUE);
+	else
+		return (FALSE);
+}
+
 int	execute_builtin(t_cmd_tbl *cmd_tbl, t_shell *shell)
 {
+	if (shell->n_cmd_tbls > 1
+		&& is_not_executable_in_pipe(cmd_tbl->cmd, shell) == TRUE)
+		return (0);
 	if (what_command(cmd_tbl->cmd) == FT_CD)
 		return (ft_cd(cmd_tbl, shell));
 	else if (what_command(cmd_tbl->cmd) == FT_ECHO)
