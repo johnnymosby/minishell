@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   construct_pathname.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:12:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/27 17:46:48 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/28 19:53:06 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*construct_pathname(char *cmd, t_shell *shell)
 	char	*folder;
 	int		path_ind;
 
-	if (strchr(cmd, '/') != NULL)
+	if (ft_strchr(cmd, '/') != NULL)
 		return (return_cmd_as_pathname(cmd, shell));
 	path_ind = 0;
 	while (shell->envs[path_ind] != NULL)
