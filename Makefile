@@ -35,7 +35,7 @@ EXPAND	=	expander expander_utils put_value expand_exit_code
 EXPAND	:=	$(addprefix expander/, $(EXPAND))
 
 PARSER	=	parser concatenate_words check_syntax check_syntax_utils check_access construct_cmd_tables \
-			handle_heredocs imitate_heredocs heredocs_utils
+			handle_heredocs imitate_heredocs heredocs_utils expand_variables_in_heredoc
 PARSER	:=	$(addprefix parser/, $(PARSER))
 
 EXEC	=	execute construct_pathname execute_with_pipes handle handle_redirections execute_last_cmd \

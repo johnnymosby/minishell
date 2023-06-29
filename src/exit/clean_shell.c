@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:57:51 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/29 17:12:27 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:43:43 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ void	clean_shell(t_shell *shell)
 		free_input(shell);
 		return_std_fds(shell);
 		if (g_status == TRUE)
-		{
 			shell->exit_code = 130;
-		}
 		g_status = FALSE;
 	}
 }
