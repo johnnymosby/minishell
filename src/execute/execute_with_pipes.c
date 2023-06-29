@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/28 21:00:40 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:31:05 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ int	execute_child_and_parent(int *fd, int *prevpipe, int i, t_shell *shell)
 		print_error_and_exit(shell);
 	else if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		check_signals_in_child(&(shell->termios));
 		handle_fd(fd);
 		enable_redirections(shell->cmd_tbls, i);
 		if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
 			exit (1);
 	}
+	check_signals_in_parent(&(shell->termios));
 	handle_fd(fd + 1);
 	*prevpipe = fd[0];
 	return (TRUE);
@@ -101,17 +101,14 @@ void	execute_with_pipes(t_shell *shell)
 	i = 0;
 	while (i != shell->n_cmd_tbls)
 	{
+		g_status = FALSE;
 		if (i == shell->n_cmd_tbls - 1)
 		{
-			g_status = CMD_NOSIG;
 			execute_last_cmd(shell, i, *prevpipe);
 			return ;
 		}
 		else
-		{
-			g_status = CMD_NOSIG;
 			execute_cmd(prevpipe, i, shell);
-		}
 		i++;
 	}
 }

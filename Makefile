@@ -19,7 +19,7 @@ MAIN	:=	$(addprefix main/, $(MAIN))
 UTILS	=	general_utils history
 UTILS	:=	$(addprefix utils/, $(UTILS))
 
-SIG		=	check_signals
+SIG		=	check_signals check_signals_in_parent check_signals_in_child
 SIG		:=	$(addprefix signals/, $(SIG))
 
 LOOP	=	minishell_loop

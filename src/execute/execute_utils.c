@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 18:16:18 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/27 14:36:00 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:11:51 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	enable_redirections(t_cmd_tbl *cmd_tbls, int i)
 
 void	finalise_exit_code(t_shell *shell, int status)
 {
-	if (g_status == CMD_SIG || g_status == NOCMD_SIG)
+	if (g_status == TRUE)
 		shell->exit_code = 130;
 	else
 	{

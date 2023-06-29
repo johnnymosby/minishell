@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/28 21:10:17 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:08:10 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static int	is_not_executable_in_pipe(char *cmd, t_shell *shell)
 
 int	execute_builtin(t_cmd_tbl *cmd_tbl, t_shell *shell)
 {
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (shell->n_cmd_tbls > 1
 		&& is_not_executable_in_pipe(cmd_tbl->cmd, shell) == TRUE)
 		return (0);

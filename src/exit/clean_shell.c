@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:57:51 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 16:46:43 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:12:27 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void	clean_shell(t_shell *shell)
 		free_tkn_tbl(&shell->tkn_tbl);
 		free_input(shell);
 		return_std_fds(shell);
-		if (g_status == CMD_SIG || g_status == NOCMD_SIG)
+		if (g_status == TRUE)
 		{
 			shell->exit_code = 130;
 		}
-		g_status = NOCMD_NOSIG;
+		g_status = FALSE;
 	}
 }

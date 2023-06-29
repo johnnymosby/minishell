@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 16:47:17 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:12:39 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	get_input(t_shell *shell)
 {
 	shell->input = readline(shell->prompt);
-	if (g_status == CMD_SIG || g_status == NOCMD_SIG)
+	if (g_status == TRUE)
 	{
 		shell->exit_code = 130;
 	}

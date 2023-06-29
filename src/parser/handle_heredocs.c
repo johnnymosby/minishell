@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredocs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 19:13:40 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:12:55 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ int	fill_heredoc(char *stopword, int fd, t_shell *shell)
 
 	while (TRUE)
 	{
-		g_status = HEREDOC;
 		input = readline("> ");
-		if (g_status == NOCMD_SIG || g_status == CMD_SIG)
+		if (g_status == TRUE)
 		{
 			return (free(input), close(fd), FALSE);
 		}

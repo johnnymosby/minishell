@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/27 17:37:09 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:30:06 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	history(t_shell *shell);
 // signals/...
 //	 .../check_signals.c
 void	check_signals(t_shell *shell);
+void	check_signals_in_parent(struct termios *termios);
+void	check_signals_in_child(struct termios *mirror_termios);
 
 // loop/...
 //	 .../minishell_loop.c

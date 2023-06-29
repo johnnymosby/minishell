@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/28 21:00:36 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:30:42 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	wait_child_processes(t_shell *shell)
 
 	while (wait(&status) > 0)
 		;
-	if (g_status == CMD_SIG || g_status == NOCMD_SIG)
+	if (g_status == TRUE)
 		shell->exit_code = 130;
 	else
 		shell->exit_code = status;
@@ -40,8 +40,7 @@ static int	execute_in_child(t_shell *shell, int i)
 		print_error_and_exit(shell);
 	else if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		check_signals_in_child(&(shell->termios));
 		enable_redirections(shell->cmd_tbls, i);
 		if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
 			exit (1);
@@ -70,6 +69,7 @@ int	execute_last_cmd(t_shell *shell, int i, int prevpipe)
 	}
 	else if (execute_in_child(shell, i) == FALSE)
 		return (FALSE);
+	check_signals_in_parent(&(shell->termios));
 	wait_child_processes(shell);
 	if (cmd_tbl->in >= 0)
 		close_fd(&prevpipe);

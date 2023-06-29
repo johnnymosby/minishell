@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 18:17:09 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/28 21:00:00 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:31:45 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,12 @@ void	execute_without_pipes(t_shell *shell)
 		print_error_and_exit(shell);
 	else if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		check_signals_in_child(&(shell->termios));
 		enable_redirections(shell->cmd_tbls, 0);
 		if (execve(pathname, shell->cmd_tbls->args, shell->envs) < 0)
 			exit (1);
 	}
-	else
-		waitpid(pid, &status, 0);
+	check_signals_in_parent(&(shell->termios));
+	waitpid(pid, &status, 0);
 	finalise_exit_code(shell, status);
 }

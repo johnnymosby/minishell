@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   imitate_heredocs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:30:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/25 14:49:28 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:13:14 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ int	imitate_heredoc(char *s, t_shell *shell)
 
 	while (TRUE)
 	{
-		g_status = HEREDOC;
 		input = readline("> ");
-		if (g_status == NOCMD_SIG || g_status == CMD_SIG)
+		if (g_status == TRUE)
 			return (FALSE);
 		if (input == NULL)
 			return (TRUE);
