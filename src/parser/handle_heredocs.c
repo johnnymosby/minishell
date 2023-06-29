@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:26:33 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/29 17:12:55 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 23:57:06 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ int	fill_heredoc(char *stopword, int fd, t_shell *shell)
 	{
 		input = readline("> ");
 		if (g_status == TRUE)
-		{
 			return (free(input), close(fd), FALSE);
-		}
 		if (input == NULL)
 			return (close(fd), TRUE);
 		if (ft_strcmp(input, stopword) == 0)
@@ -45,7 +43,10 @@ int	fill_heredoc(char *stopword, int fd, t_shell *shell)
 			close(fd);
 			return (TRUE);
 		}
-		write(fd, input, ft_strlen(input));
+		if (ft_strchr(input, '$') == NULL)
+			write(fd, input, ft_strlen(input));
+		else
+			expand_variables(input, fd, shell);
 		write(fd, "\n", 1);
 		free(input);
 	}

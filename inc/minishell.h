@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:13:56 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/29 17:30:06 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/29 22:22:05 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ void	put_value(char *value, int ind, t_tkn *tkn, t_shell *shell);
 //	 .../expand_exit_code.c
 int		expand_exit_code(int ind, t_tkn *tkn, t_shell *shell);
 int		skip_dollar_number(char *s);
+//	 .../expand_variables_in_heredoc.c
+void	expand_variables(char *s, int fd, t_shell *shell);
 
 // parser/...
 //	 .../parser.c
