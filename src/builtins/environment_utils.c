@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 22:40:31 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/30 17:30:05 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 17:50:02 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	is_in_envs(char *var, char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], var, n))
+		if (ft_strncmp(env[i], var, n) == 0 && env[i][n] == '=')
 			return (TRUE);
 		i++;
 	}
