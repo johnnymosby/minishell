@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/30 15:25:25 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 15:37:27 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,10 @@ static int	execute_in_child(t_shell *shell, int i)
 int	execute_last_cmd(t_shell *shell, int i, int prevpipe)
 {
 	t_cmd_tbl	*cmd_tbl;
-	t_tkn_tbl	*tkn_tbl;
 	char		*pathname;
 
 	cmd_tbl = &(shell->cmd_tbls[i]);
-	tkn_tbl = shell->tkn_tbl;
-	if (handle_redirections(tkn_tbl, shell->cmd_tbls, i, shell) == FALSE)
+	if (handle_redirections(shell->tkn_tbl, shell->cmd_tbls, i, shell) == FALSE)
 		return (close_fd(&prevpipe), FALSE);
 	if (cmd_tbl->cmd == NULL)
 		return (close_fd(&prevpipe), TRUE);
