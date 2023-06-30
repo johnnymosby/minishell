@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   imitate_heredocs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:30:32 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/29 17:13:14 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 19:10:16 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	imitate_heredoc(char *s, t_shell *shell)
 	{
 		input = readline("> ");
 		if (g_status == TRUE)
-			return (FALSE);
+			return (free(input), FALSE);
 		if (input == NULL)
 			return (TRUE);
 		else if (ft_strcmp(input, s) == 0)
