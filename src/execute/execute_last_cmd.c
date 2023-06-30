@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_last_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/29 17:30:42 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 15:25:25 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	execute_in_child(t_shell *shell, int i)
 	cmd_tbl = &(shell->cmd_tbls[i]);
 	pathname = construct_pathname(cmd_tbl->cmd, shell);
 	if (pathname == NULL)
-		return (FALSE);
+		return (handle_fd(&(cmd_tbl->in)), FALSE);
 	add_command_to_args(pathname, i, shell);
 	pid = fork();
 	if (pid < 0)
@@ -69,6 +69,7 @@ int	execute_last_cmd(t_shell *shell, int i, int prevpipe)
 	}
 	else if (execute_in_child(shell, i) == FALSE)
 		return (FALSE);
+	handle_fd(&(cmd_tbl->in));
 	check_signals_in_parent(&(shell->termios));
 	wait_child_processes(shell);
 	if (cmd_tbl->in >= 0)

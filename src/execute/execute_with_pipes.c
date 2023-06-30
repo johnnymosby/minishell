@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_with_pipes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/29 17:31:05 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 15:12:03 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	execute_child_and_parent(int *fd, int *prevpipe, int i, t_shell *shell)
 
 	cmd_tbl = &(shell->cmd_tbls[i]);
 	if (construct_pathname_safely(&pathname, i, cmd_tbl, shell) == FALSE)
-		return (FALSE);
+		return (handle_fd(&(cmd_tbl->in)), handle_fd(fd + 1), FALSE);
 	pid = fork();
 	if (pid < 0)
 		print_error_and_exit(shell);
@@ -43,7 +43,6 @@ int	execute_child_and_parent(int *fd, int *prevpipe, int i, t_shell *shell)
 			exit (1);
 	}
 	check_signals_in_parent(&(shell->termios));
-	handle_fd(fd + 1);
 	*prevpipe = fd[0];
 	return (TRUE);
 }
@@ -86,6 +85,7 @@ int	execute_cmd(int *prevpipe, int i, t_shell *shell)
 	}
 	else if (execute_child_and_parent(fd, prevpipe, i, shell) == FALSE)
 		return (set_exit_code(shell, 1), FALSE);
+	handle_fd(&(cmd_tbl->in));
 	handle_fd(fd + 1);
 	return (TRUE);
 }
