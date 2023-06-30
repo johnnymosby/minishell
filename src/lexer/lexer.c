@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:20:53 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/30 16:44:15 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:54:55 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	lexer_loop(t_shell *shell)
 		if (shell->tkn_tbl->max_n_tkns == shell->tkn_tbl->n_tkns)
 			increase_tkn_tbl(shell);
 		i += add_token(shell, i);
-		printf("i: %i\n", i);
 	}
 }
 
