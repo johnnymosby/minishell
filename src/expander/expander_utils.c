@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:31:45 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/27 16:50:10 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 17:07:27 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,6 @@ int	env_finishes_with_equal_sign(char *var, int len)
 	if (var[i] == '=')
 		return (TRUE);
 	return (FALSE);
-}
-
-void	remove_trailing_dollar(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	if (i > 0 && s[i - 1] == '$')
-		s[i - 1] = '\0';
 }
 
 void	remove_repeating_dollars(char *s)
