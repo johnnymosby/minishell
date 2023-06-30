@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:57:51 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/29 17:43:43 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:41:13 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	set_exit_code(t_shell *shell, int exit_code)
 
 void	free_input(t_shell *shell)
 {
-	free_if_not_null((void **)&shell->input);
-	free_if_not_null((void **)&shell->trimmed_input);
+	free_if_not_null((void **)&(shell->input));
+	free_if_not_null((void **)&(shell->trimmed_input));
 }
 
 void	clean_shell(t_shell *shell)

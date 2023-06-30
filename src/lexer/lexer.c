@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:20:53 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 18:57:45 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:44:15 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	add_quote(t_tkn_tbl *tkn_tbl, const char *inp, int i, t_shell *shell)
 	while (inp[i + len + 1] != '\0' && inp[i + len + 1] != '\'')
 		len++;
 	if (len == 0)
-		return (1 + (inp[i + len + 1] == '\0'));
+		return (1 + (inp[i + len + 1] == '\''));
 	tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt = ft_calloc(len + 1, sizeof(char));
 	if (tkn_tbl->tkns[tkn_tbl->n_tkns].cntnt == NULL)
 	{
@@ -97,6 +97,7 @@ void	lexer_loop(t_shell *shell)
 		if (shell->tkn_tbl->max_n_tkns == shell->tkn_tbl->n_tkns)
 			increase_tkn_tbl(shell);
 		i += add_token(shell, i);
+		printf("i: %i\n", i);
 	}
 }
 
