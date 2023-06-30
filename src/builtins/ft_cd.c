@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 15:16:01 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/27 17:33:22 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 17:35:04 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,9 @@ Changes the current working directory
 */
 int	ft_cd(t_cmd_tbl *cmd_tbl, t_shell *shell)
 {
+	if (return_env_var_index("HOME", shell->envs) == -1)
+		return (ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO),
+			FALSE);
 	if (!cmd_tbl->args || (ft_strcmp(cmd_tbl->args[0], "~") == 0
 			&& cmd_tbl->args[1] == NULL))
 		return (go_to_home(shell));

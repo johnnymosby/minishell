@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:19:40 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/26 16:43:56 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 17:35:52 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_unset(t_shell *shell, char **args)
 	int		i;
 	int		index;
 
-	if (!args || !args[0] || !shell->envs)
+	if (args == NULL || args[0] == NULL || shell->envs == NULL)
 		return (0);
 	i = 0;
 	while (args[i] != NULL)

@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 22:40:31 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/27 16:58:04 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/06/30 17:30:05 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ int	return_env_var_index(char *var, char **env)
 	int	i;
 	int	n;
 
-	if (!var || !env)
+	if (var == NULL || env == NULL)
 		return (-1);
 	n = 0;
 	while (var[n] != '\0' && var[n] != '=')
 		n++;
 	i = 0;
-	while (env[i])
+	while (env[i] != NULL)
 	{
-		if (!ft_strncmp(env[i], var, n))
+		if (ft_strncmp(env[i], var, n) == 0 && env[i][n] == '=')
 			return (i);
 		i++;
 	}
