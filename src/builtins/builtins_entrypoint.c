@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_entrypoint.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:45 by maruzibo          #+#    #+#             */
-/*   Updated: 2023/06/29 17:08:10 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/07/02 11:56:31 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	execute_builtin(t_cmd_tbl *cmd_tbl, t_shell *shell)
 	else if (what_command(cmd_tbl->cmd) == FT_ECHO)
 		return (ft_echo(cmd_tbl->args));
 	else if (what_command(cmd_tbl->cmd) == FT_PWD)
-		return (ft_pwd());
+		return (ft_pwd(shell));
 	else if (what_command(cmd_tbl->cmd) == FT_EXIT)
 		return (ft_exit(shell, cmd_tbl));
 	else if (what_command(cmd_tbl->cmd) == FT_ENV)

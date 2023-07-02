@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   construct_pathname.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbasyrov <rbasyrov@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:12:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/28 19:53:06 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/07/02 12:08:44 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static char	*return_cmd_as_pathname(char *cmd, t_shell *shell)
 	char	*pathname;
 
 	if (access(cmd, F_OK) != 0)
-		return (write_file_error_message(cmd), NULL);
+		return (write_file_error_message(cmd), set_exit_code(shell, 1), NULL);
 	if (is_directory(cmd, shell) == TRUE)
-		return (print_permission_denied(cmd), NULL);
+		return (print_permission_denied(cmd), set_exit_code(shell, 2), NULL);
 	pathname = ft_strdup(cmd);
 	exit_if_true(shell, pathname == NULL, FT_ERROR);
 	return (pathname);
