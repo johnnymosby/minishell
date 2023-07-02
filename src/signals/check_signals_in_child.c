@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 17:37:46 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/30 15:31:29 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/07/02 11:43:40 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ static void	handle_sigint_in_child(void)
 void	check_signals_in_child(struct termios *mirror_termios)
 {
 	tcsetattr(1, TCSAFLUSH, mirror_termios);
+	signal(SIGQUIT, SIG_IGN);
 	handle_sigint_in_child();
 }

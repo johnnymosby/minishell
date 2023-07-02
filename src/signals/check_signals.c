@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 16:17:40 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/30 15:32:04 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/07/02 11:44:58 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	check_signals(t_shell *shell)
 {
 	g_status = FALSE;
 	save_termios(shell);
-	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_sigint);
 }

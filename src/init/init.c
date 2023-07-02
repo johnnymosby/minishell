@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:40:35 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/26 18:54:32 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/07/02 11:40:30 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	init_minishell(t_shell *shell, char **envs)
 {
 	if (!isatty(STDIN_FILENO))
 		exit(EXIT_FAILURE);
+	shell->input = NULL;
 	shell->envs = copy_environment(envs, shell);
 	shell->prompt = return_prompt(shell);
 	dup_std_in_out(shell);

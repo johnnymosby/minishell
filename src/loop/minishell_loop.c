@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:42:12 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/30 19:15:52 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/07/02 11:40:44 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 static int	get_input(t_shell *shell)
 {
+	if (shell->input != NULL)
+		free(shell->input);
 	shell->input = readline(shell->prompt);
 	if (g_status == TRUE)
 	{
 		shell->exit_code = 130;
+		g_status = FALSE;
 	}
 	if (shell->input == NULL)
 		return (ft_putstr_fd("exit\n", STDERR_FILENO), FALSE);
