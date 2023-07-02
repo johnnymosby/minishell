@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:12:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/07/02 12:15:48 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/07/02 13:07:57 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*return_cmd_as_pathname(char *cmd, t_shell *shell)
 {
 	char	*pathname;
 
-	if (access(cmd, F_OK) != 0)
+	if (access(cmd, X_OK) != 0)
 		return (write_file_error_message(cmd), set_exit_code(shell, 126), NULL);
 	if (is_directory(cmd, shell) == TRUE)
 		return (print_permission_denied(cmd), set_exit_code(shell, 126), NULL);

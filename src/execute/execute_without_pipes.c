@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 18:17:09 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/07/02 12:40:42 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/07/02 13:06:13 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,4 @@ void	execute_without_pipes(t_shell *shell)
 	}
 	else
 		execute_child_then_parent(pathname, shell);
-	free(pathname);
 }
