@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:48:14 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/30 15:19:14 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/07/02 12:34:40 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ int	handle_infile(int i, int *prevpipe, t_shell *shell)
 		return (handle_fd(prevpipe), TRUE);
 	else if (*prevpipe >= 0)
 	{
-		cmd_tbl->in = dup(*prevpipe);
-		close(*prevpipe);
+		cmd_tbl->in = *prevpipe;
 		*prevpipe = -1;
 		return (TRUE);
 	}

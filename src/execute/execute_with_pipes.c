@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:06 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/30 15:12:03 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/07/02 12:39:26 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	execute_child_and_parent(int *fd, int *prevpipe, int i, t_shell *shell)
 		if (execve(pathname, cmd_tbl->args, shell->envs) < 0)
 			exit (1);
 	}
+	handle_fd(fd + 1);
 	check_signals_in_parent(&(shell->termios));
 	*prevpipe = fd[0];
 	return (TRUE);
@@ -69,9 +70,9 @@ int	execute_cmd(int *prevpipe, int i, t_shell *shell)
 
 	cmd_tbl = &(shell->cmd_tbls[i]);
 	if (prepare_to_execution(prevpipe, i, fd, shell) == FALSE)
-		return (FALSE);
+		return (close_files(cmd_tbl), FALSE);
 	if (cmd_tbl->cmd == NULL)
-		return (handle_fd(prevpipe), TRUE);
+		return (handle_fd(prevpipe), close_files(cmd_tbl), TRUE);
 	handle_infile(i, prevpipe, shell);
 	handle_outfile(fd, i, prevpipe, shell);
 	if (what_command(cmd_tbl->cmd) != FT_OTHER)
@@ -84,9 +85,8 @@ int	execute_cmd(int *prevpipe, int i, t_shell *shell)
 		*prevpipe = fd[0];
 	}
 	else if (execute_child_and_parent(fd, prevpipe, i, shell) == FALSE)
-		return (set_exit_code(shell, 1), FALSE);
-	handle_fd(&(cmd_tbl->in));
-	handle_fd(fd + 1);
+		return (set_exit_code(shell, 1), close_files(cmd_tbl), FALSE);
+	close_files(cmd_tbl);
 	return (TRUE);
 }
 

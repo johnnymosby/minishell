@@ -6,7 +6,7 @@
 /*   By: rbasyrov <rbasyrov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:35:42 by rbasyrov          #+#    #+#             */
-/*   Updated: 2023/06/30 15:37:27 by rbasyrov         ###   ########.fr       */
+/*   Updated: 2023/07/02 12:39:48 by rbasyrov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,18 @@ int	execute_last_cmd(t_shell *shell, int i, int prevpipe)
 
 	cmd_tbl = &(shell->cmd_tbls[i]);
 	if (handle_redirections(shell->tkn_tbl, shell->cmd_tbls, i, shell) == FALSE)
-		return (close_fd(&prevpipe), FALSE);
+		return (close_fd(&prevpipe), close_files(cmd_tbl), FALSE);
 	if (cmd_tbl->cmd == NULL)
-		return (close_fd(&prevpipe), TRUE);
+		return (close_fd(&prevpipe), close_files(cmd_tbl), TRUE);
 	if (handle_infile(i, &prevpipe, shell) == FALSE)
-		return (set_exit_code(shell, 1), FALSE);
+		return (set_exit_code(shell, 1), close_files(cmd_tbl), FALSE);
 	if (what_command(cmd_tbl->cmd) != FT_OTHER)
 	{
 		enable_redirections(shell->cmd_tbls, i);
 		shell->exit_code = execute_builtin(cmd_tbl, shell);
 	}
 	else if (execute_in_child(shell, i) == FALSE)
-		return (FALSE);
+		return (close_files(cmd_tbl), FALSE);
 	handle_fd(&(cmd_tbl->in));
 	check_signals_in_parent(&(shell->termios));
 	wait_child_processes(shell);
